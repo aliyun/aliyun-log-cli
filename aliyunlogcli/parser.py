@@ -4,9 +4,9 @@ import re
 
 import aliyun.log as log
 from aliyun.log import *
-from config import *
 from aliyun.log.util import Util
-from config import load_default_config_from_file_env, load_config_from_file, LOG_CONFIG_SECTION
+from .config import *
+from .config import load_default_config_from_file_env, load_config_from_file, LOG_CONFIG_SECTION
 
 
 def _parse_method(func):
