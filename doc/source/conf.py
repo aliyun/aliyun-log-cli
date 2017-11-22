@@ -57,7 +57,7 @@ source_suffix = ['.rst']
 master_doc = 'index'
 
 # General information about the project.
-project = 'Aliyun Log Service Python SDK'
+project = 'Aliyun Log Service CLI'
 copyright = '2017, Alibaba Cloud'
 author = 'Alibaba Cloud'
 
