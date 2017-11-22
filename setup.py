@@ -30,12 +30,10 @@ classifiers = [
     'Programming Language :: Python :: Implementation :: PyPy'
 ]
 
-try:
-    import pypandoc
-
-    long_description = pypandoc.convert('README.md', 'rst')
-except(IOError, ImportError):
-    long_description = open('README.md').read()
+long_description = """
+Command Line Interface for Aliyun Log Service 
+http://aliyun-log-cli.readthedocs.io
+"""
 
 setup(
     name='aliyun-log-cli',
