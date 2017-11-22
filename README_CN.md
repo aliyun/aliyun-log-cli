@@ -181,7 +181,7 @@
 **一般情况**
 
 子命令对应于logclient的方法, 参数和可选参数也一一对应.
-具体支持的API参数, 请参考(Python SDK API规范)[http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient]
+具体支持的API参数, 请参考[Python SDK API规范](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
 
 **例子:**
 
