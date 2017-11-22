@@ -1,55 +1,59 @@
-# Aliyun Log CLI
+# User Guide (中文)
 
-#### [中文版README](./README_CN.md)
+[README in English](./README.md)
 
-
-### Installation
+### 安装
 
 ```shell
 > pip -U aliyun-log-cli
 ```
 
-**supported platforms**:
+**支持平台**:
 - windows
 - mac
 - linux
 
-#### Supported Python:
+
+
+#### 支持平台
 - Python 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
 
 
-#### Full Usage list:
+#### 完整参数列表
 
 ```shell
 > aliyun --help
 ```
 
 
-### CLI
+### CLI规范
 
 ```shell
 1. aliyun log <subcommand> [parameters | global options]
-2. aliyun configure <access_id> <access-key> <endpoint>
+2. aliyun configure <access_id> <access-key> <endpoint> [<client-name>]
 3. aliyun [--help | --version]
 ```
 
-### Access Key and Endpoint
-**Priority**
-1. Parameters
+### Access Key与Endpoint存储与使用
+**优先级**
+1. 参数
 
   ```shell
   > aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
   ```
-  **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
 
-2. Environment Variables
+  **注意:**
+  - 任意 log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
+
+
+2. 环境变量
   - ALIYUN_LOG_CLI_ACCESSID
   - ALIYUN_LOG_CLI_ACCESSKEY
   - ALIYUN_LOG_CLI_ENDPOINT
 
-3. Local configuration file
+3. 本地配置文件
 
-  You could store them at `~/.aliyunlogcli`, the default section name is `main`
+  将存储AK与Endpoint在~/.aliyunlogcli, 默认使用的块名是`main`
 
   ```ini
   [main]
@@ -57,22 +61,23 @@
   access-key=
   endpoint=
   ```
-  **You could use the command `Configure` to store them directly.**
+
+  **Configure命令可以修改配置文件内容**
 
   ```shell
   > aliyun configure access_id access_key cn-beijing.log.aliyun.com
   ```
 
 
-**Multiple Account**
-1. You could store multiple accounts for some use cases (e.g. test, multiple region operations)
+**多账户**
+1. 存储与多个账户, 以便在特定情况下使用(例如测试):
 
   ```shell
   > aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
   > aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyun.com test
   ```
 
-  AK is stored as:
+  AK将存储为:
 
   ```ini
   [main]
@@ -86,50 +91,53 @@
   endpoint=cn-hangzhou.log.aliyun.com
   ```
 
-2. Use specific account:
-  Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
+2. 使用特定账户
+  任意命令都可以通过选项`--client-name=<value>`来使用特定配置的账户, 例如:
+
     ```shell
     > aliyun log create_project ..... --client-name=test
     ```
-    It will use `test` to create the project.
 
-  In some case, we need to operate cross regions, e.g.
+    将使用`test`的AK来进行操作.
+
+  某些情况下也需要跨账户操作, 例如:
 
     ```shell
     > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
     ```
 
-    It will use account `main` to copy project `p1` in its region to another region under account `test`
+    将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
 
 
-### Inputs
-1. Normally case:
+
+
+### 参数输入
+1. 一般输入
 
 ```shell
 > aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"123\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"123\", \"reverse\":\"false\"}"
 ```
 
-2. Input via file:
-You could store the content of one parameter into a file and pass it via the command line with prefix `file://`:
+2. 文件输入
+也可以将上面参数放到一个文件里面, 简化命令行, 需要义file://开头+文件路径即可:
 
 ```shell
 > aliyun log get_logs --request="file://./get_logs.json"
 ```
 
-**Parameter Validation**
-- Mandatory check: if one mandatory parameter is missed, it will report error with usage info.
-- Format of parameter's value will be validated. e.g. 例如int, bool, string list, special data structure.
-- for boolean, it support:
-  - true (case insensitive), T, 1
-  - false (case insensitive), F, 0
-- String list support as:
+**参数校验**
+- 必填的参数没有填写时会报错, 输出参数列表
+- 参数格式本身会进行校验, 例如int, bool, string list, 特定数据结构等
+- bool支持的形式有:
+  - true (大小写不敏感), T, 1
+  - false (大小写不敏感), F, 0
+- 字符串列表支持的形式是:
   - ["s1", "s2"]
 
-### Output
-1. For operations like Create, Update and Delete, there's no output except the exit code is 0 which means success.
-2. For operations like Get and List, it will output in json format.
-3. For errors, it will report in json format as below:
-
+### 输出
+1. 对于Create, Update, Delete操作, 一般脚本无输出, exit code=0表示成功.
+2. 对于Get/List操作, 以json格式输出内容
+3. 错误情况下, 以如下格式返回错误:
 
 ```json
 {
@@ -138,14 +146,15 @@ You could store the content of one parameter into a file and pass it via the com
 }
 ```
 
-### Filter output
-It's supported to filter output via [JMES](http://jmespath.org/):
-Examples:
+### 输出过滤
+支持通过[JMES](http://jmespath.org/)过滤输出的结果.
+例如:
 
 ```shell
 > aliyun log get_logs ...
 ```
-which outputs:
+
+的输出是:
 
 ```json
 {
@@ -155,32 +164,32 @@ which outputs:
 }
 ```
 
-You could use below `--jmse-filter` to filter it:
+通过命令:
 
 ```shell
 > aliyun log get_logs ... --jmse-filter="logstores[2:]"
 ```
 
-Then you will be the name list of second logstore and later ones as below:
+可以获取第二以及后面的logstore的名字, 输出:
 
 ```shell
 ["logstore1", "logstore2"]
 ```
 
-### Supported commands:
+### 支持的命令:
 
-**Normal Case**
+**一般情况**
 
-Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.logclient.LogClient`. The parameters of command line is mapped to the parameters of methods.
-For the detail spec of parameters, please refer to the [Python SDK API Spec](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
+子命令对应于logclient的方法, 参数和可选参数也一一对应.
+具体支持的API参数, 请参考[Python SDK API规范](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
 
-**Examples:**
+**例子:**
 
 ```python
 def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 ```
 
-Mapped to CLI:
+对应CLI:
 
 ```shell
 > aliyun log create_logstore
@@ -190,8 +199,8 @@ Mapped to CLI:
   [--shard_count=<value>]
 ```
 
-##### Global options:
-All the commands support below optional global options:
+##### 全局选项
+所有命令都支持如下的全局选项:
     [--access-id=<value>]
     [--access-key=<value>]
     [--region-endpoint=<value>]
@@ -199,7 +208,8 @@ All the commands support below optional global options:
     [--jmes-filter=<value>]
 
 
-#### Full command list:
+
+#### 完整命令列表:
 
 **project**
 - list_project
@@ -208,7 +218,7 @@ All the commands support below optional global options:
 - delete_project
 - **copy_project**
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
-
+   -
    ```shell
    > aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
    ```
@@ -235,7 +245,7 @@ All the commands support below optional global options:
 
 **machine group**
 - create_machine_group
-   - Format of partial parameter:
+   - 部分参数格式:
 
    ```json
    {
@@ -265,7 +275,7 @@ All the commands support below optional global options:
 
 **logtail**
 - create_logtail_config
-   - Format of partial parameter:
+   - 部分参数格式:
 
    ```json
    {
@@ -301,7 +311,7 @@ All the commands support below optional global options:
 
 **index**
 - create_index
-   - Format of partial parameter:
+   - 部分参数格式:
 
    ```json
    {
@@ -384,7 +394,7 @@ All the commands support below optional global options:
 
 **logs**
 - put_logs
-  - Format of parameter:
+  - 参数格式:
 
   ```json
   {
@@ -435,7 +445,7 @@ All the commands support below optional global options:
   ```
 
 - get_logs
-  - Format of parameter:
+  - 参数格式:
 
   ```json
   {
@@ -456,7 +466,7 @@ All the commands support below optional global options:
 
 **shipper**
 - create_shipper
-  - Format of partial parameter:
+  - 部分参数格式:
 
   ```json
   {
