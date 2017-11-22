@@ -45,7 +45,8 @@ def process_token(txt):
 
 
 def run_test(cmd_file):
-    cli = sys.executable + ' "' + os.path.abspath('../aliyunlogcli/cli.py') + '"'
+    cli_path = os.path.sep.join([os.path.dirname(__file__), '../aliyunlogcli/cli.py'])
+    cli = sys.executable + ' "' + cli_path + '"'
     cmd_list = process_token(open(cmd_file).read()).split('\n')
     cmd_dict = OrderedDict()
     pre_cmd = ''
