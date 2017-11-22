@@ -20,6 +20,9 @@
 import os
 import sys
 import six
+import re
+import pypandoc
+
 sys.path.insert(0, os.path.abspath('../..'))
 
 
@@ -66,8 +69,6 @@ author = 'Alibaba Cloud'
 # built documents.
 #
 # The short X.Y version.
-from aliyun.log import __version__
-import re
 version = '0.6'
 with open(os.path.abspath('../../aliyunlogcli/__init__.py'), 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
@@ -184,7 +185,6 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-import pypandoc
 if six.PY3:
     open("README.rst", "w").write(pypandoc.convert('../../README.md', 'rst'))
     open("README_CN.rst", "w").write(pypandoc.convert('../../README_CN.md', 'rst'))

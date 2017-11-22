@@ -280,7 +280,7 @@ def _parse_method_params_from_doc(doc):
     params = dict((k, types_maps.get(t.lower().strip(), None)) for k, t, d in m)
 
     unsupported_types = [(k, t, d) for k, t, d in m if params.get(k, None) is None]
-    if unsupported_types :
+    if unsupported_types:
         for k, t, d in unsupported_types:
             handler = _find_multiple_cls(t)
             if handler is not None:

@@ -7,6 +7,7 @@ import six.moves.configparser as configparser
 from docopt import docopt
 from config import load_config, LOG_CONFIG_SECTION
 from six import StringIO
+from parser import parse_method_types_optdoc_from_class
 
 
 def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONFIG_SECTION):
@@ -45,6 +46,7 @@ def _get_str(obj, enclosed=True):
     if enclosed:
         return repr(obj)
     return str(obj)
+
 
 def _sort_str_dict(obj, enclosed=False):
     buf = StringIO()
@@ -114,43 +116,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# def test_convert():
-    # d1 = {1:'\n'}
-    # print(_sort_str_dict(d1))
-    # assert r"{1: '\n'}" == _sort_str_dict(d1)
-    #
-    # d1 = {1:'\t'}
-    # print(_sort_str_dict(d1))
-    # assert r"{1: '\t'}" == _sort_str_dict(d1)
-    #
-    # d1 = "123"
-    # print(_sort_str_dict(d1))
-    # assert """123""" == _sort_str_dict(d1)
-    #
-    # d1 = ""
-    # print(_sort_str_dict(d1))
-    # assert """""" == _sort_str_dict(d1)
-    #
-    # d1 = 123
-    # print(_sort_str_dict(d1))
-    # assert """123""" == _sort_str_dict(d1)
-    #
-    # d1 = [1,'2', 3]
-    # print(_sort_str_dict(d1))
-    # assert """[1, '2', 3]""" == _sort_str_dict(d1)
-    #
-    # d1 = {1:1, '3':3, 2:'2'}
-    # print(_sort_str_dict(d1))
-    # assert """{1: 1, 2: '2', '3': 3}""" == _sort_str_dict(d1)
-    #
-    # d1 = [1,'2', {1:1, '3':3, 2:'2'}]
-    # print(_sort_str_dict(d1))
-    # assert """[1, '2', {1: 1, 2: '2', '3': 3}]""" == _sort_str_dict(d1)
-    #
-    # d1 = {1:{1:1, '3':3, 2:'2'}, '3':{1:1, '3':{1:1, '3':3, 2:'2'}, 2:'2'}, 2:'2'}
-    # print(_sort_str_dict(d1))
-    # assert """{1: {1: 1, 2: '2', '3': 3}, 2: '2', '3': {1: 1, 2: '2', '3': {1: 1, 2: '2', '3': 3}}}""" == _sort_str_dict(d1)
-    #
-    # exit(10)
