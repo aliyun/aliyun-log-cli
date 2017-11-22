@@ -126,7 +126,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 ```
 
 2. 文件输入
-也可以将上面参数放到一个文件里面, 简化命令行, 需要义file://开头+文件路径即可:
+也可以将上面参数放到一个文件里面, 简化命令行, 需要义`file://`开头+文件路径即可:
 
 ```shell
 > aliyun log get_logs --request="file://./get_logs.json"
@@ -155,6 +155,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 
 ### 输出过滤
 支持通过[JMES](http://jmespath.org/)过滤输出的结果.
+
 例如:
 
 ```shell
@@ -208,49 +209,49 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 ##### 全局选项
 所有命令都支持如下的全局选项:
+
+```
     [--access-id=<value>]
     [--access-key=<value>]
     [--region-endpoint=<value>]
     [--client-name=<value>]
     [--jmes-filter=<value>]
-
+```
 
 
 #### 完整命令列表:
 
-**project**
+**项目组**
 - list_project
 - create_project
 - get_project
 - delete_project
 - **copy_project**
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
-   -
+
 ```shell
-> aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
+> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
 ```
 
    - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
 
-**logstore**
+**日志库**
 - create_logstore
 - delete_logstore
 - get_logstore
 - update_logstore
 - list_logstore
+- list_topics
 
 
-**shard**
+**分区**
 - list_shards
 - split_shard
 - merge_shard
 
 
-**topic**
-- list_topics
 
-
-**machine group**
+**机器组**
 - create_machine_group
    - 部分参数格式:
 
@@ -275,12 +276,8 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_machine_group
 - list_machine_group
 - list_machines
-- apply_config_to_machine_group
-- remove_config_to_machine_group
-- get_machine_group_applied_configs
-- get_config_applied_machine_groups
 
-**logtail**
+**Logtail配置**
 - create_logtail_config
    - 部分参数格式:
 
@@ -316,7 +313,16 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_logtail_config
 - list_logtail_config
 
-**index**
+
+**机器组与Logtail配置关联**
+
+- apply_config_to_machine_group
+- remove_config_to_machine_group
+- get_machine_group_applied_configs
+- get_config_applied_machine_groups
+
+
+**索引**
 - create_index
    - 部分参数格式:
 
@@ -392,14 +398,14 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - delete_index
 - get_index_config
 
-**cursor**
+**游标**
 - get_cursor
 - get_cursor_time
 - get_previous_cursor_time
 - get_begin_cursor
 - get_end_cursor
 
-**logs**
+**日志**
 - put_logs
   - 参数格式:
 
@@ -471,7 +477,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_histograms
 - pull_logs
 
-**shipper**
+**投递**
 - create_shipper
   - 部分参数格式:
 
@@ -493,7 +499,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_shipper_tasks
 - retry_shipper_tasks
 
-**consumer group**
+**消费组**
 - create_consumer_group
 - update_consumer_group
 - delete_consumer_group
@@ -506,4 +512,5 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 1. 日志服务产品介绍：http://www.aliyun.com/product/sls/
 2. 日志服务产品文档：https://help.aliyun.com/product/28958.html
-3. 其他问题请提工单
+3. 日志服务Python SDK文档: http://aliyun-log-python-sdk.readthedocs.io/
+4. 其他问题请提工单

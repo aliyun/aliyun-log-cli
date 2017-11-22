@@ -96,19 +96,20 @@ endpoint=cn-hangzhou.log.aliyun.com
 ```
 
 2. Use specific account:
-  Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
+
+Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
 ```shell
 > aliyun log create_project ..... --client-name=test
 ```
-    It will use `test` to create the project.
+It will use `test` to create the project.
 
-  In some case, we need to operate cross regions, e.g.
+In some case, we need to operate cross regions, e.g.
 
 ```shell
 > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
 ```
 
-    It will use account `main` to copy project `p1` in its region to another region under account `test`
+It will use account `main` to copy project `p1` in its region to another region under account `test`
 
 
 ### Inputs
@@ -149,6 +150,7 @@ You could store the content of one parameter into a file and pass it via the com
 
 ### Filter output
 It's supported to filter output via [JMES](http://jmespath.org/):
+
 Examples:
 
 ```shell
@@ -201,12 +203,13 @@ Mapped to CLI:
 
 ##### Global options:
 All the commands support below optional global options:
+```
     [--access-id=<value>]
     [--access-key=<value>]
     [--region-endpoint=<value>]
     [--client-name=<value>]
     [--jmes-filter=<value>]
-
+```
 
 #### Full command list:
 
@@ -219,7 +222,7 @@ All the commands support below optional global options:
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
 
 ```shell
-> aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
+> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
 ```
 
    - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
@@ -230,16 +233,13 @@ All the commands support below optional global options:
 - get_logstore
 - update_logstore
 - list_logstore
+- list_topics
 
 
 **shard**
 - list_shards
 - split_shard
 - merge_shard
-
-
-**topic**
-- list_topics
 
 
 **machine group**
@@ -267,12 +267,8 @@ All the commands support below optional global options:
 - get_machine_group
 - list_machine_group
 - list_machines
-- apply_config_to_machine_group
-- remove_config_to_machine_group
-- get_machine_group_applied_configs
-- get_config_applied_machine_groups
 
-**logtail**
+**logtail config**
 - create_logtail_config
    - Format of partial parameter:
 
@@ -307,6 +303,15 @@ All the commands support below optional global options:
 - delete_logtail_config
 - get_logtail_config
 - list_logtail_config
+
+
+**Machine group and Logtail Config Mapping**
+
+- apply_config_to_machine_group
+- remove_config_to_machine_group
+- get_machine_group_applied_configs
+- get_config_applied_machine_groups
+
 
 **index**
 - create_index
@@ -498,4 +503,5 @@ All the commands support below optional global options:
 
 1. Alicloud Log Service homepage：https://www.alibabacloud.com/product/log-service
 2. Alicloud Log Service doc：https://www.alibabacloud.com/help/product/28958.htm
-3. for any issues, please submit support tickets
+3. Alicloud Log Python SDK doc: http://aliyun-log-python-sdk.readthedocs.io/
+4. for any issues, please submit support tickets
