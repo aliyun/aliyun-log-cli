@@ -169,9 +169,6 @@ def _request_maker(cls):
     def maker(json_str):
         args_list, option_arg_pos = _parse_method(cls.__init__)
 
-        # print("**** convert json:")
-        # print(json_str)
-        #
         if json_str.startswith('file://'):
             with open(json_str[7:], "r") as f:
                 json_str = f.read()
@@ -218,6 +215,8 @@ def _requests_maker(*cls_args):
             try:
                 obj = _request_maker(cls)(json_str)
                 return obj
+            except IOError as ex:
+                print("*** IO error: ", ex, json_str)
             except Exception as ex:
                 continue
 

@@ -7,6 +7,9 @@ import six.moves.configparser as configparser
 from docopt import docopt
 from config import load_config
 
+import collections
+from six import StringIO
+
 
 def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONFIG_SECTION):
     """ configure confidential
@@ -40,6 +43,36 @@ def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONF
         config.write(configfile)
 
 
+def _get_str(obj, enclosed=True):
+    if enclosed:
+        return repr(obj)
+    return str(obj)
+
+def _sort_str_dict(obj, enclosed=False):
+    buf = StringIO()
+    if isinstance(obj, dict):
+        buf.write('{')
+        for i, x in enumerate(sorted(obj)):
+            if i == 0:
+                buf.write("{0}: {1}".format(_sort_str_dict(x, True), _sort_str_dict(obj[x], True)))
+            else:
+                buf.write(", {0}: {1}".format(_sort_str_dict(x, True), _sort_str_dict(obj[x], True)))
+
+        buf.write('}')
+        return buf.getvalue()
+    elif isinstance(obj, list):
+        buf.write('[')
+        for i, x in enumerate(obj):
+            if i == 0:
+                buf.write("{0}".format(_sort_str_dict(x, True)))
+            else:
+                buf.write(", {0}".format(_sort_str_dict(x, True)))
+        buf.write(']')
+        return buf.getvalue()
+    else:
+        return _get_str(obj, enclosed)
+
+
 def main():
     method_types, optdoc = parse_method_types_optdoc_from_class(LogClient, LOG_CLIENT_METHOD_BLACK_LIST)
 
@@ -65,13 +98,13 @@ def main():
                     print(jmespath.compile(jmes_filter).search(ret.get_body()))
                 except jmespath.exceptions.ParseError as ex:
                     print("**fail to parse with JMSE path, original data: ", ex)
-                    print(ret.get_body())
+                    print(_sort_str_dict(ret.get_body()))
                     exit(1)
             elif ret is not None:
-                print(ret.get_body())
+                print(_sort_str_dict(ret.get_body()))
 
         except LogException as ex:
-            print(ex.get_resp_body())
+            print(_sort_str_dict(ex.get_resp_body()))
             exit(2)
 
     # process configure command
@@ -83,3 +116,43 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# def test_convert():
+    # d1 = {1:'\n'}
+    # print(_sort_str_dict(d1))
+    # assert r"{1: '\n'}" == _sort_str_dict(d1)
+    #
+    # d1 = {1:'\t'}
+    # print(_sort_str_dict(d1))
+    # assert r"{1: '\t'}" == _sort_str_dict(d1)
+    #
+    # d1 = "123"
+    # print(_sort_str_dict(d1))
+    # assert """123""" == _sort_str_dict(d1)
+    #
+    # d1 = ""
+    # print(_sort_str_dict(d1))
+    # assert """""" == _sort_str_dict(d1)
+    #
+    # d1 = 123
+    # print(_sort_str_dict(d1))
+    # assert """123""" == _sort_str_dict(d1)
+    #
+    # d1 = [1,'2', 3]
+    # print(_sort_str_dict(d1))
+    # assert """[1, '2', 3]""" == _sort_str_dict(d1)
+    #
+    # d1 = {1:1, '3':3, 2:'2'}
+    # print(_sort_str_dict(d1))
+    # assert """{1: 1, 2: '2', '3': 3}""" == _sort_str_dict(d1)
+    #
+    # d1 = [1,'2', {1:1, '3':3, 2:'2'}]
+    # print(_sort_str_dict(d1))
+    # assert """[1, '2', {1: 1, 2: '2', '3': 3}]""" == _sort_str_dict(d1)
+    #
+    # d1 = {1:{1:1, '3':3, 2:'2'}, '3':{1:1, '3':{1:1, '3':3, 2:'2'}, 2:'2'}, 2:'2'}
+    # print(_sort_str_dict(d1))
+    # assert """{1: {1: 1, 2: '2', '3': 3}, 2: '2', '3': {1: 1, 2: '2', '3': {1: 1, 2: '2', '3': 3}}}""" == _sort_str_dict(d1)
+    #
+    # exit(10)

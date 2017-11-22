@@ -67,8 +67,8 @@ def run_test(cmd_file):
 
         output, return_code = run_cmd(cmd)
         for check_item in check_items:
-            assert check_item in output
+            assert check_item in output, ValueError('check item "{0}" is not in output "{1}"'.format(check_item, output))
 
         if not check_items:
             # no check, need to ensure return code is 0
-            assert return_code == 0
+            assert return_code == 0, ValueError('cmd return code "{0}" is as expected "0"'.format(return_code))
