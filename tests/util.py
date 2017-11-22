@@ -6,6 +6,7 @@ from random import randint
 from subprocess import check_output, CalledProcessError, STDOUT
 from time import time
 import sys
+import os
 
 
 def run_cmd(cmd):
@@ -44,7 +45,7 @@ def process_token(txt):
 
 
 def run_test(cmd_file):
-    cli = sys.executable + ' ../aliyunlogcli/cli.py'
+    cli = sys.executable + '"' + os.path.abspath(' ../aliyunlogcli/cli.py') + '"'
     cmd_list = process_token(open(cmd_file).read()).split('\n')
     cmd_dict = OrderedDict()
     pre_cmd = ''
