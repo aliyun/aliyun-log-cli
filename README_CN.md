@@ -83,6 +83,7 @@ endpoint=
 
 
 **多账户**
+
 1. 存储与多个账户, 以便在特定情况下使用(例如测试):
 
 ```shell
@@ -132,6 +133,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 ```
 
 2. 文件输入
+
 也可以将上面参数放到一个文件里面, 简化命令行, 需要义`file://`开头+文件路径即可:
 
 ```shell
@@ -228,6 +230,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 #### 完整命令列表:
 
 **项目组**
+
 - list_project
 - create_project
 - get_project
@@ -242,6 +245,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
    - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
 
 **日志库**
+
 - create_logstore
 - delete_logstore
 - get_logstore
@@ -251,6 +255,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 
 **分区**
+
 - list_shards
 - split_shard
 - merge_shard
@@ -258,6 +263,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 
 **机器组**
+
 - create_machine_group
    - 部分参数格式:
 
@@ -284,6 +290,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - list_machines
 
 **Logtail配置**
+
 - create_logtail_config
    - 部分参数格式:
 
@@ -329,6 +336,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 
 **索引**
+
 - create_index
    - 部分参数格式:
 
@@ -405,6 +413,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_index_config
 
 **游标**
+
 - get_cursor
 - get_cursor_time
 - get_previous_cursor_time
@@ -412,6 +421,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_end_cursor
 
 **日志**
+
 - put_logs
   - 参数格式:
 
@@ -484,6 +494,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - pull_logs
 
 **投递**
+
 - create_shipper
   - 部分参数格式:
 
@@ -506,6 +517,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - retry_shipper_tasks
 
 **消费组**
+
 - create_consumer_group
 - update_consumer_group
 - delete_consumer_group

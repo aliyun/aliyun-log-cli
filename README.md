@@ -73,7 +73,7 @@ access-key=
 endpoint=
 ```
 
-  **You could use the command `Configure` to store them directly.**
+  **You could use the command "configure" to store them directly.**
 
 ```shell
 > aliyun configure access_id access_key cn-beijing.log.aliyun.com
@@ -81,6 +81,7 @@ endpoint=
 
 
 **Multiple Account**
+
 1. You could store multiple accounts for some use cases (e.g. test, multiple region operations)
 
 ```shell
@@ -221,6 +222,7 @@ All the commands support below optional global options:
 #### Full command list:
 
 **project**
+
 - list_project
 - create_project
 - get_project
@@ -235,6 +237,7 @@ All the commands support below optional global options:
    - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
 
 **logstore**
+
 - create_logstore
 - delete_logstore
 - get_logstore
@@ -244,12 +247,14 @@ All the commands support below optional global options:
 
 
 **shard**
+
 - list_shards
 - split_shard
 - merge_shard
 
 
 **machine group**
+
 - create_machine_group
    - Format of partial parameter:
 
@@ -276,6 +281,7 @@ All the commands support below optional global options:
 - list_machines
 
 **logtail config**
+
 - create_logtail_config
    - Format of partial parameter:
 
@@ -321,6 +327,7 @@ All the commands support below optional global options:
 
 
 **index**
+
 - create_index
    - Format of partial parameter:
 
@@ -397,6 +404,7 @@ All the commands support below optional global options:
 - get_index_config
 
 **cursor**
+
 - get_cursor
 - get_cursor_time
 - get_previous_cursor_time
@@ -404,6 +412,7 @@ All the commands support below optional global options:
 - get_end_cursor
 
 **logs**
+
 - put_logs
   - Format of parameter:
 
@@ -476,6 +485,7 @@ All the commands support below optional global options:
 - pull_logs
 
 **shipper**
+
 - create_shipper
   - Format of partial parameter:
 
@@ -498,6 +508,7 @@ All the commands support below optional global options:
 - retry_shipper_tasks
 
 **consumer group**
+
 - create_consumer_group
 - update_consumer_group
 - delete_consumer_group
