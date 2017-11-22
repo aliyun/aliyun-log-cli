@@ -1,4 +1,4 @@
-# User Guide
+# User Guide (中文)
 
 [![Documentation Status](https://readthedocs.org/projects/aliyun-log-cli/badge/?version=latest)](http://aliyun-log-cli.readthedocs.io/?badge=latest)
 [![Pypi Version](https://badge.fury.io/py/aliyun-log-cli.svg)](https://badge.fury.io/py/aliyun-log-cli)
@@ -45,9 +45,9 @@
 **优先级**
 1. 参数
 
-  ```shell
-  > aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
-  ```
+```shell
+> aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
+```
 
   **注意:**
   - 任意 log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
@@ -62,56 +62,56 @@
 
   将存储AK与Endpoint在~/.aliyunlogcli, 默认使用的块名是`main`
 
-  ```ini
-  [main]
-  access-id=
-  access-key=
-  endpoint=
-  ```
+```ini
+[main]
+access-id=
+access-key=
+endpoint=
+```
 
   **Configure命令可以修改配置文件内容**
 
-  ```shell
-  > aliyun configure access_id access_key cn-beijing.log.aliyun.com
-  ```
+```shell
+> aliyun configure access_id access_key cn-beijing.log.aliyun.com
+```
 
 
 **多账户**
 1. 存储与多个账户, 以便在特定情况下使用(例如测试):
 
-  ```shell
-  > aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
-  > aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyun.com test
-  ```
+```shell
+> aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
+> aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyun.com test
+```
 
   AK将存储为:
 
-  ```ini
-  [main]
-  access-id=access_id1
-  access-key=access_key1
-  endpoint=cn-beijing.log.aliyun.com
+```ini
+[main]
+access-id=access_id1
+access-key=access_key1
+endpoint=cn-beijing.log.aliyun.com
 
-  [test]
-  access-id=access_id2
-  access-key=access_key2
-  endpoint=cn-hangzhou.log.aliyun.com
-  ```
+[test]
+access-id=access_id2
+access-key=access_key2
+endpoint=cn-hangzhou.log.aliyun.com
+```
 
 2. 使用特定账户
   任意命令都可以通过选项`--client-name=<value>`来使用特定配置的账户, 例如:
 
-    ```shell
-    > aliyun log create_project ..... --client-name=test
-    ```
+```shell
+> aliyun log create_project ..... --client-name=test
+```
 
     将使用`test`的AK来进行操作.
 
   某些情况下也需要跨账户操作, 例如:
 
-    ```shell
-    > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
-    ```
+```shell
+> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
+```
 
     将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
 
@@ -226,9 +226,9 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - **copy_project**
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
    -
-   ```shell
-   > aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
-   ```
+```shell
+> aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
+```
 
    - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
 
@@ -254,21 +254,21 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - create_machine_group
    - 部分参数格式:
 
-   ```json
-   {
-     "machine_list": [
-       "machine1",
-       "machine2"
-     ],
-     "machine_type": "userdefined",
-     "group_name": "group_name2",
-     "group_type": "Armory",
-     "group_attribute": {
-       "externalName": "ex name",
-       "groupTopic": "topic x"
-     }
-   }
-   ```
+```json
+{
+ "machine_list": [
+   "machine1",
+   "machine2"
+ ],
+ "machine_type": "userdefined",
+ "group_name": "group_name2",
+ "group_type": "Armory",
+ "group_attribute": {
+   "externalName": "ex name",
+   "groupTopic": "topic x"
+ }
+}
+```
 
 - delete_machine_group
 - update_machine_group
@@ -284,32 +284,32 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - create_logtail_config
    - 部分参数格式:
 
-   ```json
-   {
-     "config_name": "config_name2",
-     "logstore_name": "logstore2",
-     "file_pattern": "file_pattern",
-     "time_format": "time_format",
-     "log_path": "/log_path",
-     "endpoint": "endpoint",
-     "log_parse_regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)",
-     "log_begin_regex": "xxx.*",
-     "reg_keys": [
-       "time",
-       "value"
-     ],
-     "topic_format": "none",
-     "filter_keys": [
-       "time",
-       "value"
-     ],
-     "filter_keys_reg": [
-       "time",
-       "value"
-     ],
-     "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
-   }
-   ```
+```json
+{
+ "config_name": "config_name2",
+ "logstore_name": "logstore2",
+ "file_pattern": "file_pattern",
+ "time_format": "time_format",
+ "log_path": "/log_path",
+ "endpoint": "endpoint",
+ "log_parse_regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)",
+ "log_begin_regex": "xxx.*",
+ "reg_keys": [
+   "time",
+   "value"
+ ],
+ "topic_format": "none",
+ "filter_keys": [
+   "time",
+   "value"
+ ],
+ "filter_keys_reg": [
+   "time",
+   "value"
+ ],
+ "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
+}
+```
 
 - update_logtail_config
 - delete_logtail_config
@@ -320,73 +320,73 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - create_index
    - 部分参数格式:
 
-   ```json
-   {
-     "keys": {
-       "f1": {
-         "caseSensitive": false,
-         "token": [
-           ",",
-           " ",
-           "\"",
-           "\"",
-           ";",
-           "=",
-           "(",
-           ")",
-           "[",
-           "]",
-           "{",
-           "}",
-           "?",
-           "@",
-           "&",
-           "<",
-           ">",
-           "/",
-           ":",
-           "\n",
-           "\t"
-         ],
-         "type": "text",
-         "doc_value": true
-       },
-       "f2": {
-         "doc_value": true,
-         "type": "long"
-       }
-     },
-     "storage": "pg",
-     "ttl": 2,
-     "index_mode": "v2",
-     "line": {
-       "caseSensitive": false,
-       "token": [
-         ",",
-         " ",
-         "\"",
-         "\"",
-         ";",
-         "=",
-         "(",
-         ")",
-         "[",
-         "]",
-         "{",
-         "}",
-         "?",
-         "@",
-         "&",
-         "<",
-         ">",
-         "/",
-         ":",
-         "\n",
-         "\t"
-       ]
-     }
+```json
+{
+ "keys": {
+   "f1": {
+     "caseSensitive": false,
+     "token": [
+       ",",
+       " ",
+       "\"",
+       "\"",
+       ";",
+       "=",
+       "(",
+       ")",
+       "[",
+       "]",
+       "{",
+       "}",
+       "?",
+       "@",
+       "&",
+       "<",
+       ">",
+       "/",
+       ":",
+       "\n",
+       "\t"
+     ],
+     "type": "text",
+     "doc_value": true
+   },
+   "f2": {
+     "doc_value": true,
+     "type": "long"
    }
-   ```
+ },
+ "storage": "pg",
+ "ttl": 2,
+ "index_mode": "v2",
+ "line": {
+   "caseSensitive": false,
+   "token": [
+     ",",
+     " ",
+     "\"",
+     "\"",
+     ";",
+     "=",
+     "(",
+     ")",
+     "[",
+     "]",
+     "{",
+     "}",
+     "?",
+     "@",
+     "&",
+     "<",
+     ">",
+     "/",
+     ":",
+     "\n",
+     "\t"
+   ]
+ }
+}
+```
 
 - update_index
 - delete_index
@@ -403,70 +403,70 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - put_logs
   - 参数格式:
 
-  ```json
+```json
+{
+"project": "dlq-test-cli-35144",
+"logstore": "logstore1",
+"topic": "topic1",
+"source": "source1",
+"logtags": [
+  [
+    "tag1",
+    "v1"
+  ],
+  [
+    "tag2",
+    "v2"
+  ]
+],
+"hashKey": "1231231234",
+"logitems": [
   {
-    "project": "dlq-test-cli-35144",
-    "logstore": "logstore1",
-    "topic": "topic1",
-    "source": "source1",
-    "logtags": [
+    "timestamp": 1510579341,
+    "contents": [
       [
-        "tag1",
+        "key1",
         "v1"
       ],
       [
-        "tag2",
+        "key2",
         "v2"
       ]
-    ],
-    "hashKey": "1231231234",
-    "logitems": [
-      {
-        "timestamp": 1510579341,
-        "contents": [
-          [
-            "key1",
-            "v1"
-          ],
-          [
-            "key2",
-            "v2"
-          ]
-        ]
-      },
-      {
-        "timestamp": 1510579341,
-        "contents": [
-          [
-            "key3",
-            "v3"
-          ],
-          [
-            "key4",
-            "v4"
-          ]
-        ]
-      }
+    ]
+  },
+  {
+    "timestamp": 1510579341,
+    "contents": [
+      [
+        "key3",
+        "v3"
+      ],
+      [
+        "key4",
+        "v4"
+      ]
     ]
   }
-  ```
+]
+}
+```
 
 - get_logs
   - 参数格式:
 
-  ```json
-  {
-    "topic": "",
-    "logstore": "logstore1",
-    "project": "dlq-test-cli-35144",
-    "toTime": "1510582941",
-    "offset": "0",
-    "query": "*",
-    "line": "10",
-    "fromTime": "1510579341",
-    "reverse": "true"
-  }
-  ```
+```json
+{
+"topic": "",
+"logstore": "logstore1",
+"project": "dlq-test-cli-35144",
+"toTime": "1510582941",
+"offset": "0",
+"query": "*",
+"line": "10",
+"fromTime": "1510579341",
+"reverse": "true"
+}
+```
 
 - get_histograms
 - pull_logs
@@ -475,16 +475,16 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - create_shipper
   - 部分参数格式:
 
-  ```json
-  {
-    "oss_bucket": "dlq-oss-test1",
-    "oss_prefix": "sls",
-    "oss_role_arn": "acs:ram::1234:role/aliyunlogdefaultrole",
-    "buffer_interval": 300,
-    "buffer_mb": 128,
-    "compress_type": "snappy"
-  }
-  ```
+```json
+{
+"oss_bucket": "dlq-oss-test1",
+"oss_prefix": "sls",
+"oss_role_arn": "acs:ram::1234:role/aliyunlogdefaultrole",
+"buffer_interval": 300,
+"buffer_mb": 128,
+"compress_type": "snappy"
+}
+```
 
 - update_shipper
 - delete_shipper
@@ -501,3 +501,9 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - update_check_point
 - get_check_point
 
+
+## 其他资源：
+
+1. 日志服务产品介绍：http://www.aliyun.com/product/sls/
+2. 日志服务产品文档：https://help.aliyun.com/product/28958.html
+3. 其他问题请提工单

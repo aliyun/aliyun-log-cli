@@ -44,9 +44,10 @@
 **Priority**
 1. Parameters
 
-  ```shell
-  > aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
-  ```
+```shell
+> aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
+```
+
   **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
 
 2. Environment Variables
@@ -58,53 +59,54 @@
 
   You could store them at `~/.aliyunlogcli`, the default section name is `main`
 
-  ```ini
-  [main]
-  access-id=
-  access-key=
-  endpoint=
-  ```
+```ini
+[main]
+access-id=
+access-key=
+endpoint=
+```
+
   **You could use the command `Configure` to store them directly.**
 
-  ```shell
-  > aliyun configure access_id access_key cn-beijing.log.aliyun.com
-  ```
+```shell
+> aliyun configure access_id access_key cn-beijing.log.aliyun.com
+```
 
 
 **Multiple Account**
 1. You could store multiple accounts for some use cases (e.g. test, multiple region operations)
 
-  ```shell
-  > aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
-  > aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyun.com test
-  ```
+```shell
+> aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
+> aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyun.com test
+```
 
   AK is stored as:
 
-  ```ini
-  [main]
-  access-id=access_id1
-  access-key=access_key1
-  endpoint=cn-beijing.log.aliyun.com
+```ini
+[main]
+access-id=access_id1
+access-key=access_key1
+endpoint=cn-beijing.log.aliyun.com
 
-  [test]
-  access-id=access_id2
-  access-key=access_key2
-  endpoint=cn-hangzhou.log.aliyun.com
-  ```
+[test]
+access-id=access_id2
+access-key=access_key2
+endpoint=cn-hangzhou.log.aliyun.com
+```
 
 2. Use specific account:
   Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
-    ```shell
-    > aliyun log create_project ..... --client-name=test
-    ```
+```shell
+> aliyun log create_project ..... --client-name=test
+```
     It will use `test` to create the project.
 
   In some case, we need to operate cross regions, e.g.
 
-    ```shell
-    > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
-    ```
+```shell
+> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
+```
 
     It will use account `main` to copy project `p1` in its region to another region under account `test`
 
@@ -216,9 +218,9 @@ All the commands support below optional global options:
 - **copy_project**
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
 
-   ```shell
-   > aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
-   ```
+```shell
+> aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
+```
 
    - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
 
@@ -244,21 +246,21 @@ All the commands support below optional global options:
 - create_machine_group
    - Format of partial parameter:
 
-   ```json
-   {
-     "machine_list": [
-       "machine1",
-       "machine2"
-     ],
-     "machine_type": "userdefined",
-     "group_name": "group_name2",
-     "group_type": "Armory",
-     "group_attribute": {
-       "externalName": "ex name",
-       "groupTopic": "topic x"
-     }
-   }
-   ```
+```json
+{
+ "machine_list": [
+   "machine1",
+   "machine2"
+ ],
+ "machine_type": "userdefined",
+ "group_name": "group_name2",
+ "group_type": "Armory",
+ "group_attribute": {
+   "externalName": "ex name",
+   "groupTopic": "topic x"
+ }
+}
+```
 
 - delete_machine_group
 - update_machine_group
@@ -274,32 +276,32 @@ All the commands support below optional global options:
 - create_logtail_config
    - Format of partial parameter:
 
-   ```json
-   {
-     "config_name": "config_name2",
-     "logstore_name": "logstore2",
-     "file_pattern": "file_pattern",
-     "time_format": "time_format",
-     "log_path": "/log_path",
-     "endpoint": "endpoint",
-     "log_parse_regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)",
-     "log_begin_regex": "xxx.*",
-     "reg_keys": [
-       "time",
-       "value"
-     ],
-     "topic_format": "none",
-     "filter_keys": [
-       "time",
-       "value"
-     ],
-     "filter_keys_reg": [
-       "time",
-       "value"
-     ],
-     "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
-   }
-   ```
+```json
+{
+ "config_name": "config_name2",
+ "logstore_name": "logstore2",
+ "file_pattern": "file_pattern",
+ "time_format": "time_format",
+ "log_path": "/log_path",
+ "endpoint": "endpoint",
+ "log_parse_regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)",
+ "log_begin_regex": "xxx.*",
+ "reg_keys": [
+   "time",
+   "value"
+ ],
+ "topic_format": "none",
+ "filter_keys": [
+   "time",
+   "value"
+ ],
+ "filter_keys_reg": [
+   "time",
+   "value"
+ ],
+ "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
+}
+```
 
 - update_logtail_config
 - delete_logtail_config
@@ -310,73 +312,73 @@ All the commands support below optional global options:
 - create_index
    - Format of partial parameter:
 
-   ```json
-   {
-     "keys": {
-       "f1": {
-         "caseSensitive": false,
-         "token": [
-           ",",
-           " ",
-           "\"",
-           "\"",
-           ";",
-           "=",
-           "(",
-           ")",
-           "[",
-           "]",
-           "{",
-           "}",
-           "?",
-           "@",
-           "&",
-           "<",
-           ">",
-           "/",
-           ":",
-           "\n",
-           "\t"
-         ],
-         "type": "text",
-         "doc_value": true
-       },
-       "f2": {
-         "doc_value": true,
-         "type": "long"
-       }
-     },
-     "storage": "pg",
-     "ttl": 2,
-     "index_mode": "v2",
-     "line": {
-       "caseSensitive": false,
-       "token": [
-         ",",
-         " ",
-         "\"",
-         "\"",
-         ";",
-         "=",
-         "(",
-         ")",
-         "[",
-         "]",
-         "{",
-         "}",
-         "?",
-         "@",
-         "&",
-         "<",
-         ">",
-         "/",
-         ":",
-         "\n",
-         "\t"
-       ]
-     }
+```json
+{
+ "keys": {
+   "f1": {
+     "caseSensitive": false,
+     "token": [
+       ",",
+       " ",
+       "\"",
+       "\"",
+       ";",
+       "=",
+       "(",
+       ")",
+       "[",
+       "]",
+       "{",
+       "}",
+       "?",
+       "@",
+       "&",
+       "<",
+       ">",
+       "/",
+       ":",
+       "\n",
+       "\t"
+     ],
+     "type": "text",
+     "doc_value": true
+   },
+   "f2": {
+     "doc_value": true,
+     "type": "long"
    }
-   ```
+ },
+ "storage": "pg",
+ "ttl": 2,
+ "index_mode": "v2",
+ "line": {
+   "caseSensitive": false,
+   "token": [
+     ",",
+     " ",
+     "\"",
+     "\"",
+     ";",
+     "=",
+     "(",
+     ")",
+     "[",
+     "]",
+     "{",
+     "}",
+     "?",
+     "@",
+     "&",
+     "<",
+     ">",
+     "/",
+     ":",
+     "\n",
+     "\t"
+   ]
+ }
+}
+```
 
 - update_index
 - delete_index
@@ -393,70 +395,70 @@ All the commands support below optional global options:
 - put_logs
   - Format of parameter:
 
-  ```json
+```json
+{
+"project": "dlq-test-cli-35144",
+"logstore": "logstore1",
+"topic": "topic1",
+"source": "source1",
+"logtags": [
+  [
+    "tag1",
+    "v1"
+  ],
+  [
+    "tag2",
+    "v2"
+  ]
+],
+"hashKey": "1231231234",
+"logitems": [
   {
-    "project": "dlq-test-cli-35144",
-    "logstore": "logstore1",
-    "topic": "topic1",
-    "source": "source1",
-    "logtags": [
+    "timestamp": 1510579341,
+    "contents": [
       [
-        "tag1",
+        "key1",
         "v1"
       ],
       [
-        "tag2",
+        "key2",
         "v2"
       ]
-    ],
-    "hashKey": "1231231234",
-    "logitems": [
-      {
-        "timestamp": 1510579341,
-        "contents": [
-          [
-            "key1",
-            "v1"
-          ],
-          [
-            "key2",
-            "v2"
-          ]
-        ]
-      },
-      {
-        "timestamp": 1510579341,
-        "contents": [
-          [
-            "key3",
-            "v3"
-          ],
-          [
-            "key4",
-            "v4"
-          ]
-        ]
-      }
+    ]
+  },
+  {
+    "timestamp": 1510579341,
+    "contents": [
+      [
+        "key3",
+        "v3"
+      ],
+      [
+        "key4",
+        "v4"
+      ]
     ]
   }
-  ```
+]
+}
+```
 
 - get_logs
   - Format of parameter:
 
-  ```json
-  {
-    "topic": "",
-    "logstore": "logstore1",
-    "project": "dlq-test-cli-35144",
-    "toTime": "1510582941",
-    "offset": "0",
-    "query": "*",
-    "line": "10",
-    "fromTime": "1510579341",
-    "reverse": "true"
-  }
-  ```
+```json
+{
+"topic": "",
+"logstore": "logstore1",
+"project": "dlq-test-cli-35144",
+"toTime": "1510582941",
+"offset": "0",
+"query": "*",
+"line": "10",
+"fromTime": "1510579341",
+"reverse": "true"
+}
+```
 
 - get_histograms
 - pull_logs
@@ -465,16 +467,16 @@ All the commands support below optional global options:
 - create_shipper
   - Format of partial parameter:
 
-  ```json
-  {
-    "oss_bucket": "dlq-oss-test1",
-    "oss_prefix": "sls",
-    "oss_role_arn": "acs:ram::1234:role/aliyunlogdefaultrole",
-    "buffer_interval": 300,
-    "buffer_mb": 128,
-    "compress_type": "snappy"
-  }
-  ```
+```json
+{
+"oss_bucket": "dlq-oss-test1",
+"oss_prefix": "sls",
+"oss_role_arn": "acs:ram::1234:role/aliyunlogdefaultrole",
+"buffer_interval": 300,
+"buffer_mb": 128,
+"compress_type": "snappy"
+}
+```
 
 - update_shipper
 - delete_shipper
@@ -491,3 +493,9 @@ All the commands support below optional global options:
 - update_check_point
 - get_check_point
 
+
+## Other resources
+
+1. Alicloud Log Service homepage：https://www.alibabacloud.com/product/log-service
+2. Alicloud Log Service doc：https://www.alibabacloud.com/help/product/28958.htm
+3. for any issues, please submit support tickets
