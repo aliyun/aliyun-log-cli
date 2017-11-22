@@ -2,7 +2,7 @@ import inspect
 import json
 import re
 
-import aliyun.log as log
+from aliyun import log
 from aliyun.log import *
 from aliyun.log.util import Util
 from .config import *
