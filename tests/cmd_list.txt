@@ -150,9 +150,8 @@ aliyun log list_machines --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_
 > {'count': 0, 'machines': [], 'total': 0}
 
 aliyun log list_shards --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
-#> [{'shardID': 0, 'status': 'readwrite', 'inclusiveBeginKey': '00000000000000000000000000000000',
-#> 'exclusiveEndKey': '80000000000000000000000000000000'}, {'shardID': 1, 'status': 'readwrite', 'inclusiveBeginKey': '80000000000000000000000000000000',
-#> 'exclusiveEndKey': 'ffffffffffffffffffffffffffffffff'}]
+> 'exclusiveEndKey': '80000000000000000000000000000000', 'inclusiveBeginKey': '00000000000000000000000000000000', 'shardID': 0, 'status': 'readwrite'
+> 'exclusiveEndKey': 'ffffffffffffffffffffffffffffffff', 'inclusiveBeginKey': '80000000000000000000000000000000', 'shardID': 1, 'status': 'readwrite'
 
 
 aliyun log list_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
@@ -166,16 +165,16 @@ aliyun log list_topics --request="{\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\"
 
 
 aliyun log merge_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --shardId="0"
-#> [{'shardID': 2, 'status': 'readwrite', 'inclusiveBeginKey': '00000000000000000000000000000000',
-#> 'exclusiveEndKey': 'ffffffffffffffffffffffffffffffff'}, {'shardID': 0, 'status': 'readonly', 'inclusiveBeginKey': '00000000000000000000000000000000',
-#> 'exclusiveEndKey': '80000000000000000000000000000000'}, {'shardID': 1, 'status': 'readonly', 'inclusiveBeginKey': '80000000000000000000000000000000',
-#> 'exclusiveEndKey': 'ffffffffffffffffffffffffffffffff'}]
+> 'exclusiveEndKey': 'ffffffffffffffffffffffffffffffff', 'inclusiveBeginKey': '00000000000000000000000000000000', 'shardID': 2, 'status': 'readwrite'
+> 'exclusiveEndKey': '80000000000000000000000000000000', 'inclusiveBeginKey': '00000000000000000000000000000000', 'shardID': 0, 'status': 'readonly'
+> 'exclusiveEndKey': 'ffffffffffffffffffffffffffffffff', 'inclusiveBeginKey': '80000000000000000000000000000000', 'shardID': 1, 'status': 'readonly'
+
 
 aliyun log split_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --shardId="0" --split_hash="40000000000000000000000000000000"
-#> [{'shardID': 0, 'status': 'readonly', 'inclusiveBeginKey': '00000000000000000000000000000000',
-#> 'exclusiveEndKey': '80000000000000000000000000000000'}, {'shardID': 2, 'status': 'readwrite', 'inclusiveBeginKey': '00000000000000000000000000000000',
-#> 'exclusiveEndKey': '40000000000000000000000000000000'}, {'shardID': 3, 'status': 'readwrite', 'inclusiveBeginKey': '40000000000000000000000000000000',
-#> 'exclusiveEndKey': '80000000000000000000000000000000'}]
+> 'exclusiveEndKey': '80000000000000000000000000000000', 'inclusiveBeginKey': '00000000000000000000000000000000', 'shardID': 0, 'status': 'readonly'
+> 'exclusiveEndKey': '40000000000000000000000000000000', 'inclusiveBeginKey': '00000000000000000000000000000000', 'shardID': 2, 'status': 'readwrite'
+> 'exclusiveEndKey': '80000000000000000000000000000000', 'inclusiveBeginKey': '40000000000000000000000000000000', 'shardID': 3, 'status': 'readwrite'
+
 
 # check-point
 aliyun log update_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --shard="0" --check_point="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --consumer="testdata1" --force_success="true"
