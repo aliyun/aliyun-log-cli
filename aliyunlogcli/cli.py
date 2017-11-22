@@ -5,9 +5,7 @@ from __init__ import __version__, USER_AGENT
 from aliyun.log import LogException, LogClient
 import six.moves.configparser as configparser
 from docopt import docopt
-from config import load_config
-
-import collections
+from config import load_config, LOG_CONFIG_SECTION
 from six import StringIO
 
 
