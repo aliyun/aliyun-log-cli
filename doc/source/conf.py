@@ -69,7 +69,7 @@ author = 'Alibaba Cloud'
 from aliyun.log import __version__
 import re
 version = '0.6'
-with open(os.path.abspath('../../aliyun/log/version.py'), 'r') as fd:
+with open(os.path.abspath('../../aliyunlogcli/__init__.py'), 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
@@ -187,7 +187,7 @@ texinfo_documents = [
 import pypandoc
 if six.PY3:
     open("README.rst", "w").write(pypandoc.convert('../../README.md', 'rst'))
-    open("README_EN.rst", "w").write(pypandoc.convert('../../README_EN.md', 'rst'))
+    open("README_CN.rst", "w").write(pypandoc.convert('../../README_CN.md', 'rst'))
 else:
     open("README.rst", "w").write(pypandoc.convert('../../README.md', 'rst').encode('utf8'))
-    open("README_EN.rst", "w").write(pypandoc.convert('../../README_EN.md', 'rst').encode('utf8'))
+    open("README_CN.rst", "w").write(pypandoc.convert('../../README_CN.md', 'rst').encode('utf8'))

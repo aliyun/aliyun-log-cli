@@ -1,59 +1,62 @@
-# User Guide (中文)
+# User Guide
 
-[README in English](./README.md)
+[![Documentation Status](https://readthedocs.org/projects/aliyun-log-cli/badge/?version=latest)](http://aliyun-log-cli.readthedocs.io/?badge=latest)
+[![Pypi Version](https://badge.fury.io/py/aliyun-log-cli.svg)](https://badge.fury.io/py/aliyun-log-cli)
+[![Travis CI](https://travis-ci.org/aliyun/aliyun-log-cli.svg?branch=master)](https://travis-ci.org/aliyun/aliyun-log-cli)
+[![Development Status](https://img.shields.io/pypi/status/aliyun-log-cli.svg)](https://pypi.python.org/pypi/aliyun-log-cli/)
+[![Python version](https://img.shields.io/pypi/pyversions/aliyun-log-cli.svg)](https://pypi.python.org/pypi/aliyun-log-cli/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aliyun/aliyun-log-python-sdk/blob/master/LICENSE)
 
-### 安装
+[中文版README](https://github.com/aliyun/aliyun-log-cli/blob/master/README_CN.md)
+
+
+### Installation
 
 ```shell
 > pip -U aliyun-log-cli
 ```
 
-**支持平台**:
+**supported platforms**:
 - windows
 - mac
 - linux
 
-
-
-#### 支持平台
+#### Supported Python:
 - Python 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
 
 
-#### 完整参数列表
+#### Full Usage list:
 
 ```shell
 > aliyun --help
 ```
 
 
-### CLI规范
+### CLI
 
 ```shell
 1. aliyun log <subcommand> [parameters | global options]
-2. aliyun configure <access_id> <access-key> <endpoint> [<client-name>]
+2. aliyun configure <access_id> <access-key> <endpoint>
 3. aliyun [--help | --version]
 ```
 
-### Access Key与Endpoint存储与使用
-**优先级**
-1. 参数
+### Access Key and Endpoint
+**Priority**
+1. Parameters
 
   ```shell
   > aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
   ```
+  **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
 
-  **注意:**
-  - 任意 log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
-
-
-2. 环境变量
+2. Environment Variables
   - ALIYUN_LOG_CLI_ACCESSID
   - ALIYUN_LOG_CLI_ACCESSKEY
   - ALIYUN_LOG_CLI_ENDPOINT
 
-3. 本地配置文件
+3. Local configuration file
 
-  将存储AK与Endpoint在~/.aliyunlogcli, 默认使用的块名是`main`
+  You could store them at `~/.aliyunlogcli`, the default section name is `main`
 
   ```ini
   [main]
@@ -61,23 +64,22 @@
   access-key=
   endpoint=
   ```
-
-  **Configure命令可以修改配置文件内容**
+  **You could use the command `Configure` to store them directly.**
 
   ```shell
   > aliyun configure access_id access_key cn-beijing.log.aliyun.com
   ```
 
 
-**多账户**
-1. 存储与多个账户, 以便在特定情况下使用(例如测试):
+**Multiple Account**
+1. You could store multiple accounts for some use cases (e.g. test, multiple region operations)
 
   ```shell
   > aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
   > aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyun.com test
   ```
 
-  AK将存储为:
+  AK is stored as:
 
   ```ini
   [main]
@@ -91,53 +93,50 @@
   endpoint=cn-hangzhou.log.aliyun.com
   ```
 
-2. 使用特定账户
-  任意命令都可以通过选项`--client-name=<value>`来使用特定配置的账户, 例如:
-
+2. Use specific account:
+  Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
     ```shell
     > aliyun log create_project ..... --client-name=test
     ```
+    It will use `test` to create the project.
 
-    将使用`test`的AK来进行操作.
-
-  某些情况下也需要跨账户操作, 例如:
+  In some case, we need to operate cross regions, e.g.
 
     ```shell
     > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
     ```
 
-    将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
+    It will use account `main` to copy project `p1` in its region to another region under account `test`
 
 
-
-
-### 参数输入
-1. 一般输入
+### Inputs
+1. Normally case:
 
 ```shell
 > aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"123\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"123\", \"reverse\":\"false\"}"
 ```
 
-2. 文件输入
-也可以将上面参数放到一个文件里面, 简化命令行, 需要义file://开头+文件路径即可:
+2. Input via file:
+You could store the content of one parameter into a file and pass it via the command line with prefix `file://`:
 
 ```shell
 > aliyun log get_logs --request="file://./get_logs.json"
 ```
 
-**参数校验**
-- 必填的参数没有填写时会报错, 输出参数列表
-- 参数格式本身会进行校验, 例如int, bool, string list, 特定数据结构等
-- bool支持的形式有:
-  - true (大小写不敏感), T, 1
-  - false (大小写不敏感), F, 0
-- 字符串列表支持的形式是:
+**Parameter Validation**
+- Mandatory check: if one mandatory parameter is missed, it will report error with usage info.
+- Format of parameter's value will be validated. e.g. 例如int, bool, string list, special data structure.
+- for boolean, it support:
+  - true (case insensitive), T, 1
+  - false (case insensitive), F, 0
+- String list support as:
   - ["s1", "s2"]
 
-### 输出
-1. 对于Create, Update, Delete操作, 一般脚本无输出, exit code=0表示成功.
-2. 对于Get/List操作, 以json格式输出内容
-3. 错误情况下, 以如下格式返回错误:
+### Output
+1. For operations like Create, Update and Delete, there's no output except the exit code is 0 which means success.
+2. For operations like Get and List, it will output in json format.
+3. For errors, it will report in json format as below:
+
 
 ```json
 {
@@ -146,15 +145,14 @@
 }
 ```
 
-### 输出过滤
-支持通过[JMES](http://jmespath.org/)过滤输出的结果.
-例如:
+### Filter output
+It's supported to filter output via [JMES](http://jmespath.org/):
+Examples:
 
 ```shell
 > aliyun log get_logs ...
 ```
-
-的输出是:
+which outputs:
 
 ```json
 {
@@ -164,32 +162,32 @@
 }
 ```
 
-通过命令:
+You could use below `--jmse-filter` to filter it:
 
 ```shell
 > aliyun log get_logs ... --jmse-filter="logstores[2:]"
 ```
 
-可以获取第二以及后面的logstore的名字, 输出:
+Then you will be the name list of second logstore and later ones as below:
 
 ```shell
 ["logstore1", "logstore2"]
 ```
 
-### 支持的命令:
+### Supported commands:
 
-**一般情况**
+**Normal Case**
 
-子命令对应于logclient的方法, 参数和可选参数也一一对应.
-具体支持的API参数, 请参考[Python SDK API规范](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
+Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.logclient.LogClient`. The parameters of command line is mapped to the parameters of methods.
+For the detail spec of parameters, please refer to the [Python SDK API Spec](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
 
-**例子:**
+**Examples:**
 
 ```python
 def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 ```
 
-对应CLI:
+Mapped to CLI:
 
 ```shell
 > aliyun log create_logstore
@@ -199,8 +197,8 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
   [--shard_count=<value>]
 ```
 
-##### 全局选项
-所有命令都支持如下的全局选项:
+##### Global options:
+All the commands support below optional global options:
     [--access-id=<value>]
     [--access-key=<value>]
     [--region-endpoint=<value>]
@@ -208,8 +206,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
     [--jmes-filter=<value>]
 
 
-
-#### 完整命令列表:
+#### Full command list:
 
 **project**
 - list_project
@@ -218,7 +215,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - delete_project
 - **copy_project**
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
-   -
+
    ```shell
    > aliyun log --from_project="p1" --to_project="p1" --to_client="account2"
    ```
@@ -245,7 +242,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 **machine group**
 - create_machine_group
-   - 部分参数格式:
+   - Format of partial parameter:
 
    ```json
    {
@@ -275,7 +272,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 **logtail**
 - create_logtail_config
-   - 部分参数格式:
+   - Format of partial parameter:
 
    ```json
    {
@@ -311,7 +308,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 **index**
 - create_index
-   - 部分参数格式:
+   - Format of partial parameter:
 
    ```json
    {
@@ -394,7 +391,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 **logs**
 - put_logs
-  - 参数格式:
+  - Format of parameter:
 
   ```json
   {
@@ -445,7 +442,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
   ```
 
 - get_logs
-  - 参数格式:
+  - Format of parameter:
 
   ```json
   {
@@ -466,7 +463,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 **shipper**
 - create_shipper
-  - 部分参数格式:
+  - Format of partial parameter:
 
   ```json
   {
