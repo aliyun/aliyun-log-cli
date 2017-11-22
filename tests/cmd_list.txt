@@ -255,14 +255,6 @@ sleep 40
 aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied"
 
 aliyun configure access_id access_key endpoint123
-
-cat ~/.aliyunlogcli
-> [main]
-> access-id = access_id
-> access-key = access_key
-> region-endpoint = endpoint123
-
-
 aliyun configure a b c xyz
 
 cat ~/.aliyunlogcli
