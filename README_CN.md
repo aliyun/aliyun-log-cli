@@ -106,21 +106,22 @@ endpoint=cn-hangzhou.log.aliyun.com
 ```
 
 2. 使用特定账户
-  任意命令都可以通过选项`--client-name=<value>`来使用特定配置的账户, 例如:
+
+任意命令都可以通过选项`--client-name=<value>`来使用特定配置的账户, 例如:
 
 ```shell
 > aliyun log create_project ..... --client-name=test
 ```
 
-    将使用`test`的AK来进行操作.
+将使用`test`的AK来进行操作.
 
-  某些情况下也需要跨账户操作, 例如:
+某些情况下也需要跨账户操作, 例如:
 
 ```shell
 > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
 ```
 
-    将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
+将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
 
 
 
