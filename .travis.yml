@@ -14,5 +14,5 @@ install:
   - pip install .
 
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then python tests/test_ci.py tests/cmd_list_py2.txt; fi
-  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then python tests/test_ci.py tests/cmd_list_py3.txt; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then python tests/test_cli.py tests/cmd_list_py2.txt; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then python tests/test_cli.py tests/cmd_list_py3.txt; fi
