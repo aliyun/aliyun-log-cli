@@ -1,0 +1,24 @@
+{
+  "config_name": "config_name2",
+  "logstore_name": "logstore2",
+  "file_pattern": "file_pattern",
+  "time_format": "time_format",
+  "log_path": "/log_path",
+  "endpoint": "endpoint",
+  "log_parse_regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)",
+  "log_begin_regex": "xxx.*",
+  "reg_keys": [
+    "time",
+    "value"
+  ],
+  "topic_format": "none",
+  "filter_keys": [
+    "time",
+    "value"
+  ],
+  "filter_keys_reg": [
+    "time",
+    "value"
+  ],
+  "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
+}

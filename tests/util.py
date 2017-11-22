@@ -1,0 +1,72 @@
+import json
+import re
+
+from collections import OrderedDict
+from random import randint
+from subprocess import check_output, CalledProcessError, STDOUT
+from time import time
+import sys
+
+
+def run_cmd(cmd):
+    print(cmd)
+    try:
+        output = check_output(
+            cmd, stderr=STDOUT, shell=True, universal_newlines=True)
+        print(output)
+        return output, 0
+    except CalledProcessError as exc:
+        print("Status : FAIL", exc.returncode)
+        print(exc.output)
+        return exc.output, exc.returncode
+
+
+def _generate_json(s):
+    p = r"""(\w+)(?:\s*=\s*['"]?\w+['"])?,"""
+    d = {}
+    for k in (re.findall(p, s)):
+        d[k] = k
+    return str(json.dumps(d)).replace('"', r'\"')
+
+
+TOKEN_LIST = {
+    "${RANDOM_NUMBER}": randint(1, 1000000),
+    "${TIME-ONE-HOUR-AGO}": int(time() - 3600),
+    "${TIME-NOW}": int(time()),
+}
+
+
+def process_token(txt):
+    for token, value in TOKEN_LIST.items():
+        txt = txt.replace(token, str(value))
+
+    return txt
+
+
+def run_test(cmd_file):
+    cli = sys.executable + ' ../aliyunlogcli/cli.py'
+    cmd_list = process_token(open(cmd_file).read()).split('\n')
+    cmd_dict = OrderedDict()
+    pre_cmd = ''
+    for i, cmd in enumerate(cmd_list):
+        cmd = cmd.strip()
+        if not cmd or cmd.startswith('#'):
+            continue
+
+        if cmd.startswith('>'):
+            cmd_dict[pre_cmd].append(cmd[1:].strip())
+        else:
+            cmd_dict[cmd] = cmd_dict.get(cmd, [])
+            pre_cmd = cmd
+
+    for cmd, check_items in cmd_dict.items():
+        if cmd.startswith("aliyun "):
+            cmd = cli + " " + cmd[len("aliyun "):]
+
+        output, return_code = run_cmd(cmd)
+        for check_item in check_items:
+            assert check_item in output
+
+        if not check_items:
+            # no check, need to ensure return code is 0
+            assert return_code == 0

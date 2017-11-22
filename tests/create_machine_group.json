@@ -1,0 +1,13 @@
+{
+  "machine_list": [
+    "machine1",
+    "machine2"
+  ],
+  "machine_type": "userdefined",
+  "group_name": "group_name2",
+  "group_type": "Armory",
+  "group_attribute": {
+    "externalName": "ex name",
+    "groupTopic": "topic x"
+  }
+}

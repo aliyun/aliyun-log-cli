@@ -1,0 +1,9 @@
+{
+  "odps_endpoint": "endpoint1",
+  "odps_project": "project1",
+  "odps_table": "table1",
+  "log_fields_list": ["field1", "field2"],
+  "partition_column": ["column1", "column2"],
+  "partition_time_format": "%y-%m-%d %h:%s",
+  "bufferInterval": 1800
+}

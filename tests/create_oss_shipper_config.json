@@ -1,0 +1,8 @@
+{
+  "oss_bucket": "dlq-oss-test1",
+  "oss_prefix": "sls",
+  "oss_role_arn": "acs:ram::1234:role/aliyunlogdefaultrole",
+  "buffer_interval": 300,
+  "buffer_mb": 128,
+  "compress_type": "snappy"
+}
