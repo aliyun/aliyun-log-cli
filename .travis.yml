@@ -1,0 +1,18 @@
+language: python
+python:
+#  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "pypy"
+  - "pypy3"
+
+install:
+  - pip install -r requirements.txt
+  - pip install .
+
+script:
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then python tests/test_ci.py tests/cmd_list_py2.txt; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then python tests/test_ci.py tests/cmd_list_py3.txt; fi
