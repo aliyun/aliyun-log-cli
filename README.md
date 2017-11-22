@@ -41,6 +41,13 @@
 ```
 
 ### Access Key and Endpoint
+
+Refer to [Configuration](https://www.alibabacloud.com/help/doc-detail/29064.htm?spm=a3c0i.o29008en.b99.182.7724d4ddaTGHgf)
+to get the access ID/key and endpoints.
+
+There're three ways to configure the access key and endpoint and they're prioritized as below:
+
+
 **Priority**
 1. Parameters
 

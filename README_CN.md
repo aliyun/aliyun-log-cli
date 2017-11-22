@@ -41,7 +41,13 @@
 3. aliyun [--help | --version]
 ```
 
-### Access Key与Endpoint存储与使用
+### 访问秘钥与入口存储与使用
+
+参考[SDK配置](https://help.aliyun.com/document_detail/29064.html?spm=5176.doc29068.2.8.SWJhYZ)
+获得访问秘钥的ID和Key以及访问入口Endpoint, 构建一个LogClient的客户端.
+
+有三种方式配置访问秘钥与入口, 优先级如下:
+
 **优先级**
 1. 参数
 
