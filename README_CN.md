@@ -194,7 +194,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 
 **一般情况**
 
-子命令对应于logclient的方法, 参数和可选参数也一一对应.
+实际上CLI实现依赖于阿里云日志服务的Python SDK, 子命令对应于`aliyun.log.LogClient`的方法, 参数和可选参数也一一对应.
 具体支持的API参数, 请参考[Python SDK API规范](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
 
 **例子:**

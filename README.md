@@ -189,7 +189,7 @@ Then you will be the name list of second logstore and later ones as below:
 
 **Normal Case**
 
-Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.logclient.LogClient`. The parameters of command line is mapped to the parameters of methods.
+Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.LogClient`. The parameters of command line is mapped to the parameters of methods.
 For the detail spec of parameters, please refer to the [Python SDK API Spec](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
 
 **Examples:**
