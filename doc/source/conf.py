@@ -70,7 +70,7 @@ author = 'Alibaba Cloud'
 #
 # The short X.Y version.
 version = '0.6'
-with open(os.path.abspath('../../aliyunlogcli/__init__.py'), 'r') as fd:
+with open(os.path.abspath('../../aliyunlogcli/version.py'), 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 

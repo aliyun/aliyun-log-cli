@@ -13,8 +13,8 @@ packages = [
     'aliyunlogcli'
 ]
 
-version = ''
-with open('aliyunlogcli/__init__.py', 'r') as fd:
+version = '0.1'
+with open('aliyunlogcli/version.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 

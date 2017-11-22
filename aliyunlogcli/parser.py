@@ -309,7 +309,10 @@ def _attach_more_cmd():
     return cmd
 
 
-def parse_method_types_optdoc_from_class(cls, black_list=(r'^_.+',)):
+def parse_method_types_optdoc_from_class(cls, black_list=None):
+    if black_list is None:
+        black_list = (r'^_.+',)
+
     method_list = []
     for k in dir(cls):
         m = getattr(cls, k, None)

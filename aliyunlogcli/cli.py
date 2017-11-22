@@ -1,7 +1,7 @@
 
 from jmespath.exceptions import ParseError
 from parser import *
-from __init__ import __version__, USER_AGENT
+from version import __version__, USER_AGENT
 from aliyun.log import LogException, LogClient
 import six.moves.configparser as configparser
 from docopt import docopt
