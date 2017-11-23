@@ -17,12 +17,13 @@
 ```
 
 **supported platforms**:
+
 - windows
 - mac
 - linux
 
 #### Supported Python:
-- Python 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
+- Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
 
 
 #### Full Usage list:
@@ -49,6 +50,7 @@ There're three ways to configure the access key and endpoint and they're priorit
 
 
 **Priority**
+
 1. Parameters
 
 ```shell
@@ -135,6 +137,7 @@ You could store the content of one parameter into a file and pass it via the com
 ```
 
 **Parameter Validation**
+
 - Mandatory check: if one mandatory parameter is missed, it will report error with usage info.
 - Format of parameter's value will be validated. e.g. 例如int, bool, string list, special data structure.
 - for boolean, it support:
@@ -228,6 +231,7 @@ All the commands support below optional global options:
 - get_project
 - delete_project
 - **copy_project**
+
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
 
 ```shell

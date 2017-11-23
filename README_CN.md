@@ -16,6 +16,7 @@
 ```
 
 **支持平台**:
+
 - windows
 - mac
 - linux
@@ -23,7 +24,7 @@
 
 
 #### 支持平台
-- Python 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
+- Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
 
 
 #### 完整参数列表
@@ -49,6 +50,7 @@
 有三种方式配置访问秘钥与入口, 优先级如下:
 
 **优先级**
+
 1. 参数
 
 ```shell
@@ -142,12 +144,15 @@ endpoint=cn-hangzhou.log.aliyun.com
 ```
 
 **参数校验**
+
 - 必填的参数没有填写时会报错, 输出参数列表
 - 参数格式本身会进行校验, 例如int, bool, string list, 特定数据结构等
 - bool支持的形式有:
   - true (大小写不敏感), T, 1
   - false (大小写不敏感), F, 0
+
 - 字符串列表支持的形式是:
+
   - ["s1", "s2"]
 
 ### 输出
@@ -237,6 +242,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_project
 - delete_project
 - **copy_project**
+
    - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
 
 ```shell
