@@ -13,7 +13,7 @@
 ### Installation
 
 ```shell
-> pip -U aliyun-log-cli
+> pip install -U aliyun-log-cli
 ```
 
 **supported platforms**:

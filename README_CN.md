@@ -12,7 +12,7 @@
 ### 安装
 
 ```shell
-> pip -U aliyun-log-cli
+> pip install -U aliyun-log-cli
 ```
 
 **支持平台**:
