@@ -227,7 +227,7 @@ def _requests_maker(*cls_args):
 
 
 def _make_log_client(to_client):
-    if not to_client:
+    if to_client:
         if to_client == LOG_CONFIG_SECTION:
             access_id, access_key, endpoint = load_default_config_from_file_env()
         else:
