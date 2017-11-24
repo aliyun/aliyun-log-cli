@@ -6,6 +6,10 @@ sleep 60
 aliyun log list_project
 > 'projectName': 'dlq-test-cli-${RANDOM_NUMBER}'
 
+aliyun log list_project --size=-1
+> 'projectName': 'dlq-test-cli-${RANDOM_NUMBER}'
+
+
 aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --ttl=2 --shard_count="2"
 
 aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=2 --shard_count="2"
@@ -140,13 +144,25 @@ aliyun log list_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logst
 aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="testdata1" --offset=0 --size=100
 > {'count': 3, 'logstores': ['logstore3', 'logstore1', 'logstore2'], 'total': 3}
 
+aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="testdata1" --offset=0 --size=-1
+> {'count': 3, 'logstores': ['logstore3', 'logstore1', 'logstore2'], 'total': 3}
+
 aliyun log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
+> {'configs': ['config_name1', 'config_name2'], 'count': 2, 'total': 2}
+
+aliyun log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=-1
 > {'configs': ['config_name1', 'config_name2'], 'count': 2, 'total': 2}
 
 aliyun log list_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
 > {'count': 2, 'machinegroups': ['group_name1', 'group_name2'], 'total': 2}
 
+aliyun log list_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=-1
+> {'count': 2, 'machinegroups': ['group_name1', 'group_name2'], 'total': 2}
+
 aliyun log list_machines --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1" --offset=0 --size=100
+> {'count': 0, 'machines': [], 'total': 0}
+
+aliyun log list_machines --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1" --offset=0 --size=-1
 > {'count': 0, 'machines': [], 'total': 0}
 
 aliyun log list_shards --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
