@@ -10,8 +10,7 @@ python:
   - "pypy3"
 
 install:
-  - pip install -r requirements.txt
-  - pip install .
+  - pip install -U .
 
 script:
   - cd tests
