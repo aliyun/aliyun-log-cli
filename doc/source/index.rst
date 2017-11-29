@@ -11,6 +11,7 @@ Aliyun Log CLI
 
    README.rst
    README_CN.rst
+   tutorials/tutorial.rst
    api.rst
 
 
