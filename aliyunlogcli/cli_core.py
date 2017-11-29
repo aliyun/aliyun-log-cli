@@ -1,14 +1,13 @@
 
-
-
 import jmespath
 from aliyun.log import LogException, LogClient
 import six.moves.configparser as configparser
-from docopt import docopt
+from docopt import docopt, DocoptExit
 from six import StringIO
 from .version import __version__, USER_AGENT
 from .config import load_config, LOG_CONFIG_SECTION
 from .parser import *
+import sys
 
 
 def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONFIG_SECTION):
@@ -74,10 +73,40 @@ def _sort_str_dict(obj, enclosed=False):
         return _get_str(obj, enclosed)
 
 
-def main():
-    method_types, optdoc = parse_method_types_optdoc_from_class(LogClient, LOG_CLIENT_METHOD_BLACK_LIST)
+def docopt_ex(doc, usage, help=True, version=None):
+    argv = sys.argv[1:]
 
-    arguments = docopt(optdoc, version=__version__)
+    # support customized help
+    if len(argv) <= 0 or "--help" in argv[0]:
+        print(usage)
+        return
+
+    first_cmd = argv[0]
+
+    try:
+        return docopt(doc, help=help, version=version)
+    except DocoptExit as ex:
+        # show customized error
+        if first_cmd == "configure":
+            print("Usage:\n" + MORE_DOCOPT_CMD)
+            return
+        elif first_cmd == "log" and len(argv) > 1:
+            second_cmd = argv[1]
+            for cmd in doc.split("\n"):
+                if "aliyun log " + second_cmd in cmd:
+                    print("Usage:\n" + cmd)
+                    return
+
+        print(usage)
+
+
+def main():
+    method_types, optdoc, usage = parse_method_types_optdoc_from_class(LogClient, LOG_CLIENT_METHOD_BLACK_LIST)
+
+    arguments = docopt_ex(optdoc, usage, help=False, version=__version__)
+    if arguments is None:
+        return
+
     system_options = normalize_system_options(arguments)
 
     # process normal log command
@@ -113,4 +142,3 @@ def main():
         args = arguments['<secure_id>'], arguments['<secure_key>'], arguments['<endpoint>'], \
                arguments['<client_name>'] or LOG_CONFIG_SECTION
         configure_confidential(*args)
-

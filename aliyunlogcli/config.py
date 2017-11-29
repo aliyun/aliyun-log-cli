@@ -6,7 +6,7 @@ import jmespath
 from jmespath.exceptions import ParseError
 
 LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
-                                'set_user_agent'
+                                'set_user_agent', 'get_unicode',
                                 )
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')
@@ -16,6 +16,40 @@ SYSTEM_OPTIONS = ['access-id', 'access-key', 'region-endpoint', 'client-name', '
 SYSTEM_OPTIONS_STR = ' '.join('[--' + x + '=<value>]' for x in SYSTEM_OPTIONS)
 
 SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint jmes_filter")
+
+API_GROUP = [('project$', 'Project'), 'logstore', ('index|topics', "Index"),
+             ('logtail_config', "Logtail Config"), ('machine', "Machine Group"), 'shard',
+             'cursor', ('logs|histogram', "Logs"), ('consumer|check_point', "Consumer Group"), 'shipper']
+
+
+USAGE_STR_TEMPLATE = """
+Usage:
+
+1. aliyun log <subcommand> [parameters | global options]
+2. aliyun configure <access_id> <access-key> <endpoint> [<client-name>]
+3. aliyun [--help | --version]
+
+Examples:
+
+1. aliyun configure AKID123 AKKEY123 cn-hangzhou.log.aliyuncs.com
+2. aliyun log create_project --project_name="test"
+
+Subcommand:
+{grouped_api}
+
+Global Options:
+[--access-id=<value>]		: use this access id in this command
+[--access-key=<value>]		: use this access key in this command
+[--region-endpoint=<value>]	: use this endpoint in this command
+[--client-name=<value>]		: use this client name in configured accounts
+[--jmes-filter=<value>]		: filter results using JMES syntax
+
+Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
+
+"""
+
+MORE_DOCOPT_CMD = """aliyun configure <secure_id> <secure_key> <endpoint> [<client_name>]
+"""
 
 
 def load_config_from_file(client_name):

@@ -7,6 +7,8 @@ from aliyun.log import *
 from aliyun.log.util import Util
 from .config import *
 from .config import load_default_config_from_file_env, load_config_from_file, LOG_CONFIG_SECTION
+from collections import OrderedDict
+from six import StringIO
 
 
 def _parse_method(func):
@@ -303,10 +305,38 @@ def _match_black_list(method_name, black_list):
     return False
 
 
-def _attach_more_cmd():
-    cmd = """aliyun configure <secure_id> <secure_key> <endpoint> [<client_name>]\n"""
+def _attach_more_cmd_docopt():
+    return MORE_DOCOPT_CMD
 
-    return cmd
+
+def _get_grouped_usage(method_list):
+    dct = OrderedDict()
+    for k in API_GROUP:
+        des = k[1] if isinstance(k, (list, tuple)) else k.title()
+        dct[des] = []
+
+    for x in method_list:
+        for k in API_GROUP:
+            key = k[0] if isinstance(k, (list, tuple)) else k
+            des = k[1] if isinstance(k, (list, tuple)) else k.title()
+            if re.search(key, x):
+                dct[des].append(x)
+                break
+        else:
+            dct["Others"].append(x)
+
+    usage = StringIO()
+    for k, v in dct.items():
+        usage.write("\n\t")
+        usage.write(k)
+        usage.write("\n\t" + "-" * 35)
+        for d in sorted(v):
+            usage.write("\n\t")
+            usage.write(d)
+
+        usage.write("\n")
+
+    return usage.getvalue()
 
 
 def parse_method_types_optdoc_from_class(cls, black_list=None):
@@ -322,8 +352,10 @@ def parse_method_types_optdoc_from_class(cls, black_list=None):
 
     params_types = {}
 
+    usage = USAGE_STR_TEMPLATE.format(grouped_api=_get_grouped_usage(method_list))
+
     doc = 'Usage:\n'
-    doc += _attach_more_cmd()
+    doc += MORE_DOCOPT_CMD
 
     for m in method_list:
         method = getattr(cls, m, None)
@@ -334,7 +366,7 @@ def parse_method_types_optdoc_from_class(cls, black_list=None):
             doc += _parse_method_cli(method)
 
     doc += '\n'
-    return params_types, doc
+    return params_types, doc, usage
 
 
 def _convert_args(args_values, method_types):
