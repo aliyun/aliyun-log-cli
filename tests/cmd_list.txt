@@ -248,6 +248,8 @@ aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logs
 
 aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3"
 
+sleep 40
+
 aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}"
 
 # clean up copied project
@@ -272,6 +274,30 @@ aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied"
 sleep 40
 
 aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied"
+
+# clean up copied project 2
+aliyun log remove_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name1" --group_name="group_name1"
+
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name1"
+
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name2"
+
+aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --group_name="group_name1"
+
+aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --group_name="group_name2"
+
+aliyun log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore1"
+
+aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore1"
+
+aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore2"
+
+aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore3"
+
+sleep 40
+
+aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2"
+
 
 aliyun configure access_id access_key endpoint123
 aliyun configure a b c xyz
