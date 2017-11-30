@@ -218,7 +218,7 @@ aliyun log get_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore=
 
 
 # copy project
-aliyun log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied"
+aliyun log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied" --copy_machine_group="true"
 
 # copy with another account, here we use main
 aliyun log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied2" --to_client="main"
@@ -281,10 +281,6 @@ aliyun log remove_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_
 aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name1"
 
 aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name2"
-
-aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --group_name="group_name1"
-
-aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --group_name="group_name2"
 
 aliyun log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore1"
 
