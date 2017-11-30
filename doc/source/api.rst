@@ -110,6 +110,7 @@ Logs
 .. autosummary::
    put_logs
    pull_logs
+   get_log
    get_logs
    get_histograms
    get_project_logs

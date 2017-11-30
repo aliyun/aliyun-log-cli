@@ -1,63 +1,111 @@
 Usage:
-aliyun configure <secure_id> <secure_key> <endpoint> [<client_name>]
-aliyun log apply_config_to_machine_group --project_name=<value> --config_name=<value> --group_name=<value>
-aliyun log copy_project --from_project=<value> --to_project=<value> [--to_client=<value>]
-aliyun log create_consumer_group --project=<value> --logstore=<value> --consumer_group=<value> --timeout=<value> [--in_order=<value>]
-aliyun log create_index --project_name=<value> --logstore_name=<value> --index_detail=<value>
-aliyun log create_logstore --project_name=<value> --logstore_name=<value> --ttl=<value> --shard_count=<value>
-aliyun log create_logtail_config --project_name=<value> --config_detail=<value>
-aliyun log create_machine_group --project_name=<value> --group_detail=<value>
-aliyun log create_project --project_name=<value> --project_des=<value>
-aliyun log create_shipper --project_name=<value> --logstore_name=<value> --shipper_name=<value> --shipper_type=<value> --shipper_config=<value>
-aliyun log delete_consumer_group --project=<value> --logstore=<value> --consumer_group=<value>
-aliyun log delete_index --project_name=<value> --logstore_name=<value>
-aliyun log delete_logstore --project_name=<value> --logstore_name=<value>
-aliyun log delete_logtail_config --project_name=<value> --config_name=<value>
-aliyun log delete_machine_group --project_name=<value> --group_name=<value>
-aliyun log delete_project --project_name=<value>
-aliyun log delete_shipper --project_name=<value> --logstore_name=<value> --shipper_name=<value>
-aliyun log get_begin_cursor --project_name=<value> --logstore_name=<value> --shard_id=<value>
-aliyun log get_check_point --project=<value> --logstore=<value> --consumer_group=<value> [--shard=<value>]
-aliyun log get_config_applied_machine_groups --project_name=<value> --config_name=<value>
-aliyun log get_cursor --project_name=<value> --logstore_name=<value> --shard_id=<value> --start_time=<value>
-aliyun log get_cursor_time --project_name=<value> --logstore_name=<value> --shard_id=<value> --cursor=<value>
-aliyun log get_end_cursor --project_name=<value> --logstore_name=<value> --shard_id=<value>
-aliyun log get_histograms --request=<value>
-aliyun log get_index_config --project_name=<value> --logstore_name=<value>
-aliyun log get_logs --request=<value>
-aliyun log get_logstore --project_name=<value> --logstore_name=<value>
-aliyun log get_logtail_config --project_name=<value> --config_name=<value>
-aliyun log get_machine_group --project_name=<value> --group_name=<value>
-aliyun log get_machine_group_applied_configs --project_name=<value> --group_name=<value>
-aliyun log get_previous_cursor_time --project_name=<value> --logstore_name=<value> --shard_id=<value> --cursor=<value>
-aliyun log get_project --project_name=<value>
-aliyun log get_shipper_config --project_name=<value> --logstore_name=<value> --shipper_name=<value>
-aliyun log get_shipper_tasks --project_name=<value> --logstore_name=<value> --shipper_name=<value> --start_time=<value> --end_time=<value> [--status_type=<value>] [--offset=<value>] [--size=<value>]
-aliyun log get_unicode --key=<value>
-aliyun log list_consumer_group --project=<value> --logstore=<value>
-aliyun log list_logstore --project_name=<value> [--logstore_name_pattern=<value>] [--offset=<value>] [--size=<value>]
-aliyun log list_logstores --request=<value>
-aliyun log list_logtail_config --project_name=<value> [--offset=<value>] [--size=<value>]
-aliyun log list_machine_group --project_name=<value> [--offset=<value>] [--size=<value>]
-aliyun log list_machines --project_name=<value> --group_name=<value> [--offset=<value>] [--size=<value>]
-aliyun log list_project [--offset=<value>] [--size=<value>]
-aliyun log list_shards --project_name=<value> --logstore_name=<value>
-aliyun log list_shipper --project_name=<value> --logstore_name=<value>
-aliyun log list_topics --request=<value>
-aliyun log merge_shard --project_name=<value> --logstore_name=<value> --shardId=<value>
-aliyun log pull_logs --project_name=<value> --logstore_name=<value> --shard_id=<value> --cursor=<value> [--count=<value>] [--end_cursor=<value>] [--compress=<value>]
-aliyun log put_logs --request=<value>
-aliyun log remove_config_to_machine_group --project_name=<value> --config_name=<value> --group_name=<value>
-aliyun log retry_shipper_tasks --project_name=<value> --logstore_name=<value> --shipper_name=<value> --task_list=<value>
-aliyun log split_shard --project_name=<value> --logstore_name=<value> --shardId=<value> --split_hash=<value>
-aliyun log update_check_point --project=<value> --logstore=<value> --consumer_group=<value> --shard=<value> --check_point=<value> [--consumer=<value>] [--force_success=<value>]
-aliyun log update_consumer_group --project=<value> --logstore=<value> --consumer_group=<value> [--timeout=<value>] [--in_order=<value>]
-aliyun log update_index --project_name=<value> --logstore_name=<value> --index_detail=<value>
-aliyun log update_logstore --project_name=<value> --logstore_name=<value> --ttl=<value> --shard_count=<value>
-aliyun log update_logtail_config --project_name=<value> --config_detail=<value>
-aliyun log update_machine_group --project_name=<value> --group_detail=<value>
-aliyun log update_shipper --project_name=<value> --logstore_name=<value> --shipper_name=<value> --shipper_type=<value> --shipper_config=<value>
+
+1. aliyun log <subcommand> [parameters | global options]
+2. aliyun configure <access_id> <access-key> <endpoint> [<client-name>]
+3. aliyun [--help | --version]
+
+Examples:
+
+1. aliyun configure AKID123 AKKEY123 cn-hangzhou.log.aliyuncs.com
+2. aliyun log create_project --project_name="test"
+
+Subcommand:
+
+	Project
+	-----------------------------------
+	copy_project
+	create_project
+	delete_project
+	get_project
+	list_project
+
+	Logstore
+	-----------------------------------
+	create_logstore
+	delete_logstore
+	get_logstore
+	list_logstore
+	list_logstores
+	update_logstore
+
+	Index
+	-----------------------------------
+	create_index
+	delete_index
+	get_index_config
+	list_topics
+	update_index
+
+	Logtail Config
+	-----------------------------------
+	create_logtail_config
+	delete_logtail_config
+	get_logtail_config
+	list_logtail_config
+	update_logtail_config
+
+	Machine Group
+	-----------------------------------
+	apply_config_to_machine_group
+	create_machine_group
+	delete_machine_group
+	get_config_applied_machine_groups
+	get_machine_group
+	get_machine_group_applied_configs
+	list_machine_group
+	list_machines
+	remove_config_to_machine_group
+	update_machine_group
+
+	Shard
+	-----------------------------------
+	list_shards
+	merge_shard
+	split_shard
+
+	Cursor
+	-----------------------------------
+	get_begin_cursor
+	get_cursor
+	get_cursor_time
+	get_end_cursor
+	get_previous_cursor_time
+
+	Logs
+	-----------------------------------
+	get_histograms
+	get_log
+	get_logs
+	get_project_logs
+	pull_logs
+	put_logs
+
+	Consumer Group
+	-----------------------------------
+	create_consumer_group
+	delete_consumer_group
+	get_check_point
+	get_check_point_fixed
+	list_consumer_group
+	update_check_point
+	update_consumer_group
+
+	Shipper
+	-----------------------------------
+	create_shipper
+	delete_shipper
+	get_shipper_config
+	get_shipper_tasks
+	list_shipper
+	retry_shipper_tasks
+	update_shipper
 
 
-All log command support global options:
-[--access-id=<value>] [--access-key=<value>] [--region-endpoint=<value>] [--client-name=<value>] [--jmes-filter=<value>]
+Global Options:
+[--access-id=<value>]		: use this access id in this command
+[--access-key=<value>]		: use this access key in this command
+[--region-endpoint=<value>]	: use this endpoint in this command
+[--client-name=<value>]		: use this client name in configured accounts
+[--jmes-filter=<value>]		: filter results using JMES syntax
+
+Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
