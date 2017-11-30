@@ -41,16 +41,23 @@ def normalize_system_options(arguments):
 def _parse_method_cli(func):
     args, option_arg_pos = _parse_method(func)
 
+    ptn = r'^\s*\:param[ \t]+(\w+)[ \t]*\:[ \t]*([^\n]*?)\s*$'
+    param_docs = dict(re.findall(ptn, func.__doc__ or '', re.MULTILINE))
+    param_usage_doc = ''
+
     args_list = ''
     for i, arg in enumerate(args):
         if i >= option_arg_pos:
-            args_list += '[--' + arg + '=<value>] '
+            arg_doc = '[--' + arg + '=<value>] '
         else:
-            args_list += '--' + arg + '=<value> '
+            arg_doc = '--' + arg + '=<value> '
 
-    doc = 'aliyun log ' + func.__name__ + ' ' + args_list + SYSTEM_OPTIONS_STR + '\n'
+        args_list += arg_doc
+        param_usage_doc += arg_doc + '\t\t: ' + param_docs.get(arg, arg) + "\n"
 
-    return doc
+    opt_doc = 'aliyun log ' + func.__name__ + ' ' + args_list + SYSTEM_OPTIONS_STR + '\n'
+
+    return opt_doc, param_usage_doc
 
 
 def _to_bool(s):
@@ -169,12 +176,11 @@ def to_logitem_list(s):
 
 def _request_maker(cls):
     def maker(json_str):
-        args_list, option_arg_pos = _parse_method(cls.__init__)
-
         if json_str.startswith('file://'):
             with open(json_str[7:], "r") as f:
                 json_str = f.read()
 
+        args_list, option_arg_pos = _parse_method(cls.__init__)
         if option_arg_pos == 0 and hasattr(cls, 'from_json'):
             # there's a from json method, try to use it
             try:
@@ -222,8 +228,23 @@ def _requests_maker(*cls_args):
             except Exception as ex:
                 continue
 
-        print("*** cannot construct relative object for json {0} with cls list {1}".format(json_str, cls_args))
+        print("*** cannot construct relative object for json '{0}' with cls list {1}".format(json_str, cls_args))
         return json_str
+
+    return maker
+
+
+def _chained_method_maker(*method_list):
+    def maker(value):
+        for method in method_list:
+            try:
+                obj = method(value)
+                return obj
+            except Exception as ex:
+                continue
+
+        print("*** cannot construct relative object '{0}' with value '{1}'".format(str(method_list), value))
+        return value
 
     return maker
 
@@ -260,14 +281,23 @@ types_maps = {
 def _find_multiple_cls(t):
     results = re.split(r"\s+or\s+|/|\||,", t.strip(), re.IGNORECASE)
     find_cls = []
+    find_method_list = []
     for t in results:
         t = t.strip()
         if t and t in dir(log) and inspect.isclass(getattr(log, t)):
             find_cls.append(getattr(log, t))
+        elif t.lower() in types_maps:
+            find_method_list.append(types_maps.get(t.lower()))
 
-    if find_cls:
+    if find_cls and find_method_list:
+        # combine two kind of caller together
         handler = _requests_maker(*find_cls)
-        return handler
+        find_method_list.append(handler)
+        return _chained_method_maker(*find_method_list)
+    elif find_cls:
+        return _requests_maker(*find_cls)
+    elif find_method_list:
+        return _chained_method_maker(*find_method_list)
 
     return None
 
@@ -276,26 +306,26 @@ def _parse_method_params_from_doc(doc):
     if not doc:
         return None
 
-    ptn = r'\:type\s+(\w+)\s*\:\s*([\w\. <>]+)\s*.+?(?:\:param\s+\1\:\s*([^\n]+)\s*)?'
-    m = re.findall(ptn, doc, re.MULTILINE)
+    ptn = r'^\s*\:type[ \t]+(\w+)[ \t]*\:[ \t]*([^\n]*?)\s*$'
+    key_type_list = re.findall(ptn, doc, re.MULTILINE)
 
-    params = dict((k, types_maps.get(t.lower().strip(), None)) for k, t, d in m)
+    param_handlers = dict((k, types_maps.get(t.lower().strip(), None)) for k, t in key_type_list)
 
-    unsupported_types = [(k, t, d) for k, t, d in m if params.get(k, None) is None]
+    unsupported_types = [(k, t) for k, t in key_type_list if param_handlers.get(k, None) is None]
     if unsupported_types:
-        for k, t, d in unsupported_types:
+        for k, t in unsupported_types:
             handler = _find_multiple_cls(t)
             if handler is not None:
                 # add to type maps
                 types_maps[t] = handler
 
                 # add to returned value
-                params[k] = handler
+                param_handlers[k] = handler
                 continue
 
-            print("***** unknown types: ", k, t, d)
+            print("***** unknown types: ", k, t)
 
-    return params
+    return param_handlers
 
 
 def _match_black_list(method_name, black_list):
@@ -339,7 +369,7 @@ def _get_grouped_usage(method_list):
     return usage.getvalue()
 
 
-def parse_method_types_optdoc_from_class(cls, black_list=None):
+def _get_method_list(cls, black_list=None):
     if black_list is None:
         black_list = (r'^_.+',)
 
@@ -350,12 +380,18 @@ def parse_method_types_optdoc_from_class(cls, black_list=None):
                 and (inspect.isfunction(m) or inspect.ismethod(m)):
             method_list.append(k)
 
+    return method_list
+
+
+def parse_method_types_optdoc_from_class(cls, black_list=None):
+    method_list = _get_method_list(cls, black_list)
     params_types = {}
+    params_doc = {}
 
-    usage = USAGE_STR_TEMPLATE.format(grouped_api=_get_grouped_usage(method_list))
+    cli_usage_doc = USAGE_STR_TEMPLATE.format(grouped_api=_get_grouped_usage(method_list))
 
-    doc = 'Usage:\n'
-    doc += MORE_DOCOPT_CMD
+    opt_doc = 'Usage:\n'
+    opt_doc += MORE_DOCOPT_CMD
 
     for m in method_list:
         method = getattr(cls, m, None)
@@ -363,10 +399,13 @@ def parse_method_types_optdoc_from_class(cls, black_list=None):
             p = _parse_method_params_from_doc(method.__doc__)
             params_types[m] = p
 
-            doc += _parse_method_cli(method)
+            method_opt_doc, method_usage_doc = _parse_method_cli(method)
+            opt_doc += method_opt_doc
 
-    doc += '\n'
-    return params_types, doc, usage
+            params_doc[m] = method_usage_doc
+
+    opt_doc += '\n'
+    return params_types, params_doc, opt_doc, cli_usage_doc
 
 
 def _convert_args(args_values, method_types):

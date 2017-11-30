@@ -21,6 +21,16 @@ API_GROUP = [('project$', 'Project'), 'logstore', ('index|topics', "Index"),
              ('logtail_config', "Logtail Config"), ('machine', "Machine Group"), 'shard',
              'cursor', ('logs|histogram', "Logs"), ('consumer|check_point', "Consumer Group"), 'shipper']
 
+GLOBAL_OPTIONS_STR = """
+Global Options:
+[--access-id=<value>]		: use this access id in this command
+[--access-key=<value>]		: use this access key in this command
+[--region-endpoint=<value>]	: use this endpoint in this command
+[--client-name=<value>]		: use this client name in configured accounts
+[--jmes-filter=<value>]		: filter results using JMES syntax
+
+Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
+"""
 
 USAGE_STR_TEMPLATE = """
 Usage:
@@ -36,17 +46,7 @@ Examples:
 
 Subcommand:
 {grouped_api}
-
-Global Options:
-[--access-id=<value>]		: use this access id in this command
-[--access-key=<value>]		: use this access key in this command
-[--region-endpoint=<value>]	: use this endpoint in this command
-[--client-name=<value>]		: use this client name in configured accounts
-[--jmes-filter=<value>]		: filter results using JMES syntax
-
-Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
-
-"""
+""" + GLOBAL_OPTIONS_STR
 
 MORE_DOCOPT_CMD = """aliyun configure <secure_id> <secure_key> <endpoint> [<client_name>]
 """

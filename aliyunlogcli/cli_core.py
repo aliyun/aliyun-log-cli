@@ -73,7 +73,7 @@ def _sort_str_dict(obj, enclosed=False):
         return _get_str(obj, enclosed)
 
 
-def docopt_ex(doc, usage, help=True, version=None):
+def docopt_ex(doc, usage, method_param_usage, help=True, version=None):
     argv = sys.argv[1:]
 
     # support customized help
@@ -88,22 +88,38 @@ def docopt_ex(doc, usage, help=True, version=None):
     except DocoptExit as ex:
         # show customized error
         if first_cmd == "configure":
+            print("Invalid parameters.\n")
             print("Usage:\n" + MORE_DOCOPT_CMD)
             return
         elif first_cmd == "log" and len(argv) > 1:
             second_cmd = argv[1]
+            header_printed = False
             for cmd in doc.split("\n"):
-                if "aliyun log " + second_cmd in cmd:
-                    print("Usage:\n" + cmd)
-                    return
+                if "aliyun log " + second_cmd + " " in cmd:
+                    if not header_printed:
+                        print("Invalid parameters.\n")
+                        print("Usage:")
+                        header_printed = True
 
-        print(usage)
+                    print(cmd)
+
+            if header_printed and second_cmd in method_param_usage:
+                print("\nOptions:")
+                print(method_param_usage[second_cmd])
+                print(GLOBAL_OPTIONS_STR)
+            else:
+                print("Unknown subcommand.")
+                print(usage)
+
+        else:
+            print("Unknown command.\n")
+            print(usage)
 
 
 def main():
-    method_types, optdoc, usage = parse_method_types_optdoc_from_class(LogClient, LOG_CLIENT_METHOD_BLACK_LIST)
+    method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient, LOG_CLIENT_METHOD_BLACK_LIST)
 
-    arguments = docopt_ex(optdoc, usage, help=False, version=__version__)
+    arguments = docopt_ex(optdoc, usage, method_param_usage, help=False, version=__version__)
     if arguments is None:
         return
 
