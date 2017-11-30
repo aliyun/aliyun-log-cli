@@ -114,6 +114,13 @@ aliyun log put_logs --request="file://./put_logs_${RANDOM_NUMBER}.json"
 
 
 # get logs
+aliyun log get_log --topic="" --logstore="logstore1" --project="dlq-test-cli-${RANDOM_NUMBER}" --to_time=${TIME-NOW} --offset=0 --query="*" --size=10 --from_time=${TIME-ONE-HOUR-AGO} --reverse="false"
+> [{'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key1': 'v1', 'key2': 'v2'}, {'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key3': 'v3', 'key4': 'v4'}]
+
+aliyun log get_log --logstore="logstore1" --project="dlq-test-cli-${RANDOM_NUMBER}" --to_time=${TIME-NOW} --from_time=${TIME-ONE-HOUR-AGO}
+> [{'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key1': 'v1', 'key2': 'v2'}, {'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key3': 'v3', 'key4': 'v4'}]
+
+
 aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-${RANDOM_NUMBER}\", \"toTime\": \"${TIME-NOW}\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"${TIME-ONE-HOUR-AGO}\", \"reverse\":\"false\"}"
 > [{'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key1': 'v1', 'key2': 'v2'}, {'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key3': 'v3', 'key4': 'v4'}]
 
@@ -121,7 +128,8 @@ aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"
 rm -f ./get_logs_${RANDOM_NUMBER}.json
 echo "{\"topic\": \"\",\"logstore\": \"logstore1\",\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"toTime\": \"${TIME-NOW}\",\"offset\": \"0\",\"query\": \"*\",\"line\": \"10\",\"fromTime\": \"${TIME-ONE-HOUR-AGO}\",\"reverse\": \"true\"}" >> ./get_logs_${RANDOM_NUMBER}.json
 aliyun log get_logs --request="file://./get_logs_${RANDOM_NUMBER}.json"
-> [{'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key3': 'v3', 'key4': 'v4'}, {'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key1': 'v1', 'key2': 'v2'}]
+> [{'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key1': 'v1', 'key2': 'v2'}, {'__source__': 'source1', '__tag__:tag1': 'v1', '__tag__:tag2': 'v2', '__time__': '${TIME-ONE-HOUR-AGO}', '__topic__': 'topic1', 'key3': 'v3', 'key4': 'v4'}]
+
 
 rm -f ./get_project_logs_${RANDOM_NUMBER}.json
 echo "{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"query\": \"select * from logstore1 where __time__ >= ${TIME-ONE-HOUR-AGO} and __time__ <= ${TIME-NOW}\"}" >> ./get_project_logs_${RANDOM_NUMBER}.json
