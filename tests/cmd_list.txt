@@ -276,7 +276,6 @@ sleep 40
 aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied"
 
 # clean up copied project 2
-aliyun log remove_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name1" --group_name="group_name1"
 
 aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name1"
 
