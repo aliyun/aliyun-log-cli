@@ -353,6 +353,8 @@ def _get_grouped_usage(method_list):
                 dct[des].append(x)
                 break
         else:
+            if "Others" not in dct:
+                dct["Others"] = []
             dct["Others"].append(x)
 
     usage = StringIO()

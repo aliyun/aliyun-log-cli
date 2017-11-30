@@ -19,7 +19,7 @@ SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint jmes_fi
 
 API_GROUP = [('project$', 'Project'), 'logstore', ('index|topics', "Index"),
              ('logtail_config', "Logtail Config"), ('machine', "Machine Group"), 'shard',
-             'cursor', ('logs|histogram', "Logs"), ('consumer|check_point', "Consumer Group"), 'shipper']
+             'cursor', ('log|histogram', "Logs"), ('consumer|check_point', "Consumer Group"), 'shipper']
 
 GLOBAL_OPTIONS_STR = """
 Global Options:
