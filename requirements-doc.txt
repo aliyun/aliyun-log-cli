@@ -2,3 +2,4 @@ sphinxcontrib-github_ribbon
 pypandoc
 six
 aliyun-log-python-sdk
+pathlib
