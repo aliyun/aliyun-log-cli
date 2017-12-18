@@ -136,6 +136,22 @@ You could store the content of one parameter into a file and pass it via the com
 > aliyun log get_logs --request="file://./get_logs.json"
 ```
 
+
+the content in file `get_logs.json` as below. Note: the `\` is unnecessary to escape the ".
+```json
+{
+  "topic": "",
+  "logstore": "logstore1",
+  "project": "project1",
+  "toTime": "12345679",
+  "offset": "0",
+  "query": "*",
+  "line": "10",
+  "fromTime": "1234567",
+  "reverse": "true"
+}
+```
+
 **Parameter Validation**
 
 - Mandatory check: if one mandatory parameter is missed, it will report error with usage info.

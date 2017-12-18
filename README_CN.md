@@ -143,6 +143,23 @@ endpoint=cn-hangzhou.log.aliyun.com
 > aliyun log get_logs --request="file://./get_logs.json"
 ```
 
+
+文件`get_logs.json`内容如下, 注意: 文件中不需要反斜杠`\`来转义.
+
+```json
+{
+  "topic": "",
+  "logstore": "logstore1",
+  "project": "project1",
+  "toTime": "12345679",
+  "offset": "0",
+  "query": "*",
+  "line": "10",
+  "fromTime": "1234567",
+  "reverse": "true"
+}
+```
+
 **参数校验**
 
 - 必填的参数没有填写时会报错, 输出参数列表
