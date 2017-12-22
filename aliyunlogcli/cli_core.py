@@ -44,6 +44,10 @@ def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONF
 
 def _get_str(obj, enclosed=True):
     if enclosed:
+        if isinstance(obj, (six.text_type, six.binary_type)):
+            return '"' + repr(obj)[1:-1] + '"'
+        elif isinstance(obj, bool):
+            return "true" if obj else "false"
         return repr(obj)
     return str(obj)
 
