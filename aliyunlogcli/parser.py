@@ -181,15 +181,22 @@ def _request_maker(cls):
                 json_str = f.read()
 
         args_list, option_arg_pos = _parse_method(cls.__init__)
-        if option_arg_pos == 0 and hasattr(cls, 'from_json'):
+        if hasattr(cls, 'from_json'):
             # there's a from json method, try to use it
             try:
                 j = json.loads(json_str)
                 extjson = Util.convert_unicode_to_str(j)
-                obj = cls()
-                obj.from_json(extjson)
+                if option_arg_pos == 0 :
+                    obj = cls()
+                    new_obj = obj.from_json(extjson)
+                    if new_obj is None:
+                        return obj      # expecting it's updated
+                    else:
+                        return new_obj  # expecting return a new obj
+                else:
+                    # expect the from_json is static method.
+                    return cls.from_json(extjson)
 
-                return obj
             except Exception as ex:
                 print("** fail to load input via method from_json, try to call constructor for cls: "
                       + str(cls) + "\nex:" + str(ex))
