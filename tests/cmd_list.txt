@@ -33,7 +33,7 @@ aliyun log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" -
 aliyun log create_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --timeout=20 --in_order="true"
 
 aliyun log create_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
-> {"errorCode":"Unauthorized","errorMessage":"denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"}
+> {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
 
 # apply machine group
 aliyun log apply_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1" --group_name="group_name1"
@@ -57,8 +57,8 @@ aliyun log get_config_applied_machine_groups --project_name="dlq-test-cli-${RAND
 > {"count": 1, "machinegroups": ["group_name1"]}
 
 aliyun log get_index_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
-> "index_mode": "v2", "keys": {"key1": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", """, ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key2": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", """, ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key3": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", """, ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key4": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", """, ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}}
-> "line": {"caseSensitive": false, "token": [",", " ", "'", """, ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"]}, "storage": "pg", "ttl": 2
+> "index_mode": "v2", "keys": {"key1": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key2": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key3": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key4": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}}
+> "line": {"caseSensitive": false, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"]}, "storage": "pg", "ttl": 2
 
 aliyun log get_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
 > "groupAttribute": {"externalName": "ex name", "groupTopic": "topic x"}, "groupName": "group_name1", "groupType": "Armory"
@@ -69,10 +69,10 @@ aliyun log get_machine_group_applied_configs --project_name="dlq-test-cli-${RAND
 > {"configs": ["config_name1"], "count": 1}
 
 aliyun log get_shipper_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
-> {"errorCode":"ParameterInvalid","errorMessage":"shipperName shipper1 not exist"}
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 not exist"
 
 aliyun log get_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --start_time=1510300126 --end_time=1510304126 --status_type="success" --offset=0 --size=100
-> {"errorCode":"ParameterInvalid","errorMessage":"only support query last 48 hours task status"}
+> {"errorCode": "ParameterInvalid", "errorMessage": "only support query last 48 hours task status"
 
 # need to sleep for 60 seconds
 sleep 90
@@ -214,11 +214,11 @@ aliyun log update_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logs
 aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
 aliyun log update_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
 aliyun log update_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
-> {"errorCode":"Unauthorized","errorMessage":"denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"}
+> {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
 
 
 aliyun log retry_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --task_list="[\"task1\",\"task2\"]"
-> {"errorCode":"ParameterInvalid","errorMessage":"shipperName shipper1 not exist"}
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 not exist"
 
 aliyun log get_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --shard="0"
 > [{"checkpoint": "MTU
@@ -245,7 +245,7 @@ aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" -
 aliyun log delete_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1"
 
 aliyun log delete_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
-> {"errorCode":"ParameterInvalid","errorMessage":"shipperName shipper1 not exist"}
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 not exist"
 
 aliyun log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
 
