@@ -8,7 +8,7 @@ from .version import __version__, USER_AGENT
 from .config import load_config, LOG_CONFIG_SECTION
 from .parser import *
 import sys
-
+import json
 
 def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONFIG_SECTION):
     """ configure confidential
@@ -40,42 +40,6 @@ def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONF
 
     with open(LOG_CREDS_FILENAME, 'w') as configfile:
         config.write(configfile)
-
-
-def _get_str(obj, enclosed=True):
-    if enclosed:
-        if isinstance(obj, (six.text_type, six.binary_type)):
-            return '"' + repr(obj)[1:-1] + '"'
-        elif isinstance(obj, bool):
-            return "true" if obj else "false"
-        return repr(obj)
-    return str(obj)
-
-
-def _sort_str_dict(obj, enclosed=False):
-    buf = StringIO()
-    if isinstance(obj, dict):
-        buf.write('{')
-        for i, x in enumerate(sorted(obj)):
-            if i == 0:
-                buf.write("{0}: {1}".format(_sort_str_dict(x, True), _sort_str_dict(obj[x], True)))
-            else:
-                buf.write(", {0}: {1}".format(_sort_str_dict(x, True), _sort_str_dict(obj[x], True)))
-
-        buf.write('}')
-        return buf.getvalue()
-    elif isinstance(obj, list):
-        buf.write('[')
-        for i, x in enumerate(obj):
-            if i == 0:
-                buf.write("{0}".format(_sort_str_dict(x, True)))
-            else:
-                buf.write(", {0}".format(_sort_str_dict(x, True)))
-        buf.write(']')
-        return buf.getvalue()
-    else:
-        return _get_str(obj, enclosed)
-
 
 def docopt_ex(doc, usage, method_param_usage, help=True, version=None):
     argv = sys.argv[1:]
@@ -120,6 +84,11 @@ def docopt_ex(doc, usage, method_param_usage, help=True, version=None):
             print(usage)
 
 
+def show_result(result):
+    if result != "":
+        print(json.dumps(result, sort_keys=True))
+
+
 def main():
     method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient, LOG_CLIENT_METHOD_BLACK_LIST)
 
@@ -139,22 +108,26 @@ def main():
 
         assert hasattr(client, method_name), "Unknown parsed command:" + method_name
 
+        ret = None
         try:
             ret = getattr(client, method_name)(**args)
 
             if jmes_filter and ret is not None and ret.get_body():
                 # filter with jmes
                 try:
-                    print(jmespath.compile(jmes_filter).search(ret.get_body()))
+                    show_result(jmespath.compile(jmes_filter).search(ret.get_body()))
                 except jmespath.exceptions.ParseError as ex:
                     print("**fail to parse with JMSE path, original data: ", ex)
-                    print(_sort_str_dict(ret.get_body()))
+                    show_result(ret.get_body())
                     exit(1)
             elif ret is not None:
-                print(_sort_str_dict(ret.get_body()))
+                show_result(ret.get_body())
 
         except LogException as ex:
-            print(_sort_str_dict(ex.get_resp_body()))
+            if ret is not None:
+                show_result(ret.get_body())
+            else:
+                print(ex)
             exit(2)
 
     # process configure command
