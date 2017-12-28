@@ -286,7 +286,7 @@ types_maps = {
 
 
 def _find_multiple_cls(t):
-    results = re.split(r"\s+or\s+|/|\||,", t.strip(), re.IGNORECASE)
+    results = re.split(r"\s+(?:or|OR|Or)\s+|/|\||,", t.strip())
     find_cls = []
     find_method_list = []
     for t in results:
