@@ -10,6 +10,7 @@ python:
   - "pypy3"
 
 install:
+  - pip install git+https://github.com/aliyun/aliyun-log-python-sdk.git@master
   - pip install -U .
 
 script:
