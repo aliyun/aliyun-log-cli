@@ -4,12 +4,16 @@ import six.moves.configparser as configparser
 import six
 import jmespath
 from jmespath.exceptions import ParseError
+import logging
 
 LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
                                 'set_user_agent', 'get_unicode',
                                 )
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')
+DEFAULT_DEBUG_LOG_FILE_PATH = "%s/aliyunlogcli.log" % os.path.expanduser('~')
+DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s"
+
 LOG_CONFIG_SECTION = "main"
 
 SYSTEM_OPTIONS = ['access-id', 'access-key', 'region-endpoint', 'client-name', 'jmes-filter']
@@ -50,6 +54,8 @@ Subcommand:
 
 MORE_DOCOPT_CMD = """aliyun configure <secure_id> <secure_key> <endpoint> [<client_name>]
 """
+
+DEBUG_SECTION_NAME = "__logging__"
 
 
 def load_config_from_file(client_name):
@@ -116,3 +122,52 @@ def load_config(system_options):
             raise ValueError("Invalid JMES filter path")
 
     return SystemConfig(access_id, access_key, endpoint, jmes_filter)
+
+
+def _get_section_option(config, section_name, option_name, default=None):
+    if six.PY3:
+        return config.get(section_name, option_name, fallback=default)
+    else:
+        return config.get(section_name, option_name) if config.has_option(section_name, option_name) else default
+
+
+__LOGGING_LEVEL_MAP = {
+    "debug": logging.DEBUG,
+    "info": logging.INFO,
+    "warn": logging.WARN,
+    "warning": logging.WARN,
+    "information": logging.INFO,
+    "error": logging.ERROR,
+    "err": logging.ERROR,
+    "critical": logging.CRITICAL,
+    "fat": logging.FATAL,
+    "fatal": logging.FATAL
+}
+
+
+def load_debug_from_config_file():
+    # load debug config from file
+    config = configparser.RawConfigParser()
+    config.read(LOG_CREDS_FILENAME)
+
+    opt = {"filename": DEFAULT_DEBUG_LOG_FILE_PATH, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
+    client_name = DEBUG_SECTION_NAME
+    if config.has_section(client_name):
+        filename = _get_section_option(config, client_name, 'filename', None)
+        level = _get_section_option(config, client_name, 'level', None)
+        filemode = _get_section_option(config, client_name, 'filemode', None)
+        format = _get_section_option(config, client_name, 'format', None)
+        datefmt = _get_section_option(config, client_name, 'datefmt', None)
+
+        if filename is not None:
+            opt['filename'] = filename
+        if filemode is not None:
+            opt['filemode'] = filemode
+        if format is not None:
+            opt['format'] = format
+        if datefmt is not None:
+            opt['datefmt'] = datefmt
+
+        opt['level'] = __LOGGING_LEVEL_MAP.get(level.lower().strip(), logging.WARN)
+
+    return opt

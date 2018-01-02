@@ -9,6 +9,9 @@ from .config import load_config, LOG_CONFIG_SECTION
 from .parser import *
 import sys
 import json
+import logging
+logger = logging.getLogger(__name__)
+
 
 def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONFIG_SECTION):
     """ configure confidential
@@ -85,7 +88,7 @@ def docopt_ex(doc, usage, method_param_usage, help=True, version=None):
 
 
 def show_result(result):
-    if result != "":
+    if result != "" and result != b'':
         print(json.dumps(result, sort_keys=True))
 
 
@@ -117,7 +120,7 @@ def main():
                 try:
                     show_result(jmespath.compile(jmes_filter).search(ret.get_body()))
                 except jmespath.exceptions.ParseError as ex:
-                    print("**fail to parse with JMSE path, original data: ", ex)
+                    logger.error("fail to parse with JMSE path, original data: %s", ex)
                     show_result(ret.get_body())
                     exit(1)
             elif ret is not None:

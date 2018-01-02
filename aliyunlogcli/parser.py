@@ -9,11 +9,18 @@ from .config import *
 from .config import load_default_config_from_file_env, load_config_from_file, LOG_CONFIG_SECTION
 from collections import OrderedDict
 from six import StringIO
+import logging
+logger = logging.getLogger(__name__)
 
 
 def _parse_method(func):
     if inspect.ismethod(func):
         func = func.__func__
+
+    if not inspect.isfunction(func):
+        # it's not a function, just return default.
+        return [], 0
+
     arg_info = inspect.getargspec(func)
     args = arg_info.args
     defaults = arg_info.defaults or []
@@ -91,7 +98,7 @@ def _to_dict(s):
 
         return v
     except Exception:
-        print("** failed to convert value='{0}' to type dict".format(s))
+        logger.error("failed to convert value='{0}' to type dict".format(s))
         raise
 
 
@@ -106,7 +113,7 @@ def _to_list(s):
 
         return v
     except Exception:
-        print("** failed to convert value='{0}' to type string list".format(s))
+        logger.error("failed to convert value='{0}' to type string list".format(s))
         raise
 
 
@@ -129,7 +136,7 @@ def _to_int_list(s):
 
         return new_v
     except Exception:
-        print("** failed to convert value='{0}' to type int list".format(s))
+        logger.error("failed to convert value='{0}' to type int list".format(s))
         raise
 
 
@@ -140,7 +147,7 @@ def _to_string_list(s):
 
         return v
     except Exception:
-        print("** failed to convert value='{0}' to type string list".format(s))
+        logger.error("failed to convert value='{0}' to type string list".format(s))
         raise
 
 
@@ -170,7 +177,7 @@ def to_logitem_list(s):
         return new_v
 
     except Exception:
-        print("** failed to convert value='{0}' to type list of log item".format(s))
+        logger.error("failed to convert value='{0}' to type list of log item".format(s))
         raise
 
 
@@ -198,8 +205,8 @@ def _request_maker(cls):
                     return cls.from_json(extjson)
 
             except Exception as ex:
-                print("** fail to load input via method from_json, try to call constructor for cls: "
-                      + str(cls) + "\nex:" + str(ex))
+                logger.warn("fail to load input via method from_json, try to call constructor for cls: "
+                               + str(cls) + "\n\tex:" + str(ex))
 
         method_type = _parse_method_params_from_doc(cls.__doc__)
         j = json.loads(json_str)
@@ -231,11 +238,11 @@ def _requests_maker(*cls_args):
                 obj = _request_maker(cls)(json_str)
                 return obj
             except IOError as ex:
-                print("*** IO error: ", ex, json_str)
+                logger.warn("IO error: %s, %s", ex, json_str)
             except Exception as ex:
                 continue
 
-        print("*** cannot construct relative object for json '{0}' with cls list {1}".format(json_str, cls_args))
+        logger.warn("cannot construct relative object for json '{0}' with cls list {1}".format(json_str, cls_args))
         return json_str
 
     return maker
@@ -250,7 +257,7 @@ def _chained_method_maker(*method_list):
             except Exception as ex:
                 continue
 
-        print("*** cannot construct relative object '{0}' with value '{1}'".format(str(method_list), value))
+        logger.warn("*** cannot construct relative object '{0}' with value '{1}'".format(str(method_list), value))
         return value
 
     return maker
@@ -330,7 +337,7 @@ def _parse_method_params_from_doc(doc):
                 param_handlers[k] = handler
                 continue
 
-            print("***** unknown types: ", k, t)
+            logger.warn("unknown types: %s, %s", k, t)
 
     return param_handlers
 
@@ -427,7 +434,7 @@ def _convert_args(args_values, method_types):
                 try:
                     converted_args[arg] = t(value)
                 except Exception:
-                    print("** failed to convert parameter '{0}' value='{1}' to type {2}".format(arg, value, t))
+                    logger.error("failed to convert parameter '{0}' value='{1}' to type {2}".format(arg, value, t))
                     raise
                 continue
 

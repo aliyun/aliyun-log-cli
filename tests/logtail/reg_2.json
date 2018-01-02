@@ -8,10 +8,11 @@
     "logBeginRegex": ".*",
     "regex": "(\\d+) (\\w+) live in (\\w+)",
     "key": [
-      "time",
+      "time1",
       "who",
       "city"
     ],
+    "timeKey":"time1",
     "timeFormat": "%Y",
 
   
