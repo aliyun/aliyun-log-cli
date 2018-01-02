@@ -17,8 +17,13 @@ Request and Config Class
    ListTopicsRequest
    ListLogstoresRequest
    PutLogsRequest
-   LogtailConfigHelper
-   CommonRegLogConfigDetail
+   LogtailConfigGenerator
+   SeperatorFileConfigDetail
+   SimpleFileConfigDetail
+   FullRegFileConfigDetail
+   JsonFileConfigDetail
+   ApsaraFileConfigDetail
+   SyslogConfigDetail
    MachineGroupDetail
    IndexConfig
    OssShipperConfig
@@ -151,9 +156,14 @@ Definitions
 .. autoclass:: IndexConfig
 .. autoclass:: ListTopicsRequest
 .. autoclass:: ListLogstoresRequest
-.. autoclass:: LogtailConfigHelper
+.. autoclass:: LogtailConfigGenerator
    :members:
-.. autoclass:: CommonRegLogConfigDetail
+.. autoclass:: SeperatorFileConfigDetail
+.. autoclass:: SimpleFileConfigDetail
+.. autoclass:: FullRegFileConfigDetail
+.. autoclass:: JsonFileConfigDetail
+.. autoclass:: ApsaraFileConfigDetail
+.. autoclass:: SyslogConfigDetail
 .. autoclass:: MachineGroupDetail
 .. autoclass:: PutLogsRequest
 .. autoclass:: OssShipperConfig

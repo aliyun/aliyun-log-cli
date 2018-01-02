@@ -42,6 +42,20 @@
 3. aliyun [--help | --version]
 ```
 
+### CLI错误诊断
+
+CLI默认把执行过程中的警告和错误存储在`~/aliyunlogcli.log`中, 也可以配置~/.aliyunlogcli中`__loggging__`来调整错误存储位置和格式:
+
+```ini
+[__logging__]
+filename=  # 默认是: ~/aliyunlogcli.log
+filemode=  # 默认是: a, 可以是: w, a
+format=    # 默认是: %(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s
+datefmt=   # 默认是: "%Y-%m-%d %H:%M:%S", 可以是strftime()兼容的日期/时间格式化字符串
+level=     # 默认是: warn, 可以是info, error, fatal, critical, debug
+```
+
+
 ### 访问秘钥与入口存储与使用
 
 参考[SDK配置](https://help.aliyun.com/document_detail/29064.html?spm=5176.doc29068.2.8.SWJhYZ)
@@ -239,6 +253,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 ```
 
 ##### 全局选项
+
 所有命令都支持如下的全局选项:
 
 ```
@@ -259,14 +274,14 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_project
 - delete_project
 - **copy_project**
-
-   - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
+  - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
 
 ```shell
 > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
 ```
 
-   - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
+  - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
+  - 参考[跨域复制项目组配置](./tutorials/tutorial_manage_cross_region_copy.html)了解如何跨域复制项目组配置.
 
 **日志库**
 
@@ -316,35 +331,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 **Logtail配置**
 
 - create_logtail_config
-   - 部分参数格式:
-
-```json
-{
- "config_name": "config_name2",
- "logstore_name": "logstore2",
- "file_pattern": "file_pattern",
- "time_format": "time_format",
- "log_path": "/log_path",
- "endpoint": "endpoint",
- "log_parse_regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)",
- "log_begin_regex": "xxx.*",
- "reg_keys": [
-   "time",
-   "value"
- ],
- "topic_format": "none",
- "filter_keys": [
-   "time",
-   "value"
- ],
- "filter_keys_reg": [
-   "time",
-   "value"
- ],
- "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
-}
-```
-
+   - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
 - update_logtail_config
 - delete_logtail_config
 - get_logtail_config

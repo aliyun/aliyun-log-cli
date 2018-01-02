@@ -41,6 +41,21 @@
 3. aliyun [--help | --version]
 ```
 
+
+### CLI Troubleshooting
+
+By default, CLI store erros or warnings at `~/aliyunlogcli.log`, it's also configurable via file ~/.aliyunlogcli, section `__loggging__` to adjust the logging level and location: 
+
+```ini
+[__logging__]
+filename=  # default: ~/aliyunlogcli.log
+filemode=  # default: a, could also be: w, a
+format=    # default: %(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s
+datefmt=   # default: "%Y-%m-%d %H:%M:%S", could be strftime() compitable date/time formatting string
+level=     # default: warn, could be: info, error, fatal, critical, debug
+```
+
+
 ### Access Key and Endpoint
 
 Refer to [Configuration](https://www.alibabacloud.com/help/doc-detail/29064.htm?spm=a3c0i.o29008en.b99.182.7724d4ddaTGHgf)
@@ -229,6 +244,7 @@ Mapped to CLI:
 ```
 
 ##### Global options:
+
 All the commands support below optional global options:
 ```
     [--access-id=<value>]
@@ -248,13 +264,15 @@ All the commands support below optional global options:
 - delete_project
 - **copy_project**
 
-   - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
+  - copy all configurations including logstore, logtail, and index config from project to another project which could be in different region. 
 
 ```shell
 > aliyun log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
 ```
 
-   - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
+  - Note: `to_client` is another account configured via `aliyun configure`, it's OK to pass `main` or not to copy inside the same region.
+  - Refer to [Copy project settings cross regions](./tutorials/tutorial_manage_cross_region_copy.html) to learn more. 
+
 
 **logstore**
 
@@ -303,35 +321,7 @@ All the commands support below optional global options:
 **logtail config**
 
 - create_logtail_config
-   - Format of partial parameter:
-
-```json
-{
- "config_name": "config_name2",
- "logstore_name": "logstore2",
- "file_pattern": "file_pattern",
- "time_format": "time_format",
- "log_path": "/log_path",
- "endpoint": "endpoint",
- "log_parse_regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)",
- "log_begin_regex": "xxx.*",
- "reg_keys": [
-   "time",
-   "value"
- ],
- "topic_format": "none",
- "filter_keys": [
-   "time",
-   "value"
- ],
- "filter_keys_reg": [
-   "time",
-   "value"
- ],
- "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
-}
-```
-
+   - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
 - update_logtail_config
 - delete_logtail_config
 - get_logtail_config
