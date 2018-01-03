@@ -193,7 +193,7 @@ def _request_maker(cls):
             try:
                 j = json.loads(json_str)
                 extjson = Util.convert_unicode_to_str(j)
-                if option_arg_pos == 0 :
+                if option_arg_pos == 0:
                     obj = cls()
                     new_obj = obj.from_json(extjson)
                     if new_obj is None:
@@ -206,7 +206,7 @@ def _request_maker(cls):
 
             except Exception as ex:
                 logger.warn("fail to load input via method from_json, try to call constructor for cls: "
-                               + str(cls) + "\n\tex:" + str(ex))
+                            + str(cls) + "\n\tex:" + str(ex))
 
         method_type = _parse_method_params_from_doc(cls.__doc__)
         j = json.loads(json_str)
@@ -240,7 +240,7 @@ def _requests_maker(*cls_args):
             except IOError as ex:
                 logger.warn("IO error: %s, %s", ex, json_str)
             except Exception as ex:
-                continue
+                logger.warn("skip it to next, ignore error: " + str(ex))
 
         logger.warn("cannot construct relative object for json '{0}' with cls list {1}".format(json_str, cls_args))
         return json_str
@@ -255,7 +255,7 @@ def _chained_method_maker(*method_list):
                 obj = method(value)
                 return obj
             except Exception as ex:
-                continue
+                logger.warn("error to call {0}, detail: {1}, skip to next".format(method, str(ex)))
 
         logger.warn("*** cannot construct relative object '{0}' with value '{1}'".format(str(method_list), value))
         return value

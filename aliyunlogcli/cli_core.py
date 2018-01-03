@@ -44,7 +44,8 @@ def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONF
     with open(LOG_CREDS_FILENAME, 'w') as configfile:
         config.write(configfile)
 
-def docopt_ex(doc, usage, method_param_usage, help=True, version=None):
+
+def docopt_ex(doc, usage, method_param_usage, hlp=True, ver=None):
     argv = sys.argv[1:]
 
     # support customized help
@@ -55,7 +56,7 @@ def docopt_ex(doc, usage, method_param_usage, help=True, version=None):
     first_cmd = argv[0]
 
     try:
-        return docopt(doc, help=help, version=version)
+        return docopt(doc, help=hlp, version=ver)
     except DocoptExit as ex:
         # show customized error
         if first_cmd == "configure":
@@ -93,9 +94,10 @@ def show_result(result):
 
 
 def main():
-    method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient, LOG_CLIENT_METHOD_BLACK_LIST)
+    method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient,
+                                                                                           LOG_CLIENT_METHOD_BLACK_LIST)
 
-    arguments = docopt_ex(optdoc, usage, method_param_usage, help=False, version=__version__)
+    arguments = docopt_ex(optdoc, usage, method_param_usage, hlp=False, ver=__version__)
     if arguments is None:
         return
 

@@ -156,15 +156,15 @@ def load_debug_from_config_file():
         filename = _get_section_option(config, client_name, 'filename', None)
         level = _get_section_option(config, client_name, 'level', None)
         filemode = _get_section_option(config, client_name, 'filemode', None)
-        format = _get_section_option(config, client_name, 'format', None)
+        fmt = _get_section_option(config, client_name, 'format', None)
         datefmt = _get_section_option(config, client_name, 'datefmt', None)
 
         if filename is not None:
             opt['filename'] = filename
         if filemode is not None:
             opt['filemode'] = filemode
-        if format is not None:
-            opt['format'] = format
+        if fmt is not None:
+            opt['format'] = fmt
         if datefmt is not None:
             opt['datefmt'] = datefmt
 
