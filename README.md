@@ -188,7 +188,7 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
 **Parameter Validation**
 
 - Mandatory check: if one mandatory parameter is missed, it will report error with usage info.
-- Format of parameter's value will be validated. e.g. 例如int, bool, string list, special data structure.
+- Format of parameter's value will be validated. e.g. int, bool, string list, special data structure.
 - for boolean, it support:
   - true (case insensitive), T, 1
   - false (case insensitive), F, 0
@@ -226,10 +226,10 @@ which outputs:
 }
 ```
 
-You could use below `--jmse-filter` to filter it:
+You could use below `--jmes-filter` to filter it:
 
 ```shell
-> aliyun log get_logs ... --jmse-filter="logstores[2:]"
+> aliyun log get_logs ... --jmes-filter="logstores[2:]"
 ```
 
 Then you will be the name list of second logstore and later ones as below:
@@ -243,7 +243,7 @@ Then you will be the name list of second logstore and later ones as below:
 **Normal Case**
 
 Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.LogClient`. The parameters of command line is mapped to the parameters of methods.
-For the detail spec of parameters, please refer to the [Python SDK API Spec](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
+For the detail spec of parameters, please refer to the [Mapped Python SDK API Spec](http://aliyun-log-cli.readthedocs.io/en/latest/api.html)
 
 **Examples:**
 

@@ -238,7 +238,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 通过命令:
 
 ```shell
-> aliyun log get_logs ... --jmse-filter="logstores[2:]"
+> aliyun log get_logs ... --jmes-filter="logstores[2:]"
 ```
 
 可以获取第二以及后面的logstore的名字, 输出:
@@ -252,7 +252,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 **一般情况**
 
 实际上CLI实现依赖于阿里云日志服务的Python SDK, 子命令对应于`aliyun.log.LogClient`的方法, 参数和可选参数也一一对应.
-具体支持的API参数, 请参考[Python SDK API规范](http://aliyun-log-python-sdk.readthedocs.io/api.html#aliyun.log.LogClient)
+具体支持的API参数, 请参考[映射的Python SDK API](http://aliyun-log-cli.readthedocs.io/en/latest/api.html)
 
 **例子:**
 

@@ -122,7 +122,7 @@ def main():
                 try:
                     show_result(jmespath.compile(jmes_filter).search(ret.get_body()))
                 except jmespath.exceptions.ParseError as ex:
-                    logger.error("fail to parse with JMSE path, original data: %s", ex)
+                    logger.error("fail to parse with JMES path, original data: %s", ex)
                     show_result(ret.get_body())
                     exit(1)
             elif ret is not None:
