@@ -9,6 +9,24 @@
 
 [中文版README](https://github.com/aliyun/aliyun-log-cli/blob/master/README_CN.md)
 
+## Backgroud
+
+The Alicloud log service provides with Web and SDK flavor to operate log service and analyzie logs. To make it more convinient to do automation, we release this command line interface (CLI).
+
+### Introduction
+
+Alicloud log service command line console, support almost all operations as web. It also supports incomplete log query check and query cross multiple pages. It could even do project settings copy cross multiple regions.
+
+### Major Features
+
+- Support almost all 50+ REST API of log service. 
+- Multiple account support to support cross region operation.
+- Log query incomplete check and automatically query cross pagination. 
+- Multiple confidential storage types, from file, commandline to env variables.
+- Support command line based or file based inputs, complete formation validations.
+- Support JMES filter to do further process on results, e.g. select specific fields from json. 
+- Cross platforms support (Windows, Linux and Mac), Python based and friendly to Py2 and Py3 even Pypy. Support Pip installation.
+
 
 ### Installation
 
