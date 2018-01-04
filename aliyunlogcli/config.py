@@ -7,7 +7,7 @@ from jmespath.exceptions import ParseError
 import logging
 
 LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
-                                'set_user_agent', 'get_unicode',
+                                'set_user_agent', 'get_unicode', 'list_logstores'
                                 )
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')

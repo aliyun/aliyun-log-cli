@@ -188,8 +188,8 @@ aliyun log list_shards --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore
 aliyun log list_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
 > {"count": 0, "shipper": [], "total": 0}
 
-aliyun log list_logstores --request={\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\"}
-> {"count": 3, "logstores": ["logstore3", "logstore1", "logstore2"], "total": 3}
+#aliyun log list_logstores --request={\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\"}
+#> {"count": 3, "logstores": ["logstore3", "logstore1", "logstore2"], "total": 3}
 
 aliyun log list_topics --request="{\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\", \"logstore\":\"logstore1\", \"token\":\"token1212\", \"line\":123}"
 > ["topic1"]

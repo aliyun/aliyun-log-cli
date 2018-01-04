@@ -308,7 +308,6 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_logstore
 - update_logstore
 - list_logstore
-- list_topics
 
 
 **分区**
@@ -440,6 +439,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - update_index
 - delete_index
 - get_index_config
+- list_topics
 
 **游标**
 

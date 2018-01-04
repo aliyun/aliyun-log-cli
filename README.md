@@ -299,7 +299,6 @@ All the commands support below optional global options:
 - get_logstore
 - update_logstore
 - list_logstore
-- list_topics
 
 
 **shard**
@@ -430,6 +429,7 @@ All the commands support below optional global options:
 - update_index
 - delete_index
 - get_index_config
+- list_topics
 
 **cursor**
 
