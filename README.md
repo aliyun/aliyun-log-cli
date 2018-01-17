@@ -31,7 +31,7 @@
 * [Command Reference](#command-reference)
   * [Command Specification](#command-specification)
   * [Alias](#alias)
-     * [Subcommand and parameters](#subcommand-and-parameters)
+  * [Subcommand and parameters](#subcommand-and-parameters)
   * [Global options](#global-options)
   * [Command categories](#command-categories)
      * [Project management](#1-project-management)
@@ -347,7 +347,7 @@ All the commands support below optional global options:
 11. [Consumer group management](#11-consumer-group-management)
 
 
-#### 1. Project management
+<h3 id="1-project-management">1. Project management</h3>
 
 - list_project
 - create_project
@@ -365,7 +365,7 @@ All the commands support below optional global options:
   - Refer to [Copy project settings cross regions](./tutorials/tutorial_manage_cross_region_copy.html) to learn more. 
 
 
-#### 2. Logstore management
+<h3 id="2-logstore-management">2. Logstore management</h3>
 
 - create_logstore
 - delete_logstore
@@ -374,14 +374,14 @@ All the commands support below optional global options:
 - list_logstore
 
 
-#### 3. Shard management
+<h3 id="3-shard-management">3. Shard management</h3>
 
 - list_shards
 - split_shard
 - merge_shard
 
 
-#### 4. Machine group management
+<h3 id="4-machine-group-management">4. Machine group management</h3>
 
 - create_machine_group
    - Format of partial parameter:
@@ -408,7 +408,8 @@ All the commands support below optional global options:
 - list_machine_group
 - list_machines
 
-#### 5. Logtail config management
+
+<h3 id="5-logtail-config-management">5. Logtail config management</h3>
 
 - create_logtail_config
    - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
@@ -417,16 +418,14 @@ All the commands support below optional global options:
 - get_logtail_config
 - list_logtail_config
 
-
-#### 6. Machine group and Logtail Config Mapping
+<h3 id="6-machine-group-and-logtail-config-mapping">6. Machine group and Logtail Config Mapping</h3>
 
 - apply_config_to_machine_group
 - remove_config_to_machine_group
 - get_machine_group_applied_configs
 - get_config_applied_machine_groups
 
-
-#### 7. Index management
+<h3 id="7-index-management">7. Index management</h3>
 
 - create_index
    - Format of partial parameter:
@@ -504,7 +503,7 @@ All the commands support below optional global options:
 - get_index_config
 - list_topics
 
-#### 8. Cursor management
+<h3 id="8-cursor-management">8. Cursor management</h3>
 
 - get_cursor
 - get_cursor_time
@@ -512,7 +511,8 @@ All the commands support below optional global options:
 - get_begin_cursor
 - get_end_cursor
 
-#### 9. Logs write and consume
+
+<h3 id="9-logs-write-and-consume">9. Logs write and consume</h3>
 
 - put_logs
   - Format of parameter:
@@ -585,9 +585,9 @@ All the commands support below optional global options:
 - get_histograms
 - pull_logs
 
-#### 10. Shipper management
-
+<h3 id="10-shipper-management">10. Shipper management</h3>
 - create_shipper
+
   - Format of partial parameter:
 
 ```json
@@ -608,7 +608,7 @@ All the commands support below optional global options:
 - get_shipper_tasks
 - retry_shipper_tasks
 
-#### 11. Consumer group management
+<h3 id="#11-consumer-group-management">11. Consumer group management</h3>
 
 - create_consumer_group
 - update_consumer_group

@@ -9,7 +9,7 @@
 
 [README in English](https://github.com/aliyun/aliyun-log-cli/blob/master/README.md)
 
-## 内容
+<h1 id="内容">内容</h1>
 
 * [简介](#简介)
   * [基本介绍](#基本介绍)
@@ -49,15 +49,15 @@
 * [其他资源](#其他资源)
 
 
-## 简介
+<h1 id="简介">简介</h1>
 
 日志服务(SLS)提供了Web和SDK的方式进行日志采集、管理、查询和分析。为了满足越来越多的的自动化日志配置查询分析的需求，现重磅发布SLS的命令行工具(Command Line Interface - CLI)。
 
-### 基本介绍
+<h2 id="基本介绍">基本介绍</h2>
 
 日志服务命令行工具CLI支持几乎所有操作，日志查询支持完整性检查与自动分页、支持多账户与跨域复制。
 
-### 主要功能
+<h2 id="主要功能">主要功能</h2>
 
 - 支持大部分的日志服务REST接口。
 - 支持多账号，方便测试与跨域操作。
@@ -68,9 +68,9 @@
 - 跨平台（Windows/Linux和Mac）支持，基于Python（Py2.6+和Py3.3+平台友好），支持Pip安装。
 
 
-## 安装
+<h1 id="安装">安装</h1>
 
-### 操作系统
+<h2 id="操作系统">操作系统</h2>
 
 日志服务CLI支持以下操作系统：
 
@@ -78,11 +78,11 @@
 - Mac OS
 - Linux
 
-### 支持版本
+<h2 id="支持版本">支持版本</h2>
 
 Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 
-### 安装方式
+<h2 id="安装方式">安装方式</h2>
 
 执行以下命令安装日志服务CLI。
 
@@ -90,19 +90,19 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 > pip install -U aliyun-log-cli
 ```
 
-### 完整参数列表
+<h2 id="完整参数列表">完整参数列表</h2>
 
 执行以下命令查看日志服务CLI参数列表。
 ```shell
 > aliyun --help
 ```
 
-## 配置说明
+<h1 id="配置说明">配置说明</h1>
 
 参考[SDK配置](https://help.aliyun.com/document_detail/29064.html?spm=5176.doc29068.2.8.SWJhYZ)获得访问秘钥的ID和Key以及访问入口Endpoint，构建一个LogClient的客户端。
 
 
-### 配置AK与服务入口
+<h2 id="配置AK与服务入口">配置AK与服务入口</h2>
 
 日志服务CLI支持通过以下三种方式配置访问秘钥与入口，如果同时配置多种方式, 优先顺序是: 参数, 环境变量, 最后是本地配置文件. 
 
@@ -132,7 +132,7 @@ access-key=
 endpoint=
 ```
 
-### 修改配置文件
+<h2 id="修改配置文件">修改配置文件</h2>
 
 Configure命令可以修改配置文件内容.
 
@@ -140,7 +140,7 @@ Configure命令可以修改配置文件内容.
 > aliyun configure access_id access_key cn-beijing.log.aliyun.com
 ```
 
-### 多账户
+<h2 id="多账户">多账户</h2>
 
 1. 存储于多个账户, 以便在特定情况下使用(例如测试):
 
@@ -184,9 +184,9 @@ endpoint=cn-hangzhou.log.aliyun.com
 将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
 
 
-## 输入输出
+<h1 id="输入输出">输入输出</h1>
 
-### 输入
+<h2 id="输入">输入</h2>
 
 1. 一般输入
 
@@ -219,7 +219,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 }
 ```
 
-### 参数校验
+<h2 id="参数校验">参数校验</h2>
 
 - 必填的参数没有填写时会报错, 输出参数列表
 
@@ -233,7 +233,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 - 字符串列表支持的形式为["s1", "s2"]
 
 
-### 输出
+<h2 id="输出">输出</h2>
 
 1. 对于Create, Update, Delete操作, 一般脚本无输出, exit code=0表示成功.
 
@@ -248,7 +248,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 }
 ```
 
-### 输出过滤
+<h2 id="输出过滤">输出过滤</h2>
 
 支持通过[JMES](http://jmespath.org/)过滤输出的结果.
 
@@ -280,9 +280,9 @@ endpoint=cn-hangzhou.log.aliyun.com
 ["logstore1", "logstore2"]
 ```
 
-## 命令参考
+<h1 id="命令参考">命令参考</h1>
 
-### 命令规范
+<h2 id="命令规范">命令规范</h2>
 
 ```shell
 1. aliyun log <subcommand> [parameters | global options]
@@ -291,7 +291,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 ```
 
 
-### 命令别名
+<h2 id="命令别名">命令别名</h2>
 日志服务的CLI也有一个别名`aliyunlog`, 如果`aliyun`这个命令冲突了, 可以尝试使用`aliyunlog`:
 
 ```shell
@@ -300,7 +300,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 3. aliyunlog [--help | --version]
 ```
 
-### 子命令与参数
+<h2 id="子命令与参数">子命令与参数</h2>
 
 日志服务命令行工具背后依赖于日志服务的Python SDK, 相关子命令对应于`aliyun.log.LogClient`的方法, 参数和可选参数也一一对应.
 具体支持的API参数, 请参考[映射的Python SDK API](http://aliyun-log-cli.readthedocs.io/en/latest/api.html)
@@ -321,7 +321,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
   [--shard_count=<value>]
 ```
 
-### 全局选项
+<h2 id="全局选项">全局选项</h2>
 
 所有命令都支持如下的全局选项:
 
@@ -333,7 +333,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
     [--jmes-filter=<value>]
 ```
 
-### 命令类别
+<h2 id="命令类别">命令类别</h2>
 
  1. [项目组管理](#1-项目组管理)
  2. [日志库管理](#2-日志库管理)
@@ -347,7 +347,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
  10. [投递管理](#10-投递管理)
  11. [消费组管理](#11-消费组管理)
 
-#### 1. 项目组管理
+<h3 id="1-项目组管理">1. 项目组管理</h3>
 
 - list_project
 - create_project
@@ -363,7 +363,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
   - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
   - 参考[跨域复制项目组配置](./tutorials/tutorial_manage_cross_region_copy.html)了解如何跨域复制项目组配置.
 
-#### 2. 日志库管理
+<h3 id="2-日志库管理">2. 日志库管理</h3>
 
 - create_logstore
 - delete_logstore
@@ -372,7 +372,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - list_logstore
 
 
-#### 3. 分区管理
+<h3 id="3-分区管理">3. 分区管理</h3>
 
 - list_shards
 - split_shard
@@ -380,7 +380,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 
 
 
-#### 4. 机器组管理
+<h3 id="4-机器组管理">4. 机器组管理</h3>
 
 - create_machine_group
    - 部分参数格式:
@@ -407,7 +407,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - list_machine_group
 - list_machines
 
-#### 5. Logtail配置管理
+<h3 id="5-Logtail配置管理">5. Logtail配置管理</h3>
 
 - create_logtail_config
    - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
@@ -417,7 +417,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - list_logtail_config
 
 
-#### 6. 机器组与Logtail配置关联
+<h3 id="6-机器组与Logtail配置关联">6. 机器组与Logtail配置关联</h3>
 
 - apply_config_to_machine_group
 - remove_config_to_machine_group
@@ -425,7 +425,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_config_applied_machine_groups
 
 
-#### 7. 索引管理
+<h3 id="7-索引管理">7. 索引管理</h3>
 
 - create_index
    - 部分参数格式:
@@ -503,7 +503,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_index_config
 - list_topics
 
-#### 8. 游标操作
+<h3 id="8-游标操作">8. 游标操作</h3>
 
 - get_cursor
 - get_cursor_time
@@ -511,7 +511,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_begin_cursor
 - get_end_cursor
 
-#### 9. 日志读写与消费
+<h3 id="9-日志读写与消费">9. 日志读写与消费</h3>
 
 - put_logs
   - 参数格式:
@@ -584,7 +584,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_histograms
 - pull_logs
 
-#### 10. 投递管理
+<h3 id="10-投递管理">10. 投递管理</h3>
 
 - create_shipper
   - 部分参数格式:
@@ -607,7 +607,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_shipper_tasks
 - retry_shipper_tasks
 
-#### 11. 消费组管理
+<h3 id="11-消费组管理">11. 消费组管理</h3>
 
 - create_consumer_group
 - update_consumer_group
@@ -617,7 +617,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - get_check_point
 
 
-## 错误诊断
+<h1 id="错误诊断">错误诊断</h1>
 
 CLI默认把执行过程中的警告和错误存储在`~/aliyunlogcli.log`中, 也可以配置~/.aliyunlogcli中`__loggging__`来调整错误存储位置和格式:
 
@@ -630,7 +630,7 @@ datefmt=   # 默认是: "%Y-%m-%d %H:%M:%S", 可以是strftime()兼容的日期/
 level=     # 默认是: warn, 可以是info, error, fatal, critical, debug
 ```
 
-## 其他资源
+<h1 id="其他资源">其他资源</h1>
 
 1. 日志服务产品介绍：http://www.aliyun.com/product/sls/
 2. 日志服务产品文档：https://help.aliyun.com/product/28958.html
