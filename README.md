@@ -9,8 +9,7 @@
 
 [中文版README](https://github.com/aliyun/aliyun-log-cli/blob/master/README_CN.md)
 
-Table of Contents
-=================
+## Table of Contents
  * [Backgroud](#backgroud)
  * [Introduction](#introduction)
  * [Major Features](#major-features)

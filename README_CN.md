@@ -10,8 +10,7 @@
 [README in English](https://github.com/aliyun/aliyun-log-cli/blob/master/README.md)
 
 
-内容
-=================
+## 内容
  * [背景](#背景)
  * [基本介绍](#基本介绍)
  * [主要功能](#主要功能)
