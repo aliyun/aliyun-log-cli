@@ -59,6 +59,15 @@ Alicloud log service command line console, support almost all operations as web.
 3. aliyun [--help | --version]
 ```
 
+#### alias
+there's also a alias `aliyunlog` for the CLI in case the command `aliyun` conflicts with others.
+
+```shell
+1. aliyunlog log <subcommand> [parameters | global options]
+2. aliyunlog configure <access_id> <access-key> <endpoint>
+3. aliyunlog [--help | --version]
+```
+
 
 ### CLI Troubleshooting
 

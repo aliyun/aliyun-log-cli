@@ -49,6 +49,7 @@ setup(
     entry_points={
         'console_scripts': [
             'aliyun=aliyunlogcli.cli:main',
+            'aliyunlog=aliyunlogcli.cli:main'
         ],
     }
 )

@@ -60,6 +60,17 @@ SLS命令行控制台, 支持几乎所有操作, 日志查询支持完整性检�
 3. aliyun [--help | --version]
 ```
 
+
+#### 别名
+日志服务的CLI也有一个别名`aliyunlog`, 如果`aliyun`这个命令冲突了, 可以尝试使用`aliyunlog`:
+
+```shell
+1. aliyunlog log <subcommand> [parameters | global options]
+2. aliyunlog configure <access_id> <access-key> <endpoint>
+3. aliyunlog [--help | --version]
+```
+
+
 ### CLI错误诊断
 
 CLI默认把执行过程中的警告和错误存储在`~/aliyunlogcli.log`中, 也可以配置~/.aliyunlogcli中`__loggging__`来调整错误存储位置和格式:
