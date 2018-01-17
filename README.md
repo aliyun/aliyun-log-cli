@@ -9,6 +9,27 @@
 
 [中文版README](https://github.com/aliyun/aliyun-log-cli/blob/master/README_CN.md)
 
+Table of Contents
+=================
+  * [Backgroud](#backgroud)
+     * [Introduction](#introduction)
+     * [Major Features](#major-features)
+     * [Installation](#installation)
+        * [Supported Python:](#supported-python)
+        * [Full Usage list:](#full-usage-list)
+     * [CLI](#cli)
+        * [Alias](#alias)
+     * [CLI Troubleshooting](#cli-troubleshooting)
+     * [Access Key and Endpoint](#access-key-and-endpoint)
+     * [Inputs](#inputs)
+     * [Output](#output)
+     * [Filter output](#filter-output)
+     * [Supported commands](#supported-commands)
+           * [Global options](#global-options)
+        * [Full command list](#full-command-list)
+  * [Other resources](#other-resources)
+
+
 ## Backgroud
 
 The Alicloud log service provides with Web and SDK flavor to operate log service and analyzie logs. To make it more convinient to do automation, we release this command line interface (CLI).
