@@ -299,7 +299,7 @@ There's also an alias `aliyunlog` for the CLI in case the command `aliyun` confl
 3. aliyunlog [--help | --version]
 ```
 
-### Subcommand and parameters
+## Subcommand and parameters
 
 Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.LogClient`. The parameters of command line is mapped to the parameters of methods.
 For the detail spec of parameters, please refer to the [Mapped Python SDK API Spec](http://aliyun-log-cli.readthedocs.io/en/latest/api.html)
