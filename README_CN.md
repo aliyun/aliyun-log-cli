@@ -10,6 +10,7 @@
 [README in English](https://github.com/aliyun/aliyun-log-cli/blob/master/README.md)
 
 # 内容
+
 * [简介](#简介)
   * [基本介绍](#基本介绍)
   * [主要功能](#主要功能)
@@ -103,7 +104,7 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 
 ## 配置AK与服务入口
 
-日志服务CLI支持通过以下三种方式配置访问秘钥与入口，多种方式都配置的情况下, 优先采用参数, 然后是黄金变量, 最后是本地配置文件. 
+日志服务CLI支持通过以下三种方式配置访问秘钥与入口，如果同时配置多种方式, 优先顺序是: 参数, 环境变量, 最后是本地配置文件. 
 
 - 参数
 
@@ -111,8 +112,7 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 > aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
 ```
 
-  **注意:**
-  - 任意log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
+  **注意:** 任意log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
 
 
 - 环境变量
@@ -142,7 +142,7 @@ Configure命令可以修改配置文件内容.
 
 ## 多账户
 
-1. 存储与多个账户, 以便在特定情况下使用(例如测试):
+1. 存储于多个账户, 以便在特定情况下使用(例如测试):
 
 ```shell
 > aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
@@ -232,6 +232,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 
 - 字符串列表支持的形式为["s1", "s2"]
 
+
 ## 输出
 
 1. 对于Create, Update, Delete操作, 一般脚本无输出, exit code=0表示成功.
@@ -290,7 +291,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 ```
 
 
-### 命令别名
+## 命令别名
 日志服务的CLI也有一个别名`aliyunlog`, 如果`aliyun`这个命令冲突了, 可以尝试使用`aliyunlog`:
 
 ```shell
@@ -299,7 +300,7 @@ endpoint=cn-hangzhou.log.aliyun.com
 3. aliyunlog [--help | --version]
 ```
 
-### 子命令与参数
+## 子命令与参数
 
 日志服务命令行工具背后依赖于日志服务的Python SDK, 相关子命令对应于`aliyun.log.LogClient`的方法, 参数和可选参数也一一对应.
 具体支持的API参数, 请参考[映射的Python SDK API](http://aliyun-log-cli.readthedocs.io/en/latest/api.html)
@@ -320,7 +321,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
   [--shard_count=<value>]
 ```
 
-### 全局选项
+## 全局选项
 
 所有命令都支持如下的全局选项:
 

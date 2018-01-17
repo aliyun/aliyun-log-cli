@@ -9,35 +9,55 @@
 
 [中文版README](https://github.com/aliyun/aliyun-log-cli/blob/master/README_CN.md)
 
-## Table of Contents
- * [Backgroud](#backgroud)
- * [Introduction](#introduction)
- * [Major Features](#major-features)
- * [Installation](#installation)
-    * [Supported Python:](#supported-python)
-    * [Full Usage list:](#full-usage-list)
- * [CLI](#cli)
-    * [Alias](#alias)
- * [CLI Troubleshooting](#cli-troubleshooting)
- * [Access Key and Endpoint](#access-key-and-endpoint)
- * [Inputs](#inputs)
- * [Output](#output)
- * [Filter output](#filter-output)
- * [Supported commands](#supported-commands)
-    * [Global options](#global-options)
-    * [Full command list](#full-command-list)
- * [Other resources](#other-resources)
+# Content
+
+* [Introduction](#introduction)
+  * [Brief](#brief)
+  * [Major Features](#major-features)
+* [Installation](#installation)
+  * [Operation System](#operation-system)
+  * [Supported Version](#supported-version)
+  * [Installation Method](#installation-method)
+  * [Full Usage list](#full-usage-list)
+* [Configure CLI](#configure-cli)
+  * [Configure AK and Endpoint](#configure-ak-and-endpoint)
+  * [Modify the configuration file](#modify-the-configuration-file)
+  * [Multiple Account](#multiple-account)
+* [Input and Output](#input-and-output)
+  * [Inputs](#inputs)
+  * [Parameter Validation](#parameter-validation)
+  * [Output](#output)
+  * [Filter output](#filter-output)
+* [Command Reference](#command-reference)
+  * [Command Specification](#command-specification)
+  * [Alias](#alias)
+     * [Subcommand and parameters](#subcommand-and-parameters)
+  * [Global options](#global-options)
+  * [Command categories](#command-categories)
+     * [Project management](#1-project-management)
+     * [Logstore management](#2-logstore-management)
+     * [Shard management](#3-shard-management)
+     * [Machine group management](#4-machine-group-management)
+     * [Logtail config management](#5-logtail-config-management)
+     * [Machine group and Logtail Config Mapping](#6-machine-group-and-logtail-config-mapping)
+     * [Index management](#7-index-management)
+     * [Cursor management](#8-cursor-management)
+     * [Logs write and consume](#9-logs-write-and-consume)
+     * [Shipper management](#10-shipper-management)
+     * [Consumer group management](#11-consumer-group-management)
+  * [Troubleshooting](#troubleshooting)
+* [Other resources](#other-resources)
 
 
-## Backgroud
+# Introduction
 
 The Alicloud log service provides with Web and SDK flavor to operate log service and analyzie logs. To make it more convinient to do automation, we release this command line interface (CLI).
 
-### Introduction
+## Brief
 
 Alicloud log service command line console, support almost all operations as web. It also supports incomplete log query check and query cross multiple pages. It could even do project settings copy cross multiple regions.
 
-### Major Features
+## Major Features
 
 - Support almost all 50+ REST API of log service. 
 - Multiple account support to support cross region operation.
@@ -48,72 +68,49 @@ Alicloud log service command line console, support almost all operations as web.
 - Cross platforms support (Windows, Linux and Mac), Python based and friendly to Py2 and Py3 even Pypy. Support Pip installation.
 
 
-### Installation
+# Installation
+
+## Operation System
+
+The CLI supports below operation system:
+
+- Windows
+- Mac
+- Linux
+
+## Supported Version
+
+Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
+
+## Installation Method
+
+Run below command to install the CLI: 
 
 ```shell
 > pip install -U aliyun-log-cli
 ```
 
-**supported platforms**:
 
-- windows
-- mac
-- linux
+## Full Usage list
 
-#### Supported Python:
-- Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
-
-
-#### Full Usage list:
+Run below command to get the full usage list: 
 
 ```shell
 > aliyun --help
 ```
 
 
-### CLI
-
-```shell
-1. aliyun log <subcommand> [parameters | global options]
-2. aliyun configure <access_id> <access-key> <endpoint>
-3. aliyun [--help | --version]
-```
-
-#### Alias
-There's also an alias `aliyunlog` for the CLI in case the command `aliyun` conflicts with others.
-
-```shell
-1. aliyunlog log <subcommand> [parameters | global options]
-2. aliyunlog configure <access_id> <access-key> <endpoint>
-3. aliyunlog [--help | --version]
-```
-
-
-### CLI Troubleshooting
-
-By default, CLI store erros or warnings at `~/aliyunlogcli.log`, it's also configurable via file ~/.aliyunlogcli, section `__loggging__` to adjust the logging level and location: 
-
-```ini
-[__logging__]
-filename=  # default: ~/aliyunlogcli.log
-filemode=  # default: a, could also be: w, a
-format=    # default: %(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s
-datefmt=   # default: "%Y-%m-%d %H:%M:%S", could be strftime() compitable date/time formatting string
-level=     # default: warn, could be: info, error, fatal, critical, debug
-```
-
-
-### Access Key and Endpoint
+# Configure CLI
 
 Refer to [Configuration](https://www.alibabacloud.com/help/doc-detail/29064.htm?spm=a3c0i.o29008en.b99.182.7724d4ddaTGHgf)
 to get the access ID/key and endpoints.
 
+## Configure AK and Endpoint
+
 There're three ways to configure the access key and endpoint and they're prioritized as below:
 
 
-**Priority**
-
-1. Parameters
+- Parameters
 
 ```shell
 > aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
@@ -121,12 +118,13 @@ There're three ways to configure the access key and endpoint and they're priorit
 
   **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
 
-2. Environment Variables
+- Environment Variables
+
   - ALIYUN_LOG_CLI_ACCESSID
   - ALIYUN_LOG_CLI_ACCESSKEY
   - ALIYUN_LOG_CLI_ENDPOINT
 
-3. Local configuration file
+- Local configuration file
 
   You could store them at `~/.aliyunlogcli`, the default section name is `main`
 
@@ -137,16 +135,18 @@ access-key=
 endpoint=
 ```
 
-  **You could use the command "configure" to store them directly.**
+## Modify the configuration file
+
+Use the command "configure" to modify the configuration file: 
 
 ```shell
 > aliyun configure access_id access_key cn-beijing.log.aliyun.com
 ```
 
 
-**Multiple Account**
+## Multiple Account
 
-1. You could store multiple accounts for some use cases (e.g. test, multiple region operations)
+1. Store multiple accounts for some use cases (e.g. test, multiple region operations)
 
 ```shell
 > aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
@@ -167,13 +167,15 @@ access-key=access_key2
 endpoint=cn-hangzhou.log.aliyun.com
 ```
 
-2. Use specific account:
+2. Use specific account
 
 Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
 ```shell
 > aliyun log create_project ..... --client-name=test
 ```
 It will use `test` to create the project.
+
+3. Other Case
 
 In some case, we need to operate cross regions, e.g.
 
@@ -184,7 +186,11 @@ In some case, we need to operate cross regions, e.g.
 It will use account `main` to copy project `p1` in its region to another region under account `test`
 
 
-### Inputs
+# Input and Output
+
+
+## Inputs
+
 1. Normally case:
 
 ```shell
@@ -214,19 +220,25 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
 }
 ```
 
-**Parameter Validation**
+## Parameter Validation
 
 - Mandatory check: if one mandatory parameter is missed, it will report error with usage info.
+
 - Format of parameter's value will be validated. e.g. int, bool, string list, special data structure.
+
 - for boolean, it support:
+
   - true (case insensitive), T, 1
   - false (case insensitive), F, 0
-- String list support as:
-  - ["s1", "s2"]
+  
+- String list support as ["s1", "s2"]
 
-### Output
+## Output
+
 1. For operations like Create, Update and Delete, there's no output except the exit code is 0 which means success.
+
 2. For operations like Get and List, it will output in json format.
+
 3. For errors, it will report in json format as below:
 
 
@@ -237,7 +249,8 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
 }
 ```
 
-### Filter output
+## Filter output
+
 It's supported to filter output via [JMES](http://jmespath.org/):
 
 Examples:
@@ -267,9 +280,26 @@ Then you will be the name list of second logstore and later ones as below:
 ["logstore1", "logstore2"]
 ```
 
-### Supported commands:
+# Command Reference
 
-**Normal Case**
+## Command Specification
+
+```shell
+1. aliyun log <subcommand> [parameters | global options]
+2. aliyun configure <access_id> <access-key> <endpoint>
+3. aliyun [--help | --version]
+```
+
+## Alias
+There's also an alias `aliyunlog` for the CLI in case the command `aliyun` conflicts with others.
+
+```shell
+1. aliyunlog log <subcommand> [parameters | global options]
+2. aliyunlog configure <access_id> <access-key> <endpoint>
+3. aliyunlog [--help | --version]
+```
+
+### Subcommand and parameters
 
 Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.LogClient`. The parameters of command line is mapped to the parameters of methods.
 For the detail spec of parameters, please refer to the [Mapped Python SDK API Spec](http://aliyun-log-cli.readthedocs.io/en/latest/api.html)
@@ -290,9 +320,10 @@ Mapped to CLI:
   [--shard_count=<value>]
 ```
 
-##### Global options:
+## Global options
 
 All the commands support below optional global options:
+
 ```
     [--access-id=<value>]
     [--access-key=<value>]
@@ -301,9 +332,22 @@ All the commands support below optional global options:
     [--jmes-filter=<value>]
 ```
 
-#### Full command list:
+## Command categories
 
-**project**
+1. [Project management](#1-project-management)
+2. [Logstore management](#2-logstore-management)
+3. [Shard management](#3-shard-management)
+4. [Machine group management](#4-machine-group-management)
+5. [Logtail config management](#5-logtail-config-management)
+6. [Machine group and Logtail Config Mapping](#6-machine-group-and-logtail-config-mapping)
+7. [Index management](#7-index-management)
+8. [Cursor management](#8-cursor-management)
+9. [Logs write and consume](#9-logs-write-and-consume)
+10. [Shipper management](#10-shipper-management)
+11. [Consumer group management](#11-consumer-group-management)
+
+
+### 1. Project management
 
 - list_project
 - create_project
@@ -321,7 +365,7 @@ All the commands support below optional global options:
   - Refer to [Copy project settings cross regions](./tutorials/tutorial_manage_cross_region_copy.html) to learn more. 
 
 
-**logstore**
+### 2. Logstore management
 
 - create_logstore
 - delete_logstore
@@ -330,14 +374,14 @@ All the commands support below optional global options:
 - list_logstore
 
 
-**shard**
+### 3. Shard management
 
 - list_shards
 - split_shard
 - merge_shard
 
 
-**machine group**
+### 4. Machine group management
 
 - create_machine_group
    - Format of partial parameter:
@@ -364,7 +408,7 @@ All the commands support below optional global options:
 - list_machine_group
 - list_machines
 
-**logtail config**
+### 5. Logtail config management
 
 - create_logtail_config
    - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
@@ -374,7 +418,7 @@ All the commands support below optional global options:
 - list_logtail_config
 
 
-**Machine group and Logtail Config Mapping**
+### 6. Machine group and Logtail Config Mapping
 
 - apply_config_to_machine_group
 - remove_config_to_machine_group
@@ -382,7 +426,7 @@ All the commands support below optional global options:
 - get_config_applied_machine_groups
 
 
-**index**
+### 7. Index management
 
 - create_index
    - Format of partial parameter:
@@ -460,7 +504,7 @@ All the commands support below optional global options:
 - get_index_config
 - list_topics
 
-**cursor**
+### 8. Cursor management
 
 - get_cursor
 - get_cursor_time
@@ -468,7 +512,7 @@ All the commands support below optional global options:
 - get_begin_cursor
 - get_end_cursor
 
-**logs**
+### 9. Logs write and consume
 
 - put_logs
   - Format of parameter:
@@ -541,7 +585,7 @@ All the commands support below optional global options:
 - get_histograms
 - pull_logs
 
-**shipper**
+### 10. Shipper management
 
 - create_shipper
   - Format of partial parameter:
@@ -564,7 +608,7 @@ All the commands support below optional global options:
 - get_shipper_tasks
 - retry_shipper_tasks
 
-**consumer group**
+### 11. Consumer group management
 
 - create_consumer_group
 - update_consumer_group
@@ -574,7 +618,22 @@ All the commands support below optional global options:
 - get_check_point
 
 
-## Other resources
+
+## Troubleshooting
+
+By default, CLI store erros or warnings at `~/aliyunlogcli.log`, it's also configurable via file ~/.aliyunlogcli, section `__loggging__` to adjust the logging level and location: 
+
+```ini
+[__logging__]
+filename=  # default: ~/aliyunlogcli.log
+filemode=  # default: a, could also be: w, a
+format=    # default: %(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s
+datefmt=   # default: "%Y-%m-%d %H:%M:%S", could be strftime() compitable date/time formatting string
+level=     # default: warn, could be: info, error, fatal, critical, debug
+```
+
+
+# Other resources
 
 1. Alicloud Log Service homepage：https://www.alibabacloud.com/product/log-service
 2. Alicloud Log Service doc：https://www.alibabacloud.com/help/product/28958.htm
