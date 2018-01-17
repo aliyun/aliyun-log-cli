@@ -9,7 +9,7 @@
 
 [中文版README](https://github.com/aliyun/aliyun-log-cli/blob/master/README_CN.md)
 
-# Content
+## Content
 
 * [Introduction](#introduction)
   * [Brief](#brief)
@@ -49,15 +49,15 @@
 * [Other resources](#other-resources)
 
 
-# Introduction
+## Introduction
 
 The Alicloud log service provides with Web and SDK flavor to operate log service and analyzie logs. To make it more convinient to do automation, we release this command line interface (CLI).
 
-## Brief
+### Brief
 
 Alicloud log service command line console, support almost all operations as web. It also supports incomplete log query check and query cross multiple pages. It could even do project settings copy cross multiple regions.
 
-## Major Features
+### Major Features
 
 - Support almost all 50+ REST API of log service. 
 - Multiple account support to support cross region operation.
@@ -68,9 +68,9 @@ Alicloud log service command line console, support almost all operations as web.
 - Cross platforms support (Windows, Linux and Mac), Python based and friendly to Py2 and Py3 even Pypy. Support Pip installation.
 
 
-# Installation
+## Installation
 
-## Operation System
+### Operation System
 
 The CLI supports below operation system:
 
@@ -78,11 +78,11 @@ The CLI supports below operation system:
 - Mac
 - Linux
 
-## Supported Version
+### Supported Version
 
 Python 2.6, 2.7, 3.3, 3.4, 3.5, 3.6, PyPy, PyPy3
 
-## Installation Method
+### Installation Method
 
 Run below command to install the CLI: 
 
@@ -91,7 +91,7 @@ Run below command to install the CLI:
 ```
 
 
-## Full Usage list
+### Full Usage list
 
 Run below command to get the full usage list: 
 
@@ -100,12 +100,12 @@ Run below command to get the full usage list:
 ```
 
 
-# Configure CLI
+## Configure CLI
 
 Refer to [Configuration](https://www.alibabacloud.com/help/doc-detail/29064.htm?spm=a3c0i.o29008en.b99.182.7724d4ddaTGHgf)
 to get the access ID/key and endpoints.
 
-## Configure AK and Endpoint
+### Configure AK and Endpoint
 
 There're three ways to configure the access key and endpoint and they're prioritized as below:
 
@@ -135,7 +135,7 @@ access-key=
 endpoint=
 ```
 
-## Modify the configuration file
+### Modify the configuration file
 
 Use the command "configure" to modify the configuration file: 
 
@@ -144,7 +144,7 @@ Use the command "configure" to modify the configuration file:
 ```
 
 
-## Multiple Account
+### Multiple Account
 
 1. Store multiple accounts for some use cases (e.g. test, multiple region operations)
 
@@ -186,10 +186,10 @@ In some case, we need to operate cross regions, e.g.
 It will use account `main` to copy project `p1` in its region to another region under account `test`
 
 
-# Input and Output
+## Input and Output
 
 
-## Inputs
+### Inputs
 
 1. Normally case:
 
@@ -220,7 +220,7 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
 }
 ```
 
-## Parameter Validation
+### Parameter Validation
 
 - Mandatory check: if one mandatory parameter is missed, it will report error with usage info.
 
@@ -233,7 +233,7 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
   
 - String list support as ["s1", "s2"]
 
-## Output
+### Output
 
 1. For operations like Create, Update and Delete, there's no output except the exit code is 0 which means success.
 
@@ -249,7 +249,7 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
 }
 ```
 
-## Filter output
+### Filter output
 
 It's supported to filter output via [JMES](http://jmespath.org/):
 
@@ -280,9 +280,9 @@ Then you will be the name list of second logstore and later ones as below:
 ["logstore1", "logstore2"]
 ```
 
-# Command Reference
+## Command Reference
 
-## Command Specification
+### Command Specification
 
 ```shell
 1. aliyun log <subcommand> [parameters | global options]
@@ -290,7 +290,7 @@ Then you will be the name list of second logstore and later ones as below:
 3. aliyun [--help | --version]
 ```
 
-## Alias
+### Alias
 There's also an alias `aliyunlog` for the CLI in case the command `aliyun` conflicts with others.
 
 ```shell
@@ -299,7 +299,7 @@ There's also an alias `aliyunlog` for the CLI in case the command `aliyun` confl
 3. aliyunlog [--help | --version]
 ```
 
-## Subcommand and parameters
+### Subcommand and parameters
 
 Actually, the CLI leverage `aliyun-log-python-sdk`, which maps the command into the methods of `aliyun.log.LogClient`. The parameters of command line is mapped to the parameters of methods.
 For the detail spec of parameters, please refer to the [Mapped Python SDK API Spec](http://aliyun-log-cli.readthedocs.io/en/latest/api.html)
@@ -320,7 +320,7 @@ Mapped to CLI:
   [--shard_count=<value>]
 ```
 
-## Global options
+### Global options
 
 All the commands support below optional global options:
 
@@ -332,7 +332,7 @@ All the commands support below optional global options:
     [--jmes-filter=<value>]
 ```
 
-## Command categories
+### Command categories
 
 1. [Project management](#1-project-management)
 2. [Logstore management](#2-logstore-management)
@@ -347,7 +347,7 @@ All the commands support below optional global options:
 11. [Consumer group management](#11-consumer-group-management)
 
 
-### 1. Project management
+#### 1. Project management
 
 - list_project
 - create_project
@@ -365,7 +365,7 @@ All the commands support below optional global options:
   - Refer to [Copy project settings cross regions](./tutorials/tutorial_manage_cross_region_copy.html) to learn more. 
 
 
-### 2. Logstore management
+#### 2. Logstore management
 
 - create_logstore
 - delete_logstore
@@ -374,14 +374,14 @@ All the commands support below optional global options:
 - list_logstore
 
 
-### 3. Shard management
+#### 3. Shard management
 
 - list_shards
 - split_shard
 - merge_shard
 
 
-### 4. Machine group management
+#### 4. Machine group management
 
 - create_machine_group
    - Format of partial parameter:
@@ -408,7 +408,7 @@ All the commands support below optional global options:
 - list_machine_group
 - list_machines
 
-### 5. Logtail config management
+#### 5. Logtail config management
 
 - create_logtail_config
    - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
@@ -418,7 +418,7 @@ All the commands support below optional global options:
 - list_logtail_config
 
 
-### 6. Machine group and Logtail Config Mapping
+#### 6. Machine group and Logtail Config Mapping
 
 - apply_config_to_machine_group
 - remove_config_to_machine_group
@@ -426,7 +426,7 @@ All the commands support below optional global options:
 - get_config_applied_machine_groups
 
 
-### 7. Index management
+#### 7. Index management
 
 - create_index
    - Format of partial parameter:
@@ -504,7 +504,7 @@ All the commands support below optional global options:
 - get_index_config
 - list_topics
 
-### 8. Cursor management
+#### 8. Cursor management
 
 - get_cursor
 - get_cursor_time
@@ -512,7 +512,7 @@ All the commands support below optional global options:
 - get_begin_cursor
 - get_end_cursor
 
-### 9. Logs write and consume
+#### 9. Logs write and consume
 
 - put_logs
   - Format of parameter:
@@ -585,7 +585,7 @@ All the commands support below optional global options:
 - get_histograms
 - pull_logs
 
-### 10. Shipper management
+#### 10. Shipper management
 
 - create_shipper
   - Format of partial parameter:
@@ -608,7 +608,7 @@ All the commands support below optional global options:
 - get_shipper_tasks
 - retry_shipper_tasks
 
-### 11. Consumer group management
+#### 11. Consumer group management
 
 - create_consumer_group
 - update_consumer_group
@@ -619,7 +619,7 @@ All the commands support below optional global options:
 
 
 
-## Troubleshooting
+### Troubleshooting
 
 By default, CLI store erros or warnings at `~/aliyunlogcli.log`, it's also configurable via file ~/.aliyunlogcli, section `__loggging__` to adjust the logging level and location: 
 
@@ -633,7 +633,7 @@ level=     # default: warn, could be: info, error, fatal, critical, debug
 ```
 
 
-# Other resources
+## Other resources
 
 1. Alicloud Log Service homepage：https://www.alibabacloud.com/product/log-service
 2. Alicloud Log Service doc：https://www.alibabacloud.com/help/product/28958.htm
