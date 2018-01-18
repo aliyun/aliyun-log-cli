@@ -1,4 +1,4 @@
-Tutorials (中文)
+最佳实践
 ==============================
 
 .. toctree::
@@ -9,6 +9,7 @@ Tutorials (中文)
    tutorial_log_download.rst
    tutorial_log_upload.rst
    tutorial_log_monitor.rst
+   jmes_filter_usage.rst
 
 
 
