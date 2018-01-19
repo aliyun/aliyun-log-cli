@@ -87,8 +87,7 @@ aliyun log get_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_
 > {"cursor": "MTU
 
 aliyun log get_cursor_time --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ=="
-> {"cursor_time":
-# > "errorCode": "InvalidCursor", "errorMessage": ""
+> "errorCode": "InvalidCursor", "errorMessage": ""
 
 
 aliyun log get_previous_cursor_time --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ=="
