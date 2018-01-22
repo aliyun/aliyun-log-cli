@@ -140,7 +140,7 @@ endpoint=
 Use the command "configure" to modify the configuration file: 
 
 ```shell
-> aliyun configure access_id access_key cn-beijing.log.aliyun.com
+> aliyun configure access_id access_key cn-beijing.log.aliyuncs.com
 ```
 
 
@@ -149,8 +149,8 @@ Use the command "configure" to modify the configuration file:
 1. Store multiple accounts for some use cases (e.g. test, multiple region operations)
 
 ```shell
-> aliyun configure access_id1 access_key1 cn-beijing.log.aliyun.com
-> aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyun.com test
+> aliyun configure access_id1 access_key1 cn-beijing.log.aliyuncs.com
+> aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyuncs.com test
 ```
 
   AK is stored as:
@@ -159,12 +159,12 @@ Use the command "configure" to modify the configuration file:
 [main]
 access-id=access_id1
 access-key=access_key1
-endpoint=cn-beijing.log.aliyun.com
+endpoint=cn-beijing.log.aliyuncs.com
 
 [test]
 access-id=access_id2
 access-key=access_key2
-endpoint=cn-hangzhou.log.aliyun.com
+endpoint=cn-hangzhou.log.aliyuncs.com
 ```
 
 2. Use specific account
