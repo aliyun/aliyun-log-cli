@@ -28,6 +28,7 @@
      * [Parameter Validation](#parameter-validation)
      * [Output](#output)
      * [Filter output](#filter-output)
+     * [Further Process](#further-process)
   * [Command Reference](#command-reference)
      * [Command Specification](#command-specification)
      * [Alias](#alias)
@@ -237,7 +238,7 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
 
 1. For operations like Create, Update and Delete, there's no output except the exit code is 0 which means success.
 
-2. For operations like Get and List, it will output in json format.
+2. For operations like Get and List, it will output in **json** format.
 
 3. For errors, it will report in json format as below:
 
@@ -279,6 +280,22 @@ Then you will be the name list of second logstore and later ones as below:
 ```shell
 ["logstore1", "logstore2"]
 ```
+
+### Further Process
+You may want to process the output using your own cmd. For example, if you may want to break the logs into each line. 
+you could append thd command with a `|` on linux/unix: 
+
+```shell
+| python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));"
+or 
+| python3 -c "import json;list(map(lambda x: print(json.dumps(x)), json.loads(input())));"
+```
+
+e.g. 
+```shell
+aliyun log get_log .... | | python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
+```
+
 
 ## Command Reference
 
