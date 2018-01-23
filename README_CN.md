@@ -192,7 +192,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 1. 一般输入
 
 ```shell
-> aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"123\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"123\", \"reverse\":\"false\"}"
+> aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"2018-01-01 11:11:11\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"2018-01-01 10:10:10\", \"reverse\":\"false\"}"
 ```
 
 2. 文件输入
@@ -211,11 +211,11 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
   "topic": "",
   "logstore": "logstore1",
   "project": "project1",
-  "toTime": "12345679",
+  "toTime": "2018-01-01 11:11:11",
   "offset": "0",
   "query": "*",
   "line": "10",
-  "fromTime": "1234567",
+  "fromTime": "2018-01-01 10:10:10",
   "reverse": "true"
 }
 ```
@@ -590,11 +590,11 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 "topic": "",
 "logstore": "logstore1",
 "project": "dlq-test-cli-35144",
-"toTime": "1510582941",
+"toTime": "2018-01-01 11:11:11",
 "offset": "0",
 "query": "*",
 "line": "10",
-"fromTime": "1510579341",
+"fromTime": "2018-01-01 10:10:10",
 "reverse": "true"
 }
 ```

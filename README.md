@@ -195,7 +195,7 @@ It will use account `main` to copy project `p1` in its region to another region 
 1. Normally case:
 
 ```shell
-> aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"123\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"123\", \"reverse\":\"false\"}"
+> aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"2018-01-01 10:10:10\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"2018-01-01 08:08:08\", \"reverse\":\"false\"}"
 ```
 
 2. Input via file:
@@ -212,11 +212,11 @@ the content in file `get_logs.json` as below. Note: the `\` is unnecessary to es
   "topic": "",
   "logstore": "logstore1",
   "project": "project1",
-  "toTime": "12345679",
+  "toTime": "2018-01-01 11:11:11",
   "offset": "0",
   "query": "*",
   "line": "10",
-  "fromTime": "1234567",
+  "fromTime": "2018-01-01 10:10:10",
   "reverse": "true"
 }
 ```
@@ -590,11 +590,11 @@ All the commands support below optional global options:
 "topic": "",
 "logstore": "logstore1",
 "project": "dlq-test-cli-35144",
-"toTime": "1510582941",
+"toTime": "2018-01-01 11:11:11",
 "offset": "0",
 "query": "*",
 "line": "10",
-"fromTime": "1510579341",
+"fromTime": "2018-01-01 10:10:10",
 "reverse": "true"
 }
 ```
