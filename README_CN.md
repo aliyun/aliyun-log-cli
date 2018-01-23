@@ -109,7 +109,7 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 - 参数
 
 ```shell
-> aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
+> aliyun log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
 ```
 
   **注意:** 任意log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
@@ -129,7 +129,7 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 [main]
 access-id=
 access-key=
-endpoint=
+region-endpoint=
 ```
 
 <h2 id="修改配置文件">修改配置文件</h2>
@@ -155,12 +155,12 @@ Configure命令可以修改配置文件内容.
 [main]
 access-id=access_id1
 access-key=access_key1
-endpoint=cn-beijing.log.aliyuncs.com
+region-endpoint=cn-beijing.log.aliyuncs.com
 
 [test]
 access-id=access_id2
 access-key=access_key2
-endpoint=cn-hangzhou.log.aliyuncs.com
+region-endpoint=cn-hangzhou.log.aliyuncs.com
 ```
 
 2. 使用特定账户

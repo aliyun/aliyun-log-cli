@@ -113,7 +113,7 @@ There're three ways to configure the access key and endpoint and they're priorit
 - Parameters
 
 ```shell
-> aliyun log create_project ..... --access-id=<value> --access-key=<value> --endpoint=<value>
+> aliyun log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
 ```
 
   **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
@@ -132,7 +132,7 @@ There're three ways to configure the access key and endpoint and they're priorit
 [main]
 access-id=
 access-key=
-endpoint=
+region-endpoint=
 ```
 
 ### Modify the configuration file
@@ -159,12 +159,12 @@ Use the command "configure" to modify the configuration file:
 [main]
 access-id=access_id1
 access-key=access_key1
-endpoint=cn-beijing.log.aliyuncs.com
+region-endpoint=cn-beijing.log.aliyuncs.com
 
 [test]
 access-id=access_id2
 access-key=access_key2
-endpoint=cn-hangzhou.log.aliyuncs.com
+region-endpoint=cn-hangzhou.log.aliyuncs.com
 ```
 
 2. Use specific account
