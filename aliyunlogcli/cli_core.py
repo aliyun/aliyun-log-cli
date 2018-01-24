@@ -90,7 +90,10 @@ def docopt_ex(doc, usage, method_param_usage, hlp=True, ver=None):
 
 def show_result(result):
     if result != "" and result != b'':
-        print(json.dumps(result, sort_keys=True))
+        if isinstance(result, (six.text_type, six.binary_type)):
+            print(result)
+        else:
+            print(json.dumps(result, sort_keys=True))
 
 
 def main():
