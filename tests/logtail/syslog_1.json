@@ -13,6 +13,6 @@
   },
   "inputType": "syslog",
   "outputDetail": {
-    "logstoreName": "logstore"
+    "logstoreName": "logstore3"
   }
 }

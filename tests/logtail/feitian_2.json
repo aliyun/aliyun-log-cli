@@ -27,7 +27,7 @@
   "inputType": "file",
   "logSample": "",
   "outputDetail": {
-    "logstoreName": "logstore"
+    "logstoreName": "logstore3"
   },
   "outputType": "LogService"
 }
