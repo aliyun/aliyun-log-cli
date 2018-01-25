@@ -114,6 +114,8 @@ def _process_response(ret, jmes_filter):
     if hasattr(ret, 'get_body'):
         data = ret.get_body()
         _process_response_data(data, jmes_filter)
+
+        return data
     elif inspect.isgenerator(ret):
         for x in ret:
             _process_response(x, jmes_filter)
@@ -144,19 +146,8 @@ def main():
         data = None
         try:
             ret = getattr(client, method_name)(**args)
-            _process_response(ret, jmes_filter)
-
-            if data is not None:
-                if jmes_filter:
-                    # filter with jmes
-                    try:
-                        show_result(jmespath.compile(jmes_filter).search(data))
-                    except jmespath.exceptions.ParseError as ex:
-                        logger.error("fail to parse with JMES path, original data: %s", ex)
-                        show_result(data)
-                        exit(1)
-                else:
-                    show_result(data)
+            jmes_filter = jmes_filter.replace("\\n", '\n')  # parse faked \n
+            data = _process_response(ret, jmes_filter)
 
         except LogException as ex:
             if data is not None:
