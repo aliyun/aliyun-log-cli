@@ -7,8 +7,6 @@
    tutorial_create_logtail_config.rst
    tutorial_manage_cross_region_copy.rst
    tutorial_pull_logs.rst
-   tutorial_log_upload.rst
-   tutorial_log_monitor.rst
    jmes_filter_usage.rst
 
 
