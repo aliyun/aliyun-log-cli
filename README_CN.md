@@ -262,28 +262,28 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 以上命令的输出是:
 
 ```json
-{
-  "count": 3,
-   "logstores": ["logstore3", "logstore1", "logstore2"],
-   "total": 3
-}
+[ {"__source__": "ip1", "key": "log1"}, {"__source__": "ip2", "key": "log2"} ]
 ```
 
-通过以下命令可以获取第二以及后面的Logstore的名字: 
+通过以下命令将日志分隔为每一行: 
 
 ```shell
-> aliyun log get_logs ... --jmes-filter="logstores[2:]"
+> aliyun log get_logs ... --jmes-filter="join('
+', map(&to_string(@), @))"
 ```
+
+**注意** 这里传入了一个包含换行符的字符串给`jmes-filter`.
 
 输出:
 
 ```shell
-["logstore1", "logstore2"]
+{"__source__": "ip1", "key": "log1"}
+{"__source__": "ip2", "key": "log2"}
 ```
 
 
 <h2 id="进一步处理">进一步处理</h2>
-某些情况下, 你需要使用其他命令进行处理, 例如需要把json格式的日志, 分行打印. 在Linux/Unix下, 你可以在命令后通过添加一个`|`来进一步处理.  
+你可以使用`>>`来讲输出存储到一个文件. 某些时候, 你需要使用其他命令进行处理, 例如, 这里介绍另一个把json格式的日志分行打印的方法. 在Linux/Unix下, 你可以在命令后通过添加一个`|`来进一步处理.  
 
 ```shell
 | python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));"
@@ -598,9 +598,15 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 "reverse": "true"
 }
 ```
+  - 但参数`line`传入-1时, 就回获取所有. 但是当数据量很大, 超过1GB时, 最好使用`get_log_all`
+
+- get_log_all
+  - 和`get_logs`一样, 但是迭代式获取数据并输出, 适合大容量的数据获取. 
 
 - get_histograms
 - pull_logs
+- pull_log
+  - 和`pull_logs`类似, 但是迭代式获取数据并输出, 适合大容量的数据获取. 
 
 <h3 id="10-投递管理">10. 投递管理</h3>
 

@@ -262,28 +262,28 @@ Examples:
 which outputs:
 
 ```json
-{
-  "count": 3,
-   "logstores": ["logstore3", "logstore1", "logstore2"],
-   "total": 3
-}
+[ {"__source__": "ip1", "key": "log1"}, {"__source__": "ip2", "key": "log2"} ]
 ```
 
-You could use below `--jmes-filter` to filter it:
+You could use below `--jmes-filter` to break log into each line:
 
 ```shell
-> aliyun log get_logs ... --jmes-filter="logstores[2:]"
+> aliyun log get_logs ... --jmes-filter="join('
+', map(&to_string(@), @))"
 ```
 
-Then you will be the name list of second logstore and later ones as below:
+**Note** there's a string containing a newline passed to `jmes-filter`.
+
+output:
 
 ```shell
-["logstore1", "logstore2"]
+{"__source__": "ip1", "key": "log1"}
+{"__source__": "ip2", "key": "log2"}
 ```
 
 ### Further Process
-You may want to process the output using your own cmd. For example, if you may want to break the logs into each line. 
-you could append thd command with a `|` on linux/unix: 
+You could use `>>` to store the output to a file. or you may want to process the output using your own cmd. 
+For example, there's another way to if you may want to break the logs into each line. you could append thd command with a `|` on linux/unix: 
 
 ```shell
 | python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));"
@@ -295,6 +295,7 @@ e.g.
 ```shell
 aliyun log get_log .... | | python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
 ```
+
 
 
 ## Command Reference
@@ -583,7 +584,7 @@ All the commands support below optional global options:
 ```
 
 - get_logs
-  - Format of parameter:
+  - Format of parameter: 
 
 ```json
 {
@@ -598,9 +599,15 @@ All the commands support below optional global options:
 "reverse": "true"
 }
 ```
+  - It will fetch all data when `line` is passed as -1. But if have large volume of data exceeding 1GB, better to use `get_log_all`
+
+- get_log_all
+  - this API is similar as `get_logs`, but it will fetch data iteratively and output them by chunk. It's used for large volume of data fetching. 
 
 - get_histograms
 - pull_logs
+- pull_log
+  - this API is similar as `pull_logs`, but it allow readable parameter and allow to fetch data iteratively and output them by chunk. It's used for large volume of data fetching. 
 
 <h3 id="10-shipper-management">10. Shipper management</h3>
 - create_shipper
