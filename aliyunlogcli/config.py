@@ -107,7 +107,7 @@ def load_config(system_options):
 
     # load config from command lines
     access_id = system_options.get('access-id', access_id)
-    access_key = system_options.get('secure-key', access_key)
+    access_key = system_options.get('access-key', access_key)
     endpoint = system_options.get('region-endpoint', endpoint)
 
     assert access_id and access_key and endpoint, ValueError("Access id/key or endpoint is empty!")
