@@ -46,6 +46,7 @@
         * [Logs write and consume](#9-logs-write-and-consume)
         * [Shipper management](#10-shipper-management)
         * [Consumer group management](#11-consumer-group-management)
+  * [Best Practice](#best-practice)
   * [Troubleshooting](#troubleshooting)
   * [Other resources](#other-resources)
 
@@ -268,11 +269,8 @@ which outputs:
 You could use below `--jmes-filter` to break log into each line:
 
 ```shell
-> aliyun log get_logs ... --jmes-filter="join('
-', map(&to_string(@), @))"
+> aliyun log get_logs ... --jmes-filter="join('\n', map(&to_string(@), @))"
 ```
-
-**Note** there's a string containing a newline passed to `jmes-filter`.
 
 output:
 
@@ -632,7 +630,7 @@ All the commands support below optional global options:
 - get_shipper_tasks
 - retry_shipper_tasks
 
-<h3 id="#11-consumer-group-management">11. Consumer group management</h3>
+<h3 id="11-consumer-group-management">11. Consumer group management</h3>
 
 - create_consumer_group
 - update_consumer_group
@@ -641,6 +639,11 @@ All the commands support below optional global options:
 - update_check_point
 - get_check_point
 
+### Best Practice
+
+- [Create Logtail Config](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_create_logtail_config.html)
+- [Duplicate project settings cross region](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
+- [Pull Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
 
 
 ### Troubleshooting

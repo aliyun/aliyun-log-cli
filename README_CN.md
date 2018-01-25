@@ -46,6 +46,7 @@
         * [日志读写与消费](#9-日志读写与消费)
         * [投递管理](#10-投递管理)
         * [消费组管理](#11-消费组管理)
+* [最佳实践](#最佳实践)
 * [错误诊断](#错误诊断)
 * [其他资源](#其他资源)
 
@@ -268,11 +269,8 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 通过以下命令将日志分隔为每一行: 
 
 ```shell
-> aliyun log get_logs ... --jmes-filter="join('
-', map(&to_string(@), @))"
+> aliyun log get_logs ... --jmes-filter="join('\n', map(&to_string(@), @))"
 ```
-
-**注意** 这里传入了一个包含换行符的字符串给`jmes-filter`.
 
 输出:
 
@@ -639,6 +637,13 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - list_consumer_group
 - update_check_point
 - get_check_point
+
+
+<h1 id="最佳实践">最佳实践</h1>
+
+- [创建Logtail配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_create_logtail_config.html)
+- [跨域复制项目配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
+- [拉取日志](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
 
 
 <h1 id="错误诊断">错误诊断</h1>
