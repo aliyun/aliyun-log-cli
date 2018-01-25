@@ -96,6 +96,31 @@ def show_result(result):
             print(json.dumps(result, sort_keys=True))
 
 
+def _process_response_data(data, jmes_filter):
+    if data is not None:
+        if jmes_filter:
+            # filter with jmes
+            try:
+                show_result(jmespath.compile(jmes_filter).search(data))
+            except jmespath.exceptions.ParseError as ex:
+                logger.error("fail to parse with JMES path, original data: %s", ex)
+                show_result(data)
+                exit(1)
+        else:
+            show_result(data)
+
+
+def _process_response(ret, jmes_filter):
+    if hasattr(ret, 'get_body'):
+        data = ret.get_body()
+        _process_response_data(data, jmes_filter)
+    elif inspect.isgenerator(ret):
+        for x in ret:
+            _process_response(x, jmes_filter)
+    else:
+        logger.warning("unknown response data", ret)
+
+
 def main():
     method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient,
                                                                                            LOG_CLIENT_METHOD_BLACK_LIST)
@@ -116,24 +141,26 @@ def main():
 
         assert hasattr(client, method_name), "Unknown parsed command:" + method_name
 
-        ret = None
+        data = None
         try:
             ret = getattr(client, method_name)(**args)
+            _process_response(ret, jmes_filter)
 
-            if jmes_filter and ret is not None and ret.get_body():
-                # filter with jmes
-                try:
-                    show_result(jmespath.compile(jmes_filter).search(ret.get_body()))
-                except jmespath.exceptions.ParseError as ex:
-                    logger.error("fail to parse with JMES path, original data: %s", ex)
-                    show_result(ret.get_body())
-                    exit(1)
-            elif ret is not None:
-                show_result(ret.get_body())
+            if data is not None:
+                if jmes_filter:
+                    # filter with jmes
+                    try:
+                        show_result(jmespath.compile(jmes_filter).search(data))
+                    except jmespath.exceptions.ParseError as ex:
+                        logger.error("fail to parse with JMES path, original data: %s", ex)
+                        show_result(data)
+                        exit(1)
+                else:
+                    show_result(data)
 
         except LogException as ex:
-            if ret is not None:
-                show_result(ret.get_body())
+            if data is not None:
+                show_result(data)
             else:
                 print(ex)
             exit(2)
