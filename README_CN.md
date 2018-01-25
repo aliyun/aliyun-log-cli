@@ -292,7 +292,7 @@ or
 例如: 
 
 ```shell
-aliyun log get_log .... | | python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
+aliyun log get_log .... |  python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
 ```
 
 
