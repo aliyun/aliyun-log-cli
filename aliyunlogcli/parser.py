@@ -13,6 +13,23 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def _read_file_input(value):
+    if isinstance(value, (six.binary_type, six.text_type)) and value.startswith('file://'):
+        with open(value[7:], "r") as f:
+            return f.read()
+
+    return value
+
+
+def _file_input(fn):
+    def wrapped(*args, **kwargs):
+        args = tuple(_read_file_input(x) for x in args)
+        kwargs = dict((k, _read_file_input(v)) for k, v in kwargs)
+        return fn(*args, **kwargs)
+
+    return wrapped
+
+
 def _parse_method(func):
     if inspect.ismethod(func):
         func = func.__func__
@@ -21,7 +38,10 @@ def _parse_method(func):
         # it's not a function, just return default.
         return [], 0
 
-    arg_info = inspect.getargspec(func)
+    if six.PY2:
+        arg_info = inspect.getargspec(func)
+    else:
+        arg_info = inspect.getfullargspec(func)
     args = arg_info.args
     defaults = arg_info.defaults or []
 
@@ -83,6 +103,7 @@ def _to_bool(s):
     raise ValueError("fail to convert value to bool with value: {0}".format(s))
 
 
+@_file_input
 def _to_dict(s):
     try:
         if isinstance(s, dict):
@@ -102,6 +123,7 @@ def _to_dict(s):
         raise
 
 
+@_file_input
 def _to_list(s):
     try:
         if isinstance(s, list):
@@ -123,6 +145,7 @@ def _assert_string_list(v):
             raise ValueError("input is not string list: " + str(v))
 
 
+@_file_input
 def _to_int_list(s):
     try:
         v = _to_list(s)
@@ -140,6 +163,7 @@ def _to_int_list(s):
         raise
 
 
+@_file_input
 def _to_string_list(s):
     try:
         v = _to_list(s)
@@ -151,6 +175,7 @@ def _to_string_list(s):
         raise
 
 
+@_file_input
 def to_logitem_list(s):
     try:
         if isinstance(s, list):
@@ -182,11 +207,8 @@ def to_logitem_list(s):
 
 
 def _request_maker(cls):
+    @_file_input
     def maker(json_str):
-        if json_str.startswith('file://'):
-            with open(json_str[7:], "r") as f:
-                json_str = f.read()
-
         args_list, option_arg_pos = _parse_method(cls.__init__)
         if hasattr(cls, 'from_json'):
             # there's a from json method, try to use it
