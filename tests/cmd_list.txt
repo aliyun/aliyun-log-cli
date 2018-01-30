@@ -192,7 +192,6 @@ aliyun log list_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstor
 #> {"count": 3, "logstores": ["logstore3", "logstore1", "logstore2"], "total": 3}
 
 aliyun log list_topics --request="{\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\", \"logstore\":\"logstore1\", \"token\":\"token1212\", \"line\":123}"
-> ["topic1"]
 
 
 aliyun log merge_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --shardId="0"
