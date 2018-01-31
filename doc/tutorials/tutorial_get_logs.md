@@ -6,7 +6,7 @@
 查询日志的特点是:
 
 1. 针对获取索引的数据
-2. 按照索引获取, 跨分区
+2. 按照索引获取, 跨分区, 支持跨多个logstore查询
 3. 可以按照主题, 全文分词, 特定索引域等查询条件获取.
 4. 按照日志资深时间查询, 而不是服务器接收.
 
@@ -57,3 +57,12 @@ aliyun log get_log_all --project_name="p1" --logstore_name="l1" --query="host:te
 
 2. 时间的范围是左闭右闭`[]`, 上面例子中`16:00:00`和`17:00:00`时间的日志都会获得.
 
+## 跨库查询
+
+使用接口`get_project_logs`可以跨库查询日志. 例如:
+
+```shell
+aliyun log get_project_logs --request="{\"project\":\"p1\", \"query\":\"select count(1) from logstore1, logstore2, logstore3 where __date__ >'2017-11-10 00:00:00' and __date__ < '2017-11-13 00:00:00'\"}"
+```
+
+具体细节可以参考[跨库查询](https://help.aliyun.com/document_detail/62650.html?spm=5176.11065259.1996646101.searchclickresult.1fd2173brsQAo5).
