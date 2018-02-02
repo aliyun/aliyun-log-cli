@@ -21,6 +21,7 @@
      * [Full Usage list](#full-usage-list)
   * [Configure CLI](#configure-cli)
      * [Configure AK and Endpoint](#configure-ak-and-endpoint)
+     * [Enable Https Connection](#enable-https-connection)
      * [Modify the configuration file](#modify-the-configuration-file)
      * [Multiple Account](#multiple-account)
   * [Input and Output](#input-and-output)
@@ -136,6 +137,11 @@ access-id=
 access-key=
 region-endpoint=
 ```
+
+### Enable Https Connection
+
+When configuring endpoint with prefix `https://`, the connection between CLI and Log service will be secured. Or else, it will use http by default. 
+
 
 ### Modify the configuration file
 
