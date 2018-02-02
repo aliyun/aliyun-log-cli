@@ -16,7 +16,7 @@ aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logs
 
 aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=2 --shard_count="2"
 
-aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --ttl=2 --shard_count="2"
+aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --ttl=2 --shard_count="2" --enable_tracking=true
 
 
 # create index
@@ -216,7 +216,7 @@ aliyun log update_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstor
 aliyun log update_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --timeout=20 --in_order="true"
 
 
-# aliyun log update_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=3 --shard_count="3"
+# aliyun log update_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=3 --enable_tracking=true
 
 aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
 aliyun log update_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
