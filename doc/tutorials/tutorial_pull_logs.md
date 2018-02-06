@@ -55,7 +55,7 @@ aliyun log pull_log --project_name="p1" --logstore_name="l1" --shard_id=3 --from
 例如:
 
 ```shell
-aliyun log pull_log --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00 CST" --jmes-filter="join('\n', map(&to_string(@), @))" >> ~/Desktop/test.data
+aliyun log pull_log --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00 CST" --jmes-filter="join('\n', map(&to_string(@), logs))" >> ~/Desktop/test.data
 ``` 
 
 输出将被存储在文件`test.data`中, 格式为:
@@ -112,7 +112,7 @@ aliyun log pull_log --project_name="p1" --logstore_name="l1" --shard_id=3 --from
 
 这种情况下, 使用`jmes-filter`的话会针对每一块的输出内容. 也就是上面2块内容分别应用`jmes-filter`来处理. 例如:
 ```shell
-aliyun log pull_log --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00 CST" --jmes-filter="join('\n', map(&to_string(@), @))"
+aliyun log pull_log --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00 CST" --jmes-filter="join('\n', map(&to_string(@), logs))"
 ```
 
 输出:
