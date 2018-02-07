@@ -93,6 +93,12 @@ Run below command to install the CLI:
 > pip install -U aliyun-log-cli
 ```
 
+**Note** 
+
+On mac if you encounter errors like `OSError: [Errno 1] Operation not permitted`, try to use below command to install:
+```shell
+> pip install -U aliyun-log-cli --user
+``` 
 
 ### Full Usage list
 

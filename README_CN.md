@@ -93,6 +93,14 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 > pip install -U aliyun-log-cli
 ```
 
+**注意** 
+
+Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 1] Operation not permitted`，尝试使用如下命令安装：
+```shell
+> pip install -U aliyun-log-cli --user
+``` 
+
+
 <h2 id="完整参数列表">完整参数列表</h2>
 
 执行以下命令查看日志服务CLI参数列表。
