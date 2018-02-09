@@ -25,7 +25,6 @@ Subcommand:
 	delete_logstore
 	get_logstore
 	list_logstore
-	list_logstores
 	update_logstore
 
 	Index
@@ -75,8 +74,11 @@ Subcommand:
 	-----------------------------------
 	get_histograms
 	get_log
+	get_log_all
 	get_logs
 	get_project_logs
+	pull_log
+	pull_log_dump
 	pull_logs
 	put_logs
 
@@ -99,6 +101,30 @@ Subcommand:
 	list_shipper
 	retry_shipper_tasks
 	update_shipper
+
+	Dashboard
+	-----------------------------------
+	create_dashboard
+	delete_dashboard
+	get_dashboard
+	list_dashboard
+	update_dashboard
+
+	Savedsearch
+	-----------------------------------
+	create_savedsearch
+	delete_savedsearch
+	get_savedsearch
+	list_savedsearch
+	update_savedsearch
+
+	Alert
+	-----------------------------------
+	create_alert
+	delete_alert
+	get_alert
+	list_alert
+	update_alert
 
 
 Global Options:
