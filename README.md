@@ -618,6 +618,8 @@ All the commands support below optional global options:
 - pull_logs
 - pull_log
   - this API is similar as `pull_logs`, but it allow readable parameter and allow to fetch data iteratively and output them by chunk. It's used for large volume of data fetching. 
+- pull_log_dump
+  - this API will dump data from all shards to local files concurrently.
 
 <h3 id="10-shipper-management">10. Shipper management</h3>
 - create_shipper

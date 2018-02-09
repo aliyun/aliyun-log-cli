@@ -620,6 +620,8 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - pull_logs
 - pull_log
   - 和`pull_logs`类似, 但是迭代式获取数据并输出, 适合大容量的数据获取. 
+- pull_log_dump
+  - 并发下载大量日志直接到本地文件，并一行一个日志。
 
 <h3 id="10-投递管理">10. 投递管理</h3>
 
