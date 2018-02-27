@@ -1,31 +1,5 @@
 # 创建Logtail配置
 
-<!-- TOC -->
-
-- [创建Logtail配置](#%E5%88%9B%E5%BB%BAlogtail%E9%85%8D%E7%BD%AE)
-  - [介绍](#%E4%BB%8B%E7%BB%8D)
-    - [有哪些Logtail的配置项](#%E6%9C%89%E5%93%AA%E4%BA%9Blogtail%E7%9A%84%E9%85%8D%E7%BD%AE%E9%A1%B9)
-  - [准备](#%E5%87%86%E5%A4%87)
-    - [配置域账户](#%E9%85%8D%E7%BD%AE%E5%9F%9F%E8%B4%A6%E6%88%B7)
-  - [配置](#%E9%85%8D%E7%BD%AE)
-    - [1. 创建极简模式的logtail配置](#1-%E5%88%9B%E5%BB%BA%E6%9E%81%E7%AE%80%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
-      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
-    - [2. 创建JSON模式的logtail配置](#2-%E5%88%9B%E5%BB%BAjson%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
-      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
-    - [3. 创建分隔符模式的logtail配置](#3-%E5%88%9B%E5%BB%BA%E5%88%86%E9%9A%94%E7%AC%A6%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
-      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
-      - [特殊字符配置](#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E9%85%8D%E7%BD%AE)
-    - [4. 创建正则表达式模式的logtail配置](#4-%E5%88%9B%E5%BB%BA%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
-      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
-    - [5. 创建syslog的logtail配置](#5-%E5%88%9B%E5%BB%BAsyslog%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
-      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
-  - [高级配置项](#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE%E9%A1%B9)
-    - [配置多行日志](#%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%A1%8C%E6%97%A5%E5%BF%97)
-    - [Logtail客户端的解析配置](#logtail%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE)
-  - [后续操作](#%E5%90%8E%E7%BB%AD%E6%93%8D%E4%BD%9C)
-
-<!-- /TOC -->
-
 ## 介绍
 Logtail是日志服务提供的高性能低耗的日志收集客户端, 参考[这里](https://help.aliyun.com/document_detail/28979.html?spm=5176.doc28967.6.580.TiIpdf)了解更多背景.
 目前Logtail的配置有多种, 本节介绍如何快速有效的通过CLI创建各种Logtail的配置项.
@@ -234,7 +208,7 @@ JSON模式适用于文件本身就是JSON的情况.
 
 这里指定`travel_time`为时间关键字, 配置其格式为`%Y-%M-%D %h:%m:s`, 针对时间格式, 可以进一步参考[这里](https://help.aliyun.com/document_detail/28980.html?spm=5176.doc28972.6.593.tQYyhr)
 
-#### 特殊字符配置
+### 4. 创建不可见字符的分隔的logtail配置
 
 对于一些不可见字符, 可以在`separator`域中使用转义: 
 
@@ -251,7 +225,42 @@ JSON模式适用于文件本身就是JSON的情况.
 | 纵向制表符 | \\v |
 | \\u 0000 | 任意字符 |
 
-### 4. 创建正则表达式模式的logtail配置
+
+例如，这里我们在项目组`project1`中创建一个分隔符为`\u0001`的的logtail配置:
+
+```shell
+> aliyun log create_logtail_config --project_name="project1" --config_detail="file://sep_2.json"
+```
+
+文件`sep_2.json`的内容如下:
+ 
+```json
+{
+  "configName": "sep_1",
+  "logSample": "2017-1-1 10:10:00\u0001nanjing\u0001shanghai\u0001xiao ming",
+  "inputDetail": {
+    "logType": "delimiter_log",
+    "logPath": "/user",
+    "filePattern": "travel.log",
+    "separator": "\u0001",
+    "key": [
+      "travel_time",
+      "from_city",
+      "to_city",
+      "people"
+    ]
+  },
+  "inputType": "file",
+  "outputDetail": {
+    "logstoreName": "logstore1"
+  }
+}
+```
+
+**注意:** 通过CLI配置了不可见字符作为分隔符后，再进入Web控制台编辑这个Logtail配置页面是看不到这些字符，但点击按钮`下一步`继续其他的配置是不受影响的。
+
+
+### 5. 创建正则表达式模式的logtail配置
 
 
 正则表达式模式利用了强大的正则表达式的解析能力, 提取非结构化文本中的特定模式的域. 适用于文件本身结构较为特殊的情况.
@@ -327,7 +336,7 @@ JSON模式适用于文件本身就是JSON的情况.
 **注意:** 如果只配置了`inputDetail.timeFormat`而没有配置`inputDetail.timeKey`, 默认使用域`time`. 
 
 
-### 5. 创建syslog的logtail配置
+### 6. 创建syslog的logtail配置
 
 
 syslog与文件方式互补, 收集部署上更方便. 除了通过CLI进行配置外, 还需要在logtail客户端通过本地配置文件的方式进行进一步配置. 具体参考[这里](https://help.aliyun.com/document_detail/48932.html?spm=5176.doc43759.6.588.2Hwrdk).
