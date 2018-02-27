@@ -1,5 +1,31 @@
 # 创建Logtail配置
 
+<!-- TOC -->
+
+- [创建Logtail配置](#%E5%88%9B%E5%BB%BAlogtail%E9%85%8D%E7%BD%AE)
+  - [介绍](#%E4%BB%8B%E7%BB%8D)
+    - [有哪些Logtail的配置项](#%E6%9C%89%E5%93%AA%E4%BA%9Blogtail%E7%9A%84%E9%85%8D%E7%BD%AE%E9%A1%B9)
+  - [准备](#%E5%87%86%E5%A4%87)
+    - [配置域账户](#%E9%85%8D%E7%BD%AE%E5%9F%9F%E8%B4%A6%E6%88%B7)
+  - [配置](#%E9%85%8D%E7%BD%AE)
+    - [1. 创建极简模式的logtail配置](#1-%E5%88%9B%E5%BB%BA%E6%9E%81%E7%AE%80%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
+      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
+    - [2. 创建JSON模式的logtail配置](#2-%E5%88%9B%E5%BB%BAjson%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
+      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
+    - [3. 创建分隔符模式的logtail配置](#3-%E5%88%9B%E5%BB%BA%E5%88%86%E9%9A%94%E7%AC%A6%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
+      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
+      - [特殊字符配置](#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E9%85%8D%E7%BD%AE)
+    - [4. 创建正则表达式模式的logtail配置](#4-%E5%88%9B%E5%BB%BA%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A8%A1%E5%BC%8F%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
+      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
+    - [5. 创建syslog的logtail配置](#5-%E5%88%9B%E5%BB%BAsyslog%E7%9A%84logtail%E9%85%8D%E7%BD%AE)
+      - [时间配置](#%E6%97%B6%E9%97%B4%E9%85%8D%E7%BD%AE)
+  - [高级配置项](#%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE%E9%A1%B9)
+    - [配置多行日志](#%E9%85%8D%E7%BD%AE%E5%A4%9A%E8%A1%8C%E6%97%A5%E5%BF%97)
+    - [Logtail客户端的解析配置](#logtail%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E8%A7%A3%E6%9E%90%E9%85%8D%E7%BD%AE)
+  - [后续操作](#%E5%90%8E%E7%BB%AD%E6%93%8D%E4%BD%9C)
+
+<!-- /TOC -->
+
 ## 介绍
 Logtail是日志服务提供的高性能低耗的日志收集客户端, 参考[这里](https://help.aliyun.com/document_detail/28979.html?spm=5176.doc28967.6.580.TiIpdf)了解更多背景.
 目前Logtail的配置有多种, 本节介绍如何快速有效的通过CLI创建各种Logtail的配置项.
