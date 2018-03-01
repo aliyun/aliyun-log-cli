@@ -95,9 +95,17 @@ Run below command to install the CLI:
 
 **Note** 
 
-On mac if you encounter errors like `OSError: [Errno 1] Operation not permitted`, try to use below command to install:
+On mac it's recommended to use pip3 to install the CLI. 
+
 ```shell
-> pip install -U aliyun-log-cli --user
+> brew install python3
+> pip3 install -U aliyun-log-cli
+```
+
+if you encounter errors like `OSError: [Errno 1] Operation not permitted`, try to use option `--user` to install:
+
+```shell
+> pip3 install -U aliyun-log-cli --user
 ``` 
 
 ### Full Usage list

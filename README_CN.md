@@ -95,9 +95,17 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 
 **注意** 
 
-Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 1] Operation not permitted`，尝试使用如下命令安装：
+Mac上推荐使用pip3安装CLI，首选需要安装Python3：
+ 
 ```shell
-> pip install -U aliyun-log-cli --user
+> brew install python3
+> pip3 install -U aliyun-log-cli
+```
+
+Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 1] Operation not permitted`，尝试使用如下命令安装：
+
+```shell
+> pip3 install -U aliyun-log-cli --user
 ``` 
 
 
