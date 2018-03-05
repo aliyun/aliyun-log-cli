@@ -60,7 +60,8 @@ aliyun log get_config_applied_machine_groups --project_name="dlq-test-cli-${RAND
 
 aliyun log get_index_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
 > "index_mode": "v2", "keys": {"key1": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key2": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key3": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key4": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}}
-> "line": {"caseSensitive": false, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"]}, "storage": "pg", "ttl": 2
+> "line": {"caseSensitive": false, "chn": false, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"]}, "storage": "pg"
+
 
 aliyun log get_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
 > "groupAttribute": {"externalName": "ex name", "groupTopic": "topic x"}, "groupName": "group_name1", "groupType": "Armory"
