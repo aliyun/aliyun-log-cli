@@ -123,7 +123,11 @@ pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple
 执行以下命令查看日志服务CLI参数列表。
 ```shell
 > aliyun --help
+> aliyunlog --help
 ```
+
+**Note** `aliyunlog`和`aliyun`都可以，推荐使用`aliyunlog`以防冲突。 
+
 
 <h1 id="配置说明">配置说明</h1>
 
@@ -137,7 +141,7 @@ pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple
 - 参数
 
 ```shell
-> aliyun log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
+> aliyunlog log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
 ```
 
   **注意:** 任意log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
@@ -171,7 +175,7 @@ region-endpoint=
 Configure命令可以修改配置文件内容.
 
 ```shell
-> aliyun configure access_id access_key cn-beijing.log.aliyuncs.com
+> aliyunlog configure access_id access_key cn-beijing.log.aliyuncs.com
 ```
 
 <h2 id="多账户">多账户</h2>
@@ -179,8 +183,8 @@ Configure命令可以修改配置文件内容.
 1. 存储于多个账户, 以便在特定情况下使用(例如测试):
 
 ```shell
-> aliyun configure access_id1 access_key1 cn-beijing.log.aliyuncs.com
-> aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyuncs.com test
+> aliyunlog configure access_id1 access_key1 cn-beijing.log.aliyuncs.com
+> aliyunlog configure access_id2 access_key2 cn-hangzhou.log.aliyuncs.com test
 ```
 
   AK将存储为:
@@ -202,7 +206,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 任意命令都可以通过选项`--client-name=<value>`来使用特定配置的账户, 例如:
 
 ```shell
-> aliyun log create_project ..... --client-name=test
+> aliyunlog log create_project ..... --client-name=test
 ```
 
 将使用`test`的AK来进行操作.
@@ -212,7 +216,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 某些情况下也需要跨账户操作, 例如:
 
 ```shell
-> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
+> aliyunlog log copy_project --from_project="p1" --to_project="p1" --to_client=test
 ```
 
 将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
@@ -225,7 +229,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 1. 一般输入
 
 ```shell
-> aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"2018-01-01 11:11:11\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"2018-01-01 10:10:10\", \"reverse\":\"false\"}"
+> aliyunlog log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"2018-01-01 11:11:11\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"2018-01-01 10:10:10\", \"reverse\":\"false\"}"
 ```
 
 2. 文件输入
@@ -233,7 +237,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 也可以将上面参数放到一个文件里面, 简化命令行, 需要义`file://`开头+文件路径即可:
 
 ```shell
-> aliyun log get_logs --request="file://./get_logs.json"
+> aliyunlog log get_logs --request="file://./get_logs.json"
 ```
 
 
@@ -289,7 +293,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 例如:
 
 ```shell
-> aliyun log get_logs ...
+> aliyunlog log get_logs ...
 ```
 
 以上命令的输出是:
@@ -301,7 +305,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 通过以下命令将日志分隔为每一行: 
 
 ```shell
-> aliyun log get_logs ... --jmes-filter="join('\n', map(&to_string(@), @))"
+> aliyunlog log get_logs ... --jmes-filter="join('\n', map(&to_string(@), @))"
 ```
 
 输出:
@@ -324,7 +328,7 @@ or
 例如: 
 
 ```shell
-aliyun log get_log .... |  python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
+aliyunlog log get_log .... |  python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
 ```
 
 
@@ -333,9 +337,9 @@ aliyun log get_log .... |  python2 -c "from __future__ import print_function;imp
 <h2 id="命令规范">命令规范</h2>
 
 ```shell
-1. aliyun log <subcommand> [parameters | global options]
-2. aliyun configure <access_id> <access-key> <endpoint> [<client-name>]
-3. aliyun [--help | --version]
+1. aliyunlog log <subcommand> [parameters | global options]
+2. aliyunlog configure <access_id> <access-key> <endpoint> [<client-name>]
+3. aliyunlog [--help | --version]
 ```
 
 
@@ -362,7 +366,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 对应命令行:
 
 ```shell
-> aliyun log create_logstore
+> aliyunlog log create_logstore
   --project_name=<value>
   --logstore_name=<value>
   [--ttl=<value>]

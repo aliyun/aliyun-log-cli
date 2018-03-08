@@ -122,9 +122,11 @@ pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple
 Run below command to get the full usage list: 
 
 ```shell
+> aliyunlog --help
 > aliyun --help
 ```
 
+**Note** `aliyunlog` is recommended in case the `aliyun` conflict with others. 
 
 ## Configure CLI
 
@@ -139,7 +141,7 @@ There're three ways to configure the access key and endpoint and they're priorit
 - Parameters
 
 ```shell
-> aliyun log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
+> aliyunlog log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
 ```
 
   **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
@@ -171,7 +173,7 @@ When configuring endpoint with prefix `https://`, the connection between CLI and
 Use the command "configure" to modify the configuration file: 
 
 ```shell
-> aliyun configure access_id access_key cn-beijing.log.aliyuncs.com
+> aliyunlog configure access_id access_key cn-beijing.log.aliyuncs.com
 ```
 
 
@@ -180,8 +182,8 @@ Use the command "configure" to modify the configuration file:
 1. Store multiple accounts for some use cases (e.g. test, multiple region operations)
 
 ```shell
-> aliyun configure access_id1 access_key1 cn-beijing.log.aliyuncs.com
-> aliyun configure access_id2 access_key2 cn-hangzhou.log.aliyuncs.com test
+> aliyunlog configure access_id1 access_key1 cn-beijing.log.aliyuncs.com
+> aliyunlog configure access_id2 access_key2 cn-hangzhou.log.aliyuncs.com test
 ```
 
   AK is stored as:
@@ -202,7 +204,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 
 Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
 ```shell
-> aliyun log create_project ..... --client-name=test
+> aliyunlog log create_project ..... --client-name=test
 ```
 It will use `test` to create the project.
 
@@ -211,7 +213,7 @@ It will use `test` to create the project.
 In some case, we need to operate cross regions, e.g.
 
 ```shell
-> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client=test
+> aliyunlog log copy_project --from_project="p1" --to_project="p1" --to_client=test
 ```
 
 It will use account `main` to copy project `p1` in its region to another region under account `test`
@@ -225,14 +227,14 @@ It will use account `main` to copy project `p1` in its region to another region 
 1. Normally case:
 
 ```shell
-> aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"2018-01-01 10:10:10\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"2018-01-01 08:08:08\", \"reverse\":\"false\"}"
+> aliyunlog log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-123\", \"toTime\": \"2018-01-01 10:10:10\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"2018-01-01 08:08:08\", \"reverse\":\"false\"}"
 ```
 
 2. Input via file:
 You could store the content of one parameter into a file and pass it via the command line with prefix `file://`:
 
 ```shell
-> aliyun log get_logs --request="file://./get_logs.json"
+> aliyunlog log get_logs --request="file://./get_logs.json"
 ```
 
 
@@ -287,7 +289,7 @@ It's supported to filter output via [JMES](http://jmespath.org/):
 Examples:
 
 ```shell
-> aliyun log get_logs ...
+> aliyunlog log get_logs ...
 ```
 which outputs:
 
@@ -298,7 +300,7 @@ which outputs:
 You could use below `--jmes-filter` to break log into each line:
 
 ```shell
-> aliyun log get_logs ... --jmes-filter="join('\n', map(&to_string(@), @))"
+> aliyunlog log get_logs ... --jmes-filter="join('\n', map(&to_string(@), @))"
 ```
 
 output:
@@ -320,7 +322,7 @@ or
 
 e.g. 
 ```shell
-aliyun log get_log .... | | python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
+aliyunlog log get_log .... | | python2 -c "from __future__ import print_function;import json;map(lambda x: print(json.dumps(x).encode('utf8')), json.loads(raw_input()));" >> data.txt
 ```
 
 
@@ -330,9 +332,9 @@ aliyun log get_log .... | | python2 -c "from __future__ import print_function;im
 ### Command Specification
 
 ```shell
-1. aliyun log <subcommand> [parameters | global options]
-2. aliyun configure <access_id> <access-key> <endpoint>
-3. aliyun [--help | --version]
+1. aliyunlog log <subcommand> [parameters | global options]
+2. aliyunlog configure <access_id> <access-key> <endpoint>
+3. aliyunlog [--help | --version]
 ```
 
 ### Alias
@@ -358,7 +360,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 Mapped to CLI:
 
 ```shell
-> aliyun log create_logstore
+> aliyunlog log create_logstore
   --project_name=<value>
   --logstore_name=<value>
   [--ttl=<value>]
