@@ -398,7 +398,7 @@ All the commands support below optional global options:
 ```
 
   - Note: `to_client` is another account configured via `aliyun configure`, it's OK to pass `main` or not to copy inside the same region.
-  - Refer to [Copy project settings cross regions](./tutorials/tutorial_manage_cross_region_copy.html) to learn more. 
+  - Refer to [Copy project settings cross regions](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html) to learn more. 
 
 
 <h3 id="2-logstore-management">2. Logstore management</h3>
@@ -448,7 +448,7 @@ All the commands support below optional global options:
 <h3 id="5-logtail-config-management">5. Logtail config management</h3>
 
 - create_logtail_config
-   - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
+   - 参考[Create Logtail Configuration](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
 - update_logtail_config
 - delete_logtail_config
 - get_logtail_config

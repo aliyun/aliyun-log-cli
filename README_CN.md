@@ -400,7 +400,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 ```
 
   - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
-  - 参考[跨域复制项目组配置](./tutorials/tutorial_manage_cross_region_copy.html)了解如何跨域复制项目组配置.
+  - 参考[跨域复制项目组配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)了解如何跨域复制项目组配置.
 
 <h3 id="2-日志库管理">2. 日志库管理</h3>
 
@@ -449,7 +449,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 <h3 id="5-客户端配置管理">5. Logtail配置管理</h3>
 
 - create_logtail_config
-   - 参考[创建Logtail配置](./tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
+   - 参考[创建Logtail配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_create_logtail_config.html)了解如何创建各种格式的Logtail配置.
 - update_logtail_config
 - delete_logtail_config
 - get_logtail_config
