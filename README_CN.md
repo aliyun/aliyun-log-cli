@@ -109,6 +109,14 @@ Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 
 ``` 
 
 
+**外网访问受限的阿里云ECS**
+因为安全策略等原因，某些云服务器可能无法访问Pypi服务器，可以尝试使用本地Pypi镜像，例如阿里云服务器可以尝试:
+
+```shell
+pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+```
+
+
 <h2 id="完整参数列表">完整参数列表</h2>
 
 执行以下命令查看日志服务CLI参数列表。

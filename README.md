@@ -108,6 +108,14 @@ if you encounter errors like `OSError: [Errno 1] Operation not permitted`, try t
 > pip3 install -U aliyun-log-cli --user
 ``` 
 
+**Alicloud ECS which may have limited internet access**
+You could try the mirrors of local network provider, for Alicloud ECS, you can try below noe:
+
+```shell
+pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+```
+
+
 ### Full Usage list
 
 Run below command to get the full usage list: 
