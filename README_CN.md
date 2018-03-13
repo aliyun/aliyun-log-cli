@@ -592,7 +592,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - [创建Logtail配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_create_logtail_config.html)
 - [跨域复制项目配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
 - [拉取日志](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
-
+- [查询日志](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_get_logs.html)
 
 <h1 id="错误诊断">错误诊断</h1>
 

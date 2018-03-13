@@ -591,6 +591,7 @@ All the commands support below optional global options:
 - [Create Logtail Config](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_create_logtail_config.html)
 - [Duplicate project settings cross region](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
 - [Pull Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
+- [Get Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_get_logs.html)
 
 
 ### Troubleshooting
