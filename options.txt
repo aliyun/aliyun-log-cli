@@ -1,13 +1,15 @@
 Usage:
 
-1. aliyun log <subcommand> [parameters | global options]
-2. aliyun configure <access_id> <access-key> <endpoint> [<client-name>]
-3. aliyun [--help | --version]
+1. aliyunlog log <subcommand> [parameters | global options]
+2. aliyunlog configure <access_id> <access-key> <endpoint> [<client-name>]
+3. aliyunlog configure [--format-output=json] [--default-client=<client_name>]
+4. aliyunlog [--help | --version]
 
 Examples:
 
-1. aliyun configure AKID123 AKKEY123 cn-hangzhou.log.aliyuncs.com
-2. aliyun log create_project --project_name="test"
+1. aliyunlog configure AKID123 AKKEY123 cn-hangzhou.log.aliyuncs.com
+2. aliyunlog configure --format-output=json --default-client=beijing
+3. aliyunlog log create_project --project_name="test"
 
 Subcommand:
 
@@ -133,5 +135,6 @@ Global Options:
 [--region-endpoint=<value>]	: use this endpoint in this command
 [--client-name=<value>]		: use this client name in configured accounts
 [--jmes-filter=<value>]		: filter results using JMES syntax
+[--format-output=json]		: print formatted json results or else print in one line
 
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.

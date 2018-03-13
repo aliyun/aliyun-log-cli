@@ -6,7 +6,7 @@ from aliyun import log
 from aliyun.log import *
 from aliyun.log.util import Util
 from .config import *
-from .config import load_default_config_from_file_env, load_config_from_file, LOG_CONFIG_SECTION
+from .config import load_default_config_from_file_env, load_confidential_from_file, LOG_CONFIG_SECTION
 from collections import OrderedDict
 from six import StringIO
 import logging
@@ -290,7 +290,7 @@ def _make_log_client(to_client):
         if to_client == LOG_CONFIG_SECTION:
             access_id, access_key, endpoint = load_default_config_from_file_env()
         else:
-            access_id, access_key, endpoint = load_config_from_file(to_client)
+            access_id, access_key, endpoint = load_confidential_from_file(to_client)
 
         assert endpoint and access_id and access_key, \
             ValueError("endpoint, access_id or key is not configured for section {0}".format(to_client))
