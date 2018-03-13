@@ -16,7 +16,7 @@ DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(
 
 LOG_CONFIG_SECTION = "main"
 GLOBAL_OPTION_SECTION = "__option__"
-GLOBAL_OPTION_KEY_FORMAT_OUTPUT = "format-putput"
+GLOBAL_OPTION_KEY_FORMAT_OUTPUT = "format-output"
 GLOBAL_OPTION_KEY_DEFAULT_CLIENT = "default-client"
 
 SYSTEM_OPTIONS = ['access-id', 'access-key', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output']
@@ -119,6 +119,7 @@ def load_config(system_options):
     client_name = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DEFAULT_CLIENT, LOG_CONFIG_SECTION) or LOG_CONFIG_SECTION
     client_name = os.environ.get('ALIYUN_LOG_CLI_CLIENT_NAME', client_name)
     client_name = system_options.get('client-name', client_name)
+    format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, '')
 
     access_id, access_key, endpoint = load_confidential_from_file(client_name)
 
@@ -126,7 +127,7 @@ def load_config(system_options):
     access_id = os.environ.get('ALIYUN_LOG_CLI_ACCESSID', access_id)
     access_key = os.environ.get('ALIYUN_LOG_CLI_ACCESSKEY', access_key)
     endpoint = os.environ.get('ALIYUN_LOG_CLI_ENDPOINT', endpoint)
-    format_output = os.environ.get('ALIYUN_LOG_CLI_FORMAT_OUTPUT', '')
+    format_output = os.environ.get('ALIYUN_LOG_CLI_FORMAT_OUTPUT', format_output)
 
     # load config from command lines
     access_id = system_options.get('access-id', access_id)
