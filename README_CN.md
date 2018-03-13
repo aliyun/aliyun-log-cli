@@ -122,6 +122,8 @@ pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple
 > aliyunlog --help
 ```
 
+会显示[完整命令](https://github.com/aliyun/aliyun-log-cli/blob/master/options.txt)。
+
 **Note** `aliyunlog`和`aliyun`都可以，推荐使用`aliyunlog`以防冲突。 
 
 

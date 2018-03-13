@@ -122,6 +122,9 @@ Run below command to get the full usage list:
 > aliyun --help
 ```
 
+it will show the [full usage](https://github.com/aliyun/aliyun-log-cli/blob/master/options.txt).
+
+
 **Note** `aliyunlog` is recommended in case the `aliyun` conflict with others. 
 
 ## Configure CLI
