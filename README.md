@@ -20,10 +20,6 @@
      * [Installation Method](#installation-method)
      * [Full Usage list](#full-usage-list)
   * [Configure CLI](#configure-cli)
-     * [Configure AK and Endpoint](#configure-ak-and-endpoint)
-     * [Enable Https Connection](#enable-https-connection)
-     * [Modify the configuration file](#modify-the-configuration-file)
-     * [Multiple Account](#multiple-account)
   * [Input and Output](#input-and-output)
      * [Inputs](#inputs)
      * [Parameter Validation](#parameter-validation)
@@ -130,93 +126,7 @@ Run below command to get the full usage list:
 
 ## Configure CLI
 
-Refer to [Configuration](https://www.alibabacloud.com/help/doc-detail/29064.htm?spm=a3c0i.o29008en.b99.182.7724d4ddaTGHgf)
-to get the access ID/key and endpoints.
-
-### Configure AK and Endpoint
-
-There're three ways to configure the access key and endpoint and they're prioritized as below:
-
-
-- Parameters
-
-```shell
-> aliyunlog log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
-```
-
-  **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
-
-- Environment Variables
-
-  - ALIYUN_LOG_CLI_ACCESSID
-  - ALIYUN_LOG_CLI_ACCESSKEY
-  - ALIYUN_LOG_CLI_ENDPOINT
-
-- Local configuration file
-
-  You could store them at `~/.aliyunlogcli`, the default section name is `main`
-
-```ini
-[main]
-access-id=
-access-key=
-region-endpoint=
-```
-
-### Enable Https Connection
-
-When configuring endpoint with prefix `https://`, the connection between CLI and Log service will be secured. Or else, it will use http by default. 
-
-
-### Modify the configuration file
-
-Use the command "configure" to modify the configuration file: 
-
-```shell
-> aliyunlog configure access_id access_key cn-beijing.log.aliyuncs.com
-```
-
-
-### Multiple Account
-
-1. Store multiple accounts for some use cases (e.g. test, multiple region operations)
-
-```shell
-> aliyunlog configure access_id1 access_key1 cn-beijing.log.aliyuncs.com
-> aliyunlog configure access_id2 access_key2 cn-hangzhou.log.aliyuncs.com test
-```
-
-  AK is stored as:
-
-```ini
-[main]
-access-id=access_id1
-access-key=access_key1
-region-endpoint=cn-beijing.log.aliyuncs.com
-
-[test]
-access-id=access_id2
-access-key=access_key2
-region-endpoint=cn-hangzhou.log.aliyuncs.com
-```
-
-2. Use specific account
-
-Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:
-```shell
-> aliyunlog log create_project ..... --client-name=test
-```
-It will use `test` to create the project.
-
-3. Other Case
-
-In some case, we need to operate cross regions, e.g.
-
-```shell
-> aliyunlog log copy_project --from_project="p1" --to_project="p1" --to_client=test
-```
-
-It will use account `main` to copy project `p1` in its region to another region under account `test`
+Refer to [Configure CLI](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_configure_cli_en.html).
 
 
 ## Input and Output
@@ -674,6 +584,7 @@ All the commands support below optional global options:
 
 ### Best Practice
 
+- [Configure CLI](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_configure_cli_en.html)
 - [Create Logtail Config](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_create_logtail_config.html)
 - [Duplicate project settings cross region](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
 - [Pull Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
