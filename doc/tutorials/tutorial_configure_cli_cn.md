@@ -103,7 +103,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 
 将`main`账户下对应的项目`p1`复制到账户`test`下的`p1`
 
-## 默认账户
+### 默认账户
 
 如前面所属，默认账户是`main`，在多用户情况下，切换默认账户也是很有用。通过选项`--default-client`可以修改。
 
