@@ -1,0 +1,639 @@
+{
+  "ttl": 30,
+  "keys": {
+    "__topic__": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "user_agent": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "logging_flag": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "bucket": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t",
+        "\r"
+      ],
+      "type": "text"
+    },
+    "bucket_storage_type": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "cdn_in": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "cdn_out": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "metering_type": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "content_length_in": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "content_length_out": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "delta_data_size": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "end_time": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "error_code": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "get_request": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "host": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "request_length": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "intranet_in": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "intranet_out": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "client_ip": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "response_body_length": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "bucket_location": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t",
+        "\r"
+      ],
+      "type": "text"
+    },
+    "http_method": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "network_in": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "network_out": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "key": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "object_size": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "operation": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "oss_location": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "owner_id": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "process_img_size": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "product_id": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t",
+        "\r"
+      ],
+      "type": "text"
+    },
+    "put_request": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "referer": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "region": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t",
+        "\r"
+      ],
+      "type": "text"
+    },
+    "request_id": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "requester_id": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "response_time": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "http_type": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "sign_type": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "start_time": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "http_status": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "storage": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "storage_type": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "sync_in": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "sync_out": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "sync_request": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "time": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "server_cost_time": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "request_uri": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "user_id": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "vpc_addr": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "vpc_id": {
+      "alias": "",
+      "caseSensitive": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t"
+      ],
+      "type": "text"
+    }
+  },
+  "line": {
+    "caseSensitive": false,
+    "token": [
+      ",",
+      " ",
+      "'",
+      "\"",
+      ";",
+      "=",
+      "(",
+      ")",
+      "[",
+      "]",
+      "{",
+      "}",
+      "?",
+      "@",
+      "&",
+      "<",
+      ">",
+      "/",
+      ":",
+      "\n",
+      "\t"
+    ]
+  }
+}
