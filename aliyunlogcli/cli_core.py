@@ -88,7 +88,7 @@ def docopt_ex(doc, usage, method_param_usage, hlp=True, ver=None):
             second_cmd = argv[1]
             header_printed = False
             for cmd in doc.split("\n"):
-                if "aliyunlog log " + second_cmd + " " in cmd:
+                if "aliyun log " + second_cmd + " " in cmd:
                     if not header_printed:
                         print("Invalid parameters.\n")
                         print("Usage:")
