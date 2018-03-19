@@ -47,7 +47,7 @@ region-endpoint=
 
 <h2 id="使用HTTPS连接">使用HTTPS连接</h2>
 
-当给服务入口地址加上`https://`前缀时, CLI会使用`https`连接, 否则默认使用`https`. 
+当给服务入口地址加上`https://`前缀时, CLI会使用`https`连接, 否则默认使用`http`. 
 
 
 <h2 id="修改配置文件">修改配置文件</h2>
