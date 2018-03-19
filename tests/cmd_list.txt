@@ -156,11 +156,14 @@ aliyun log pull_logs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_n
 aliyun log list_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1"
 > [{"name": "consumer_group1", "order": true, "timeout": 20}]
 
-aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="testdata1" --offset=0 --size=100
+aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="logstore" --offset=0 --size=100
 > {"count": 3, "logstores": ["logstore3", "logstore1", "logstore2"], "total": 3}
 
-aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="testdata1" --offset=0 --size=-1
+aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="logstore" --offset=0 --size=-1
 > {"count": 3, "logstores": ["logstore3", "logstore1", "logstore2"], "total": 3}
+
+aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="test123" --offset=0 --size=-1
+> {"count": 0, "total": 0}
 
 aliyun log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
 > {"configs": ["config_name1", "config_name2"], "count": 2, "total": 2}
