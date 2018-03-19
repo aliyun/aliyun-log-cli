@@ -252,6 +252,14 @@ aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" 
 aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_3.json"
 aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/syslog_1.json"
 
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_4_docker.json"
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_4_docker.json"
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_4_docker.json"
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_4_docker.json"
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/docker-stdout-config.json"
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-binlog-config.json"
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-rawsql-config.json"
+aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/nginx-status-config.json"
 
 aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
 aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_2.json"
@@ -270,6 +278,17 @@ aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" 
 aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_3.json"
 aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/syslog_1.json"
 
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_4_docker.json"
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_4_docker.json"
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_4_docker.json"
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_4_docker.json"
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/docker-stdout-config.json"
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-binlog-config.json"
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-rawsql-config.json"
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/nginx-status-config.json"
+
+
+aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
 
 
 # more logtail config test
@@ -338,6 +357,17 @@ aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" 
 aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_2"
 aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_3"
 aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="syslog_1"
+
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_4_docker"
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_4_docker"
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_4_docker"
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_4_docker"
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="docker-stdout-config"
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="mysql-binlog-config"
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="mysql-rawsql-config"
+aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="nginx-status-config"
+
+
 
 ######
 
