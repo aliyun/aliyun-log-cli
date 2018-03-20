@@ -7,7 +7,14 @@ from aliyun.log import *
 from aliyun.log.util import Util
 from .config import *
 from .config import load_default_config_from_file_env, load_confidential_from_file, LOG_CONFIG_SECTION
-from collections import OrderedDict
+
+
+try:
+    from collections import OrderedDict
+except ImportError:
+    # for py2.6 case
+    from ordereddict import OderedDict
+
 from six import StringIO
 import logging
 logger = logging.getLogger(__name__)
