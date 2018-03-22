@@ -1,7 +1,11 @@
 import json
 import re
 
-from collections import OrderedDict
+try:
+    from collections import OrderedDict
+except ImportError:
+    # for py2.6 case
+    from ordereddict import OderedDict
 from random import randint
 from subprocess import check_output, CalledProcessError, STDOUT
 from time import time
