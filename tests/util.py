@@ -14,7 +14,7 @@ try:
     from subprocess import check_output
 except ImportError:
     # for py2.6 case
-    def f(*popenargs, **kwargs):
+    def check_output(*popenargs, **kwargs):
         if 'stdout' in kwargs:
             raise ValueError('stdout argument not allowed, it will be overridden.')
         process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
@@ -26,7 +26,6 @@ except ImportError:
                 cmd = popenargs[0]
             raise subprocess.CalledProcessError(retcode, cmd)
         return output
-    subprocess.check_output = f
 
 from time import time
 import sys
