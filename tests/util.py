@@ -24,7 +24,9 @@ except ImportError:
             cmd = kwargs.get("args")
             if cmd is None:
                 cmd = popenargs[0]
-            raise subprocess.CalledProcessError(retcode, cmd)
+            ex = subprocess.CalledProcessError(retcode, cmd)
+            ex.output = output
+            raise ex
         return output
 
 from time import time
