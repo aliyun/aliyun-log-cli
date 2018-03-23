@@ -13,7 +13,7 @@ try:
     from collections import OrderedDict
 except ImportError:
     # for py2.6 case
-    from ordereddict import OderedDict
+    from ordereddict import OrderedDict
 
 from six import StringIO
 import logging
