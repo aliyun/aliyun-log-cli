@@ -144,7 +144,7 @@ def _process_response(ret, jmes_filter, format_output):
         for x in ret:
             _process_response(x, jmes_filter, format_output)
     else:
-        logger.warning("unknown response data", ret)
+        logger.warning("unknown response data: %s", ret)
 
 
 def main():
