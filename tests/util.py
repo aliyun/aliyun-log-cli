@@ -7,7 +7,27 @@ except ImportError:
     # for py2.6 case
     from ordereddict import OrderedDict
 from random import randint
-from subprocess import check_output, CalledProcessError, STDOUT
+import subprocess
+from subprocess import CalledProcessError, STDOUT
+
+try:
+    from subprocess import check_output
+except ImportError:
+    # for py2.6 case
+    def f(*popenargs, **kwargs):
+        if 'stdout' in kwargs:
+            raise ValueError('stdout argument not allowed, it will be overridden.')
+        process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
+        output, unused_err = process.communicate()
+        retcode = process.poll()
+        if retcode:
+            cmd = kwargs.get("args")
+            if cmd is None:
+                cmd = popenargs[0]
+            raise subprocess.CalledProcessError(retcode, cmd)
+        return output
+    subprocess.check_output = f
+
 from time import time
 import sys
 import os
