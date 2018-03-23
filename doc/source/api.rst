@@ -46,6 +46,7 @@ Project
 Logstore
 ----------
 .. autosummary::
+   copy_logstore
    list_logstore
    create_logstore
    get_logstore
