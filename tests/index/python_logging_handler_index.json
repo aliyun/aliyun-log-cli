@@ -1,0 +1,200 @@
+{
+  "keys": {
+    "__source__": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "__topic__": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        "\t"
+      ],
+      "type": "text"
+    },
+    "file_path": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": true,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t",
+        "\r"
+      ],
+      "type": "text"
+    },
+    "func_name": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t",
+        "\r"
+      ],
+      "type": "text"
+    },
+    "level": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "line_no": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "message": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": true,
+      "doc_value": true,
+      "token": [
+        ",",
+        " ",
+        "'",
+        "\"",
+        ";",
+        "=",
+        "(",
+        ")",
+        "[",
+        "]",
+        "{",
+        "}",
+        "?",
+        "@",
+        "&",
+        "<",
+        ">",
+        "/",
+        ":",
+        "\n",
+        "\t",
+        "\r"
+      ],
+      "type": "text"
+    },
+    "module": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [
+        "."
+      ],
+      "type": "text"
+    },
+    "process_id": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "process_name": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "record_name": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    },
+    "thread_id": {
+      "alias": "",
+      "doc_value": true,
+      "type": "long"
+    },
+    "thread_name": {
+      "alias": "",
+      "caseSensitive": false,
+      "chn": false,
+      "doc_value": true,
+      "token": [],
+      "type": "text"
+    }
+  },
+  "line": {
+    "caseSensitive": false,
+    "chn": true,
+    "token": [
+      ",",
+      " ",
+      "'",
+      "\"",
+      ";",
+      "=",
+      "(",
+      ")",
+      "[",
+      "]",
+      "{",
+      "}",
+      "?",
+      "@",
+      "&",
+      "<",
+      ">",
+      "/",
+      "\n",
+      "\t",
+      "\r"
+    ]
+  }
+}
