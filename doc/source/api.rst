@@ -136,6 +136,33 @@ Consumer group
    get_check_point
 
 
+Dashboard
+----------
+.. autosummary::
+   create_dashboard
+   update_dashboard
+   delete_dashboard
+   get_dashboard
+   list_dashboard
+
+Alert
+----------
+.. autosummary::
+   create_alert
+   update_alert
+   delete_alert
+   get_alert
+   list_alert
+
+Savedsearch
+----------
+.. autosummary::
+   create_savedsearch
+   update_savedsearch
+   delete_savedsearch
+   get_savedsearch
+   list_savedsearch
+
 Shipper
 ----------
 .. autosummary::
