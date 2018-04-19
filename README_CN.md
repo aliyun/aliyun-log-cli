@@ -18,6 +18,7 @@
     * [操作系统](#操作系统)
     * [支持版本](#支持版本)
     * [安装方式](#安装方式)
+    * [安装常见问题](#安装常见问题)
     * [完整参数列表](#完整参数列表)
 * [配置说明](#配置说明)
 * [输入输出](#输入输出)
@@ -111,6 +112,25 @@ Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 
 
 ```shell
 pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+```
+
+<h2 id="安装常见问题">常见安装问题</h2>
+
+1. 安装时报TLSV1_ALERT_PROTOCOL_VERSION错误
+
+```shell
+> pip install aliyun-log-cli
+
+Collecting aliyun-log-cli
+  Could not fetch URL https://pypi.python.org/simple/aliyun-log-cli/: There was a problem confirming the ssl certificate: [SSL: TLSV1_ALERT_PROTOCOL_VERSION] tlsv1 alert protocol version (_ssl.c:590) - skipping
+  Could not find a version that satisfies the requirement aliyun-log-cli (from versions: )
+No matching distribution found for aliyun-log-cli
+```
+
+**解答**： 请先升级pip：
+
+```shell
+pip install pip -U
 ```
 
 

@@ -18,6 +18,7 @@
      * [Operation System](#operation-system)
      * [Supported Version](#supported-version)
      * [Installation Method](#installation-method)
+     * [FQA of Installation](#faq-of-installation)
      * [Full Usage list](#full-usage-list)
   * [Configure CLI](#configure-cli)
   * [Input and Output](#input-and-output)
@@ -111,6 +112,28 @@ You could try the mirrors of local network provider, for Alicloud ECS, you can t
 ```shell
 pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 ```
+
+
+
+### FQA of Installation
+
+1. Encoutering errr `TLSV1_ALERT_PROTOCOL_VERSION` when installing CLI：
+
+```shell
+> pip install aliyun-log-cli
+
+Collecting aliyun-log-cli
+  Could not fetch URL https://pypi.python.org/simple/aliyun-log-cli/: There was a problem confirming the ssl certificate: [SSL: TLSV1_ALERT_PROTOCOL_VERSION] tlsv1 alert protocol version (_ssl.c:590) - skipping
+  Could not find a version that satisfies the requirement aliyun-log-cli (from versions: )
+No matching distribution found for aliyun-log-cli
+```
+
+**Solution**： Please upgrade pip and retry:
+
+```shell
+pip install pip -U
+```
+
 
 
 ### Full Usage list
