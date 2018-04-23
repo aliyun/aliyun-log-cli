@@ -72,7 +72,7 @@ aliyun log get_machine_group_applied_configs --project_name="dlq-test-cli-${RAND
 > {"configs": ["config_name1"], "count": 1}
 
 aliyun log get_shipper_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
-> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 not exist"
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
 aliyun log get_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --start_time=1510300126 --end_time=1510304126 --status_type="success" --offset=0 --size=100
 > {"errorCode": "ParameterInvalid", "errorMessage": "only support query last 48 hours task status"
