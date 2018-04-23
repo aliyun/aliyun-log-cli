@@ -398,7 +398,7 @@ aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" -
 aliyun log delete_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1"
 
 aliyun log delete_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
-> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 not exist"
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
 aliyun log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
 
