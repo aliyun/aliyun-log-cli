@@ -229,7 +229,7 @@ aliyun log update_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logst
 
 
 aliyun log retry_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --task_list="[\"task1\",\"task2\"]"
-> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 not exist"
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
 aliyun log get_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --shard="0"
 > [{"checkpoint": "MTU
