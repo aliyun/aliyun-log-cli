@@ -32,7 +32,7 @@ region-endpoint=cn-hangzhou.log.aliyuncs.com
 
 ## 方案
 
-配置文件中，可以在`DEFAULT`中集中配置多个权限的秘钥，再在其他区中引用它即可，这样可以手动编辑`~/.aliyunlogcli`来实现：
+配置文件中，可以在`DEFAULT`中集中配置多个权限的秘钥，再在其他区中用`%(xxxx)s`的方式引用它即可，这样可以手动编辑`~/.aliyunlogcli`来实现：
 
 ```ini
 [DEFAULT]
@@ -42,23 +42,23 @@ user_ak_id = id
 user_ak_key = key
 
 [hz_admin]
-access-id = %(admin_ak_id)
-access-key =  %(admin_ak_key)
+access-id = %(admin_ak_id)s
+access-key =  %(admin_ak_key)s
 region-endpoint = cn-hangzhou.sls.aliyuncs.com
 
 [hz_user]
-access-id = %(user_ak_id)
-access-key =  %(user_ak_key)
+access-id = %(user_ak_id)s
+access-key =  %(user_ak_key)s
 region-endpoint = cn-hangzhou.sls.aliyuncs.com
 
 [bj_admin]
-access-id = %(admin_ak_id)
-access-key =  %(admin_ak_key)
+access-id = %(admin_ak_id)s
+access-key =  %(admin_ak_key)s
 region-endpoint = cn-beijing.sls.aliyuncs.com
 
 [bj_user]
-access-id = %(user_ak_id)
-access-key =  %(user_ak_key)
+access-id = %(user_ak_id)s
+access-key =  %(user_ak_key)s
 region-endpoint = cn-beijing.sls.aliyuncs.com
 
 ```
