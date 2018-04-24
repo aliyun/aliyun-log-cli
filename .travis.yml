@@ -11,7 +11,7 @@ python:
 
 install:
   - pip install git+https://github.com/aliyun/aliyun-log-python-sdk.git@master
-  - pip install -U .
+  - pip install .
 
 script:
   - cd tests
