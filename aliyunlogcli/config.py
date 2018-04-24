@@ -66,35 +66,29 @@ aliyun configure [--format-output=json] [--default-client=<client_name>]
 DEBUG_SECTION_NAME = "__logging__"
 
 
+def _get_section_option(config, section_name, option_name, default=None):
+    if six.PY3:
+        return config.get(section_name, option_name, fallback=default)
+    else:
+        return config.get(section_name, option_name) if config.has_option(section_name, option_name) else default
+
+
 def load_kv_from_file(section, key, default=None):
     # load key value from file
-    config = configparser.ConfigParser()
+    config = configparser.SafeConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
-    if config.has_section(section):
-        if six.PY3:
-            return config.get(section, key, fallback=default)
-        else:
-            return config.get(section, key, default)
-
-    return default
+    return _get_section_option(config, section, key, default)
 
 
 def load_confidential_from_file(client_name):
     # load config from file
     config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
-    access_id, access_key, endpoint = '', '', ''
 
-    if config.has_section(client_name):
-        if six.PY3:
-            access_id = config.get(client_name, 'access-id', fallback='')
-            access_key = config.get(client_name, 'access-key', fallback='')
-            endpoint = config.get(client_name, 'region-endpoint', fallback='')
-        else:
-            access_id = config.get(client_name, 'access-id', '')
-            access_key = config.get(client_name, 'access-key', '')
-            endpoint = config.get(client_name, 'region-endpoint', '')
+    access_id = _get_section_option(config, client_name, 'access-id', '')
+    access_key = _get_section_option(config, client_name, 'access-key', '')
+    endpoint = _get_section_option(config, client_name, 'region-endpoint', '')
 
     return access_id, access_key, endpoint
 
@@ -147,13 +141,6 @@ def load_config(system_options):
             raise ValueError("Invalid JMES filter path")
 
     return SystemConfig(access_id, access_key, endpoint, jmes_filter, format_output)
-
-
-def _get_section_option(config, section_name, option_name, default=None):
-    if six.PY3:
-        return config.get(section_name, option_name, fallback=default)
-    else:
-        return config.get(section_name, option_name) if config.has_option(section_name, option_name) else default
 
 
 __LOGGING_LEVEL_MAP = {
