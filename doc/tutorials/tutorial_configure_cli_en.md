@@ -82,6 +82,9 @@ access-key=access_key2
 region-endpoint=cn-hangzhou.log.aliyuncs.com
 ```
 
+Refer to [here](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_configure_accounts_in_file_cn.html) to know a simpler way to configure multiple accounts in config file.
+
+
 2. Use specific account
 
 Any subcommand could use global opton `--client-name=<value>` to use specific configured account. e.g:

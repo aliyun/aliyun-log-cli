@@ -83,6 +83,8 @@ access-key=access_key2
 region-endpoint=cn-hangzhou.log.aliyuncs.com
 ```
 
+参考[这里](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_configure_accounts_in_file_cn.html)来了解一种简化的多账户配置方式。
+
 ### 使用特定账户
 
 任意命令都可以通过选项`--client-name=<value>`来使用特定配置的账户, 例如:

@@ -5,6 +5,7 @@
    :maxdepth: 2
 
    tutorial_configure_cli_cn.rst
+   tutorial_configure_accounts_in_file_cn.rst
    tutorial_create_logtail_config.rst
    tutorial_manage_cross_region_copy.rst
    tutorial_pull_logs.rst
