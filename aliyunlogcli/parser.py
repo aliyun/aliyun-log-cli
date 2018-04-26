@@ -172,6 +172,9 @@ def _to_int_list(s):
 
 @_file_input
 def _to_string_list(s):
+    if isinstance(s, (six.text_type, six.binary_type)):
+        return re.split(r'[\s\|\,]+', s)
+
     try:
         v = _to_list(s)
         _assert_string_list(v)

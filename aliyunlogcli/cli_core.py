@@ -8,6 +8,7 @@ from .version import __version__, USER_AGENT
 from .config import load_config, LOG_CONFIG_SECTION, GLOBAL_OPTION_SECTION, \
     GLOBAL_OPTION_KEY_FORMAT_OUTPUT, GLOBAL_OPTION_KEY_DEFAULT_CLIENT
 from .parser import *
+from .parser import _to_string_list
 import sys
 import json
 import logging
@@ -61,6 +62,8 @@ def configure_default_options(options):
         config.set(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, options[GLOBAL_OPTION_KEY_FORMAT_OUTPUT])
     if GLOBAL_OPTION_KEY_DEFAULT_CLIENT in options:
         config.set(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DEFAULT_CLIENT, options[GLOBAL_OPTION_KEY_DEFAULT_CLIENT])
+    if GLOBAL_OPTION_KEY_DECODE_OUTPUT in options:
+        config.set(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, options[GLOBAL_OPTION_KEY_DECODE_OUTPUT])
 
     with open(LOG_CREDS_FILENAME, 'w') as configfile:
         config.write(configfile)
@@ -109,40 +112,50 @@ def docopt_ex(doc, usage, method_param_usage, hlp=True, ver=None):
             print(usage)
 
 
-def show_result(result, format_output):
+def show_result(result, format_output, decode_output=None):
+    encodings = decode_output or ('utf8', 'latin1', 'gbk')
     if result != "" and result != b'':
         if isinstance(result, (six.text_type, six.binary_type)):
             print(result)
         else:
-            if format_output.lower().strip() == 'json':
-                print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': ')))
+            last_ex = None
+            for encoding in encodings:
+                try:
+                    if format_output.lower().strip() == 'json':
+                        print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '), encoding=encoding))
+                    else:
+                        print(json.dumps(result, sort_keys=True, encoding=encoding))
+
+                    break
+                except UnicodeDecodeError as ex:
+                    last_ex = ex
             else:
-                print(json.dumps(result, sort_keys=True))
+                raise last_ex
 
 
-def _process_response_data(data, jmes_filter, format_output):
+def _process_response_data(data, jmes_filter, format_output, decode_output):
     if data is not None:
         if jmes_filter:
             # filter with jmes
             try:
-                show_result(jmespath.compile(jmes_filter).search(data), format_output)
+                show_result(jmespath.compile(jmes_filter).search(data), format_output, decode_output)
             except jmespath.exceptions.ParseError as ex:
                 logger.error("fail to parse with JMES path, original data: %s", ex)
-                show_result(data, format_output)
+                show_result(data, format_output, decode_output)
                 exit(1)
         else:
-            show_result(data, format_output)
+            show_result(data, format_output, decode_output)
 
 
-def _process_response(ret, jmes_filter, format_output):
+def _process_response(ret, jmes_filter, format_output, decode_output):
     if hasattr(ret, 'get_body'):
         data = ret.get_body()
-        _process_response_data(data, jmes_filter, format_output)
+        _process_response_data(data, jmes_filter, format_output, decode_output)
 
         return data
     elif inspect.isgenerator(ret):
         for x in ret:
-            _process_response(x, jmes_filter, format_output)
+            _process_response(x, jmes_filter, format_output, decode_output)
     else:
         logger.warning("unknown response data: %s", ret)
 
@@ -159,7 +172,9 @@ def main():
 
     # process normal log command
     if arguments.get('log', False):
-        access_id, access_key, endpoint, jmes_filter, format_output = load_config(system_options)
+        access_id, access_key, endpoint, jmes_filter, format_output, decode_output = load_config(system_options)
+        decode_output = _to_string_list(decode_output)  # convert decode to list if any
+
         method_name, args = normalize_inputs(arguments, method_types)
         assert endpoint and access_id and access_key, ValueError("endpoint, access_id or key is not configured")
         client = LogClient(endpoint, access_id, access_key)
@@ -171,7 +186,7 @@ def main():
         try:
             ret = getattr(client, method_name)(**args)
             jmes_filter = jmes_filter.replace("\\n", '\n')  # parse faked \n
-            data = _process_response(ret, jmes_filter, format_output)
+            data = _process_response(ret, jmes_filter, format_output, decode_output)
 
         except LogException as ex:
             if data is not None:

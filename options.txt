@@ -2,8 +2,9 @@ Usage:
 
 1. aliyunlog log <subcommand> [parameters | global options]
 2. aliyunlog configure <access_id> <access-key> <endpoint> [<client-name>]
-3. aliyunlog configure [--format-output=json] [--default-client=<client_name>]
+3. aliyunlog configure [--format-output=json] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 4. aliyunlog [--help | --version]
+
 
 Examples:
 
@@ -23,6 +24,7 @@ Subcommand:
 
 	Logstore
 	-----------------------------------
+	copy_logstore
 	create_logstore
 	delete_logstore
 	get_logstore
@@ -136,5 +138,6 @@ Global Options:
 [--client-name=<value>]		: use this client name in configured accounts
 [--jmes-filter=<value>]		: filter results using JMES syntax
 [--format-output=json]		: print formatted json results or else print in one line
+[--decode-output=<value>]	: encoding list to decode response, comma separated like "utf8,lartin1,gbk", default is "utf8".
 
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.

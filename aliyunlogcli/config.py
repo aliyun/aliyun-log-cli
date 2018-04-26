@@ -18,11 +18,13 @@ LOG_CONFIG_SECTION = "main"
 GLOBAL_OPTION_SECTION = "__option__"
 GLOBAL_OPTION_KEY_FORMAT_OUTPUT = "format-output"
 GLOBAL_OPTION_KEY_DEFAULT_CLIENT = "default-client"
+GLOBAL_OPTION_KEY_DECODE_OUTPUT = "decode-output"
 
-SYSTEM_OPTIONS = ['access-id', 'access-key', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output']
+SYSTEM_OPTIONS = ['access-id', 'access-key', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output',
+                  'decode-output']
 SYSTEM_OPTIONS_STR = ' '.join('[--' + x + '=<value>]' for x in SYSTEM_OPTIONS)
 
-SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint jmes_filter format_output")
+SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint jmes_filter format_output decode_output")
 
 API_GROUP = [('project$', 'Project'), 'logstore', ('index|topics', "Index"),
              ('logtail_config', "Logtail Config"), ('machine', "Machine Group"), 'shard',
@@ -37,6 +39,7 @@ Global Options:
 [--client-name=<value>]		: use this client name in configured accounts
 [--jmes-filter=<value>]		: filter results using JMES syntax
 [--format-output=json]		: print formatted json results or else print in one line
+[--decode-output=<value>]	: encoding list to decode response, comma separated like "utf8,lartin1,gbk", default is "utf8". 
 
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
 """
@@ -46,8 +49,9 @@ Usage:
 
 1. aliyunlog log <subcommand> [parameters | global options]
 2. aliyunlog configure <access_id> <access-key> <endpoint> [<client-name>]
-3. aliyunlog configure [--format-output=json] [--default-client=<client_name>]
+3. aliyunlog configure [--format-output=json] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 4. aliyunlog [--help | --version]
+
 
 Examples:
 
@@ -60,7 +64,7 @@ Subcommand:
 """ + GLOBAL_OPTIONS_STR
 
 MORE_DOCOPT_CMD = """aliyun configure <secure_id> <secure_key> <endpoint> [<client_name>]
-aliyun configure [--format-output=json] [--default-client=<client_name>]
+aliyun configure [--format-output=json] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 """
 
 DEBUG_SECTION_NAME = "__logging__"
@@ -114,6 +118,7 @@ def load_config(system_options):
     client_name = os.environ.get('ALIYUN_LOG_CLI_CLIENT_NAME', client_name)
     client_name = system_options.get('client-name', client_name)
     format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, '')
+    decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
     access_id, access_key, endpoint = load_confidential_from_file(client_name)
 
@@ -122,12 +127,14 @@ def load_config(system_options):
     access_key = os.environ.get('ALIYUN_LOG_CLI_ACCESSKEY', access_key)
     endpoint = os.environ.get('ALIYUN_LOG_CLI_ENDPOINT', endpoint)
     format_output = os.environ.get('ALIYUN_LOG_CLI_FORMAT_OUTPUT', format_output)
+    decode_output = os.environ.get('ALIYUN_LOG_CLI_DECODE_OUTPUT', decode_output)
 
     # load config from command lines
     access_id = system_options.get('access-id', access_id)
     access_key = system_options.get('access-key', access_key)
     endpoint = system_options.get('region-endpoint', endpoint)
     format_output = system_options.get('format-output', format_output)
+    decode_output = system_options.get('decode-output', decode_output)
 
     assert access_id and access_key and endpoint, ValueError("Access id/key or endpoint is empty!")
 
@@ -140,7 +147,7 @@ def load_config(system_options):
             print(ex)
             raise ValueError("Invalid JMES filter path")
 
-    return SystemConfig(access_id, access_key, endpoint, jmes_filter, format_output)
+    return SystemConfig(access_id, access_key, endpoint, jmes_filter, format_output, decode_output)
 
 
 __LOGGING_LEVEL_MAP = {
