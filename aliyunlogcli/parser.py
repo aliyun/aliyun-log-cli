@@ -133,7 +133,7 @@ def _to_dict(s):
 @_file_input
 def _to_list(s):
     try:
-        if isinstance(s, list):
+        if isinstance(s, (list, tuple)):
             return s
 
         v = json.loads(s)
