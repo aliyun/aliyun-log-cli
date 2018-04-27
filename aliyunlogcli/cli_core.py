@@ -12,6 +12,8 @@ from .parser import _to_string_list
 import sys
 import json
 import logging
+from json import JSONEncoder
+
 logger = logging.getLogger(__name__)
 
 
@@ -112,25 +114,47 @@ def docopt_ex(doc, usage, method_param_usage, hlp=True, ver=None):
             print(usage)
 
 
+def get_encoder_cls(encodings):
+    class NonUtf8Encoder(JSONEncoder):
+        def default(self, obj):
+            if isinstance(obj, six.binary_type):
+                for encoding in encodings:
+                    try:
+                        return obj.decode(encoding)
+                    except UnicodeDecodeError as ex:
+                        pass
+                return obj.decode('utf8', "ignore")
+
+            return JSONEncoder.default(self, obj)
+
+    return NonUtf8Encoder
+
+
 def show_result(result, format_output, decode_output=None):
     encodings = decode_output or ('utf8', 'latin1', 'gbk')
     if result != "" and result != b'':
         if isinstance(result, (six.text_type, six.binary_type)):
             print(result)
         else:
-            last_ex = None
-            for encoding in encodings:
-                try:
-                    if format_output.lower().strip() == 'json':
-                        print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '), encoding=encoding))
-                    else:
-                        print(json.dumps(result, sort_keys=True, encoding=encoding))
+            if six.PY2:
+                last_ex = None
+                for encoding in encodings:
+                    try:
+                        if format_output.lower().strip() == 'json':
+                            print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '), encoding=encoding))
+                        else:
+                            print(json.dumps(result, sort_keys=True, encoding=encoding))
 
-                    break
-                except UnicodeDecodeError as ex:
-                    last_ex = ex
+                        break
+                    except UnicodeDecodeError as ex:
+                        last_ex = ex
+                else:
+                    raise last_ex
             else:
-                raise last_ex
+                if format_output.lower().strip() == 'json':
+                    print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '), cls=get_encoder_cls(encodings)))
+                else:
+                    print(json.dumps(result, sort_keys=True, cls=get_encoder_cls(encodings)))
 
 
 def _process_response_data(data, jmes_filter, format_output, decode_output):
