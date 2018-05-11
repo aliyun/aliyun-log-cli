@@ -1,0 +1,15 @@
+{
+	"externalStoreName": "rds_store4",
+	"storeType": "rds-vpc",
+	"parameter": {
+		"vpc-id": "vpc-m5eq4irc1pucpk85frr5j",
+		"instance-id": "i-m5eeo2whsnfg4kzq54ah",
+		"host": "1.2.3.4",
+		"port": "3306",
+		"username": "root",
+		"password": "123",
+		"db": "meta",
+		"table": "join_meta",
+		"region": "cn-qingdao"
+	}
+}

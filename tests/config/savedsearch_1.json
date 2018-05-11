@@ -1,0 +1,6 @@
+{
+    "logstore": "test2",
+    "savedsearchName": "search_1",
+    "searchQuery": "boy | select sex, count() as Count group by sex",
+    "topic": ""
+}

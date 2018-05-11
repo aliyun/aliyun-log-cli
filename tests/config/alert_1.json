@@ -1,0 +1,18 @@
+{
+  "actionDetail": {
+    "message": "xxxxxxx simple test"
+  },
+  "actionType": "notification",
+  "alertDetail": {
+    "alertKey": "f2",
+    "alertValue": "200",
+    "comparator": ">"
+  },
+  "checkInterval": 5,
+  "count": 10,
+  "from": "-300s",
+  "roleArn": "acs:ram::12345678:role/aliyunlogreadrole",
+  "savedsearchName": "quck-query-all",
+  "to": "now",
+  "alertName": "alert_1"
+}
