@@ -185,7 +185,7 @@ if __name__ == '__main__':
     )
 ```
 
-for linux or mac, it could be put under `/usr/bin/python`.
+for linux or mac, it could be put under `/usr/bin/`.
 
 
 2.3. verify it

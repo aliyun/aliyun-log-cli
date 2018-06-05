@@ -191,7 +191,7 @@ if __name__ == '__main__':
     )
 ```
 
-对于linux或mac, 可以考虑放到`/usr/bin/python`目录下
+对于linux或mac, 可以考虑放到`/usr/bin/`目录下
 
 
 2.3. 验证, 执行如试下命令看一下是否成功.
