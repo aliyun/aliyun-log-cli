@@ -18,7 +18,8 @@
      * [Operation System](#operation-system)
      * [Supported Version](#supported-version)
      * [Installation Method](#installation-method)
-     * [FQA of Installation](#faq-of-installation)
+     * [Offline Installation](#offline-installation)
+     * [FAQ of Installation](#faq-of-installation)
      * [Full Usage list](#full-usage-list)
   * [Configure CLI](#configure-cli)
   * [Input and Output](#input-and-output)
@@ -113,9 +114,31 @@ You could try the mirrors of local network provider, for Alicloud ECS, you can t
 pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 ```
 
+### Offline Installation
+Since [0.1.12](https://github.com/aliyun/aliyun-log-cli/releases), we provide offline package for mac x64 and linux x64 platform. 
+
+Follow below ways to install it.
+1. download the package from [release page](https://github.com/aliyun/aliyun-log-cli/releases)
+2. unzip it to a local folder, like `cli_packages`, you can see some whl files inside it.
+3. if you don't have pip, install pip first:
+
+```shell
+python pip-10.0.1-py2.py3-none-any.whl/pip install --no-index cli_packages/pip-10.0.1-py2.py3-none-any.whl
+```
+
+4. install the CLI:
+
+```shell
+pip install aliyun-log-cli --no-index --find-links=cli_packages
+```
+
+5. verify it
+```shell
+> aliyunlog --version
+```
 
 
-### FQA of Installation
+### FAQ of Installation
 
 1. Encoutering errr `TLSV1_ALERT_PROTOCOL_VERSION` when installing CLI：
 
@@ -134,7 +157,41 @@ No matching distribution found for aliyun-log-cli
 pip install pip -U
 ```
 
+2. On Linux/Mac, cannot find command `aliyunlog`?
 
+it's caused by the missing of shell of `aliyunlog`, you could make one by yourself.
+
+
+2.1. find python path:
+
+for linux or mac:
+
+```shell
+which python
+```
+
+2.2. create a shell script named `aliyunlog` with below content and allow to execute it. And put it into path folder:
+
+```python
+#!<python path here with ! ahead>
+import re
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(
+        load_entry_point('aliyun-log-cli', 'console_scripts', 'aliyunlog')()
+    )
+```
+
+for linux or mac, it could be put under `/usr/bin/python`.
+
+
+2.3. verify it
+```shell
+> aliyunlog --version
+```
 
 ### Full Usage list
 

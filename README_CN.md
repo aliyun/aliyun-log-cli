@@ -18,6 +18,7 @@
     * [操作系统](#操作系统)
     * [支持版本](#支持版本)
     * [安装方式](#安装方式)
+    * [离线安装](#离线安装)
     * [安装常见问题](#安装常见问题)
     * [完整参数列表](#完整参数列表)
 * [配置说明](#配置说明)
@@ -115,6 +116,32 @@ Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 
 pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 ```
 
+
+<h2 id="离线安装">离线安装</h2>
+
+从 [0.1.12](https://github.com/aliyun/aliyun-log-cli/releases)开始, 我们为Linux x64和MacOS x64提供离线的安装包. 
+
+如下步骤安装:
+
+1. 从[release页面](https://github.com/aliyun/aliyun-log-cli/releases)下载对应离线安装包.
+2. 解压到本地目录, 例如`cli_packages`, 可以看到许多whl文件在里面.
+3. 如果还没有`pip`, 可以如下安装:
+
+```shell
+python pip-10.0.1-py2.py3-none-any.whl/pip install --no-index cli_packages/pip-10.0.1-py2.py3-none-any.whl
+```
+
+4. 安装CLI:
+
+```shell
+pip install aliyun-log-cli --no-index --find-links=cli_packages
+```
+
+5. 验证:
+```shell
+> aliyunlog --version
+```
+
 <h2 id="安装常见问题">常见安装问题</h2>
 
 1. 安装时报TLSV1_ALERT_PROTOCOL_VERSION错误
@@ -133,6 +160,43 @@ No matching distribution found for aliyun-log-cli
 ```shell
 pip install pip -U
 ```
+
+
+2. 找不到命令`aliyunlog`?
+
+Linux/Mac下, 因为某种原因创建脚本`aliyunlog`链接时未成功, 可以手工创建一个, 如下:
+
+
+2.1. 找到Python路径:
+
+在linux或mac, 执行命令可以看到:
+
+```shell
+which python
+```
+
+
+2.2. 创建一个叫做`aliyunlog`文件, 赋予执行权限, 内容如下, 并放到PATH目录下 :
+
+```python
+#!<python路径放这里,注意有一个感叹号!>
+import re
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(
+        load_entry_point('aliyun-log-cli', 'console_scripts', 'aliyunlog')()
+    )
+```
+
+对于linux或mac, 可以考虑放到`/usr/bin/python`目录下
+
+
+2.3. 验证, 执行如试下命令看一下是否成功.
+```shell
+> aliyunlog --version
 
 
 <h2 id="完整参数列表">完整参数列表</h2>
