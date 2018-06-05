@@ -16,7 +16,7 @@
 根据设定好的查询语句查询数据, 即可通过CLI轻松查询数据. 下面例子查询某个时间范围, 某台服务器响应速度大于5秒的访问日志.
 
 ```shell
-aliyun log get_log_all --project_name="p1" --logstore_name="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST"
+aliyun log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST"
 ```
 
 这里拉取从时间`2018-01-24 16:00:00 CST`到`2018-01-24 17:00:00 CST`在内满足条件`host:test.com and response_time>5000`的日志, 例如:
@@ -35,7 +35,7 @@ aliyun log get_log_all --project_name="p1" --logstore_name="l1" --query="host:te
 例如:
 
 ```shell
-aliyun log get_log_all --project_name="p1" --logstore_name="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST" --jmes-filter="join('\n', map(&to_string(@), @))" >> ~/Desktop/test.data
+aliyun log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST" --jmes-filter="join('\n', map(&to_string(@), @))" >> ~/Desktop/test.data
 ``` 
 
 输出将被存储在文件`test.data`中, 格式为:
