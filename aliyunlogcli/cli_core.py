@@ -196,11 +196,33 @@ def main():
 
     # process normal log command
     if arguments.get('log', False):
-        access_id, access_key, endpoint, jmes_filter, format_output, decode_output = load_config(system_options)
-        decode_output = _to_string_list(decode_output)  # convert decode to list if any
+        try:
+            access_id, access_key, endpoint, jmes_filter, format_output, decode_output = load_config(system_options)
 
-        method_name, args = normalize_inputs(arguments, method_types)
-        assert endpoint and access_id and access_key, ValueError("endpoint, access_id or key is not configured")
+            decode_output = _to_string_list(decode_output)  # convert decode to list if any
+
+            method_name, args = normalize_inputs(arguments, method_types)
+            if not (endpoint and access_id and access_key):
+                raise IncompleteAccountInfoError("endpoint, access_id or key is not configured")
+
+        except IncompleteAccountInfoError as ex:
+            print("""
+Error!
+
+The default account is not configured or the command doesn't have a well-configured account passed. 
+
+Fix it by either configuring a default account as: 
+> aliyunlog configure <access_id> <access-key> <endpoint>
+
+or use option --client-name to specify a well-configured account as:
+> aliyunlog configure <access_id> <access-key> <endpoint> <user-bj>
+> aliyunlog log .....  --client-name=user-bj
+
+Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_configure_cli_en.html for more info.
+
+            """)
+            exit(2)
+
         client = LogClient(endpoint, access_id, access_key)
         client.set_user_agent(USER_AGENT)
 
@@ -217,7 +239,7 @@ def main():
                 show_result(data, format_output)
             else:
                 print(ex)
-            exit(2)
+            exit(3)
 
     # process configure command
     elif arguments.get('configure', False):

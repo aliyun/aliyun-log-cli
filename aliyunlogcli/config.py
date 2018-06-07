@@ -5,6 +5,7 @@ import six
 import jmespath
 from jmespath.exceptions import ParseError
 import logging
+from .exceptions import IncompleteAccountInfoError
 
 LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
                                 'set_user_agent', 'get_unicode', 'list_logstores'
@@ -136,7 +137,8 @@ def load_config(system_options):
     format_output = system_options.get('format-output', format_output)
     decode_output = system_options.get('decode-output', decode_output)
 
-    assert access_id and access_key and endpoint, ValueError("Access id/key or endpoint is empty!")
+    if not (access_id and access_key and endpoint):
+        raise IncompleteAccountInfoError("Access id/key or endpoint is empty!")
 
     # load jmes filter from cmd
     jmes_filter = system_options.get('jmes-filter', '')
