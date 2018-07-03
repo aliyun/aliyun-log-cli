@@ -21,7 +21,7 @@ aliyun log get_log_all --project="p1" --logstore="l1" --query="host:test.com and
 
 这里拉取从时间`2018-01-24 16:00:00 CST`到`2018-01-24 17:00:00 CST`在内满足条件`host:test.com and response_time>5000`的日志, 例如:
 ```shell
-{"count": 101, "logs": [{"k1":"a1", "k2":"a2"}, {"k1":"b1", "k2":"b2"}, ... ]}
+[{"k1":"a1", "k2":"a2"}, {"k1":"b1", "k2":"b2"}, ... ]
 ```
 
 **注意:** 
