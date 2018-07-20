@@ -35,6 +35,7 @@ aliyun log pull_log_dump --project_name="p1" --logstore_name="l1" --from_time="2
 ## 时间格式
 时间格式推荐是`%Y-%m-%d %H:%M:%S %Z`, 如`2018-01-24 17:00:00 CST`, 但也支持其他合法的时间格式, 例如:`Jan 01 2018 10:10:10 CST`
 
+**注意：** 时区不仅可以是CST，如果发现拿不到数据，可以改成特定时区例如 UTC-8 或者 UTC+8
 
 ## 时间范围
 命令`pull_log_dump`传入的时间范围, 需要注意几点:
