@@ -174,6 +174,11 @@ Shipper
    get_shipper_tasks
    retry_shipper_tasks
 
+ES Migration Class
+--------------------------
+.. py:currentmodule:: aliyun.log.es_migration
+.. autosummary::
+   MigrationManager
 
 Definitions
 -------------
@@ -202,3 +207,5 @@ Definitions
 .. autoclass:: OssShipperConfig
 .. autoclass:: OdpsShipperConfig
 .. autoclass:: ShipperTask
+.. py:currentmodule:: aliyun.log.es_migration
+.. autoclass:: MigrationManager
