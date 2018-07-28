@@ -670,6 +670,7 @@ All the commands support below optional global options:
 <h3 id="12-elasticsearch-data-migration">12. Elasticsearch data migration</h3>
 
 - migrate
+  - please refer to [Elasticsearch data migration](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)  to know how to migrate data from elasticsearch to aliyun log service.
 
 ### Best Practice
 
