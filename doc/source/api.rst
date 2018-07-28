@@ -174,7 +174,7 @@ Shipper
    get_shipper_tasks
    retry_shipper_tasks
 
-ES Migration Class
+ES Migration
 --------------------------
 .. py:currentmodule:: aliyun.log.es_migration
 .. autosummary::
