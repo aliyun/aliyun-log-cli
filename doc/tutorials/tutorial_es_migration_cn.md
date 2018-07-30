@@ -81,7 +81,7 @@ CLI 会根据 Elasticsearch 的[数据类型](https://www.elastic.co/guide/en/el
 | join datatype | n/a |
 
 ## 抓取模式
-- 为了提高吞吐量，CLI 会为每个 shard 创建一个数据迁移任务，并提交到内部进程池中执行。
+- 为了提高吞吐量，CLI 会为每个 index 的每个 shard 创建一个数据迁移任务，并提交到内部进程池中执行。
 - 当全部任务执行完成后，CLI 才会退出。
 
 ## 任务执行情况展示
