@@ -46,7 +46,9 @@ aliyun log get_project --project_name="dlq-test-cli-${RANDOM_NUMBER}"
 > "status": "Normal"
 
 aliyun log get_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
-> "logstoreName": "logstore2", "shardCount": 2
+> "logstoreName": "logstore2"
+> "shardCount": 2
+> "autoSplit": false
 
 aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1"
 > "configName": "config_name1"
