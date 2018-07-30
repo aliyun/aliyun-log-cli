@@ -45,6 +45,7 @@
         * [Logs write and consume](#9-logs-write-and-consume)
         * [Shipper management](#10-shipper-management)
         * [Consumer group management](#11-consumer-group-management)
+        * [Elasticsearch data migration](#12-elasticsearch-data-migration)
   * [Best Practice](#best-practice)
   * [Troubleshooting](#troubleshooting)
   * [Other resources](#other-resources)
@@ -385,6 +386,7 @@ All the commands support below optional global options:
 9. [Logs write and consume](#9-logs-write-and-consume)
 10. [Shipper management](#10-shipper-management)
 11. [Consumer group management](#11-consumer-group-management)
+12. [Elasticsearch data migration](#12-elasticsearch-data-migration)
 
 
 <h3 id="1-project-management">1. Project management</h3>
@@ -665,6 +667,11 @@ All the commands support below optional global options:
 - update_check_point
 - get_check_point
 
+<h3 id="12-elasticsearch-data-migration">12. Elasticsearch data migration</h3>
+
+- migrate
+  - please refer to [Elasticsearch data migration](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)  to know how to migrate data from elasticsearch to aliyun log service.
+
 ### Best Practice
 
 - [Configure CLI](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_configure_cli_en.html)
@@ -672,6 +679,8 @@ All the commands support below optional global options:
 - [Duplicate project settings cross region](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
 - [Pull Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
 - [Get Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_get_logs.html)
+- [Elasticsearch data migration](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)
+
 
 
 ### Troubleshooting

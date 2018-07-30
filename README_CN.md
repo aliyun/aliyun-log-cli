@@ -45,7 +45,8 @@
         * [日志读写与消费](#9-日志读写与消费)
         * [投递管理](#10-投递管理)
         * [消费组管理](#11-消费组管理)
-        * [其他配置管理](#12-其他配置管理)
+        * [Elasticsearch数据迁移](#12-Elasticsearch数据迁移)
+        * [其他配置管理](#13-其他配置管理)
 * [最佳实践](#最佳实践)
 * [错误诊断](#错误诊断)
 * [其他资源](#其他资源)
@@ -392,6 +393,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
  9. [日志读写与消费](#9-日志读写与消费)
  10. [投递管理](#10-投递管理)
  11. [消费组管理](#11-消费组管理)
+ 12. [Elasticsearch 数据迁移](#12-Elasticsearch数据迁移)
 
 <h3 id="1-项目组管理">1. 项目组管理</h3>
 
@@ -670,7 +672,12 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - update_check_point
 - get_check_point
 
-<h3 id="12-其他配置管理">12. 其他配置管理</h3>
+<h3 id="12-Elasticsearch数据迁移">12. Elasticsearch 数据迁移</h3>
+
+- es_migrate
+  - 参考[Elasticsearch 数据迁移](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)了解如何将 Elasticsearch 中的数据导入日志服务。
+
+<h3 id="13-其他配置管理">13. 其他配置管理</h3>
 - 报警管理
 - 快速查询管理
 - 报表管理
@@ -685,6 +692,7 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - [跨域复制项目配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
 - [拉取日志](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
 - [查询日志](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_get_logs.html)
+- [Elasticsearch 数据迁移](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)
 
 <h1 id="错误诊断">错误诊断</h1>
 
