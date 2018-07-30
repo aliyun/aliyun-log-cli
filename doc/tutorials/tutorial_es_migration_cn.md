@@ -7,7 +7,7 @@
 
 | 参数 | 必选 | 说明 | 样例 |
 | -------- | -------- | -------- | -------- |
-| hosts | yes | elasticsearch 数据源地址列表，多个 host 之间用逗号分隔。 | 127.0.0.1:9200<br>localhost:9200,other_host:9200 |
+| hosts | yes | elasticsearch 数据源地址列表，多个 host 之间用逗号分隔。 | 127.0.0.1:9200<br>localhost:9200,other_host:9200<br>user:secret@localhost:9200 |
 | project_name | yes | 日志服务中用于存储迁移数据的 project。<br>需要您提前创建好。 | your_project |
 | indexes | no | elasticsearch index 列表，多个 index 之间用逗号分隔，支持通配符(*)。<br>默认抓取目标 es 中所有 index 的数据。 | index1<br>my_index*,other_index |
 | query | no | 用于过滤文档，使用该参数您可以指定需要迁移的文档。<br>默认不会对文档进行过滤。 | '{"query": {"match": {"title": "python"}}}' |
@@ -135,6 +135,12 @@ aliyunlog log es_migration --hosts=localhost:9200,other_host:9200 --project_name
 ```
 aliyunlog log es_migration --hosts=localhost:9200 --project_name=project1 --query='{"query": {"match": {"title": "python"}}}'
 ```
+
+- 使用 HTTP 基本认证`user:secret@localhost:9200`，从 Elasticserch 中迁移数据。
+```
+aliyunlog log es_migration --hosts=user:secret@localhost:9200 --project_name=project1
+```
+
 
 ## 常见问题
 **Q**：是否支持抓取特定时间范围内的 ES 数据？
