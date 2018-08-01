@@ -22,15 +22,13 @@
 除了常规的格式，例如："%Y-%m-%d %H:%M:%S CST"的例子"2018-01-02 12:12:10 CST"；
 也支持"1 hour ago", "now", "yesterday 0:0:0"等格式了。更多格式也可以参考https://dateparser.readthedocs.io/en/latest/
 
-| 范围 | 时间例子 |
-| ---- | ---- |
-| 相对1分钟 | -1min - now， 或 1 min ago - now | 
-| 相对4小时 | -4h - now，或 4 hours ago - now 或 4 hour ago | 
-| 相对4天（24小时） | -1d - now，或 1 day ago - now | 
-| 相对1周（7*24小时）| -1week - now, 或 1 week ago - now | 
-| 今天 | today 0:0:0 - now | 
-| 昨天 | yesterday 0:0:0 - yesterday 23:59:59，或 1 day ago 0:0:0 - -1d 23:59:59 | 
-| 前天 | the day before yesterday 0:0:0 - 2 day ago 23:59:59 |
+**相对1分钟:** -1min ~ now， 或 1 min ago ~ now
+**相对4小时:** -4h ~ now，或 4 hours ago ~ now 或 4 hour ago 
+**相对4天（24小时）:** -1d ~ now，或 1 day ago ~ now  
+**相对1周（7*24小时）:** -1week ~ now, 或 1 week ago ~ now 
+**今天:** today 0:0:0 ~ now  
+**昨天:** yesterday 0:0:0 ~ yesterday 23:59:59，或 1 day ago 0:0:0 ~ -1d 23:59:59  
+**前天:** the day before yesterday 0:0:0 ~ 2 day ago 23:59:59 
 
 
 ## 例子
