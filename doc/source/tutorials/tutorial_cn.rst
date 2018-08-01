@@ -13,5 +13,5 @@
    jmes_filter_usage.rst
    tutorial_log_upload.rst
    tutorial_manage_cross_region_copy_index_dashboard.rst
-
+   tutorial_human_readable_datetime.rst
 
