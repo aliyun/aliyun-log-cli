@@ -17,6 +17,7 @@
 | pull_log | 基于服务器接受时间范围，批量拉取特定shard的数据。   |
 | pull_log_dump | 并发批量下载logstore所有shard的数据到本地。    |
 | get_cursor |  获取特定服务器时间特定shard的游标（以便基于游标拉取数据）  |
+| get_histograms | 获取查询范围内的日志分布。 |
 
 ## 支持的时间格式
 除了常规的格式，例如："%Y-%m-%d %H:%M:%S CST"的例子"2018-01-02 12:12:10 CST"；
