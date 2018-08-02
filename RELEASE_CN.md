@@ -9,6 +9,8 @@
 2. 运行命令`python setup.py sdist`构建发布文件。
 3. 运行命令`pip install twine`安装用于向 PyPI 中发布 Python 包的工具 twine。
 4. 运行命令`twine upload dist/*`将构建好的文件发布至 PyPI（需要填写用户名/密码）。
+5. 进入 [release](https://github.com/aliyun/aliyun-log-cli/releases) 页面，点击`Draft a new release`为该发布的版本创建一个 release。
+`Tag version`和`Release title`填写该版本的版本号。
 
 ### 验证
 运行命令`pip install -U aliyun-log-cli`检查是否能安装到刚发布的 CLI。
