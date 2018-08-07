@@ -148,4 +148,8 @@ aliyunlog log es_migration --hosts=user:secret@localhost:9200 --project_name=pro
 
 **A**：ES 本身并没有内置 time 字段，如果文档中某个字段代表时间，可以使用参数 query 进行过滤。
 
+**Q**：如何观察迁移任务的执行状况？
+
+**A**：参考[任务执行情况展示](https://github.com/aliyun/aliyun-log-cli/blob/master/doc/tutorials/tutorial_es_migration_cn.md#%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E6%83%85%E5%86%B5%E5%B1%95%E7%A4%BA)部分，将日志级别配置成 info 或以下，并使用命令`tail -f <your_log_file>`实时观察日志的输出。
+
 
