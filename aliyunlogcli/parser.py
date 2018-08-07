@@ -125,8 +125,8 @@ def _to_dict(s):
                 raise ValueError("input is not dict")
 
         return v
-    except Exception:
-        logger.error("failed to convert value='{0}' to type dict".format(s))
+    except Exception as ex:
+        logger.error("failed to convert value='{0}' to type dict, detail={1}".format(s, str(ex)))
         raise
 
 
