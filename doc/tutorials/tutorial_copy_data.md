@@ -1,9 +1,10 @@
-# 复制数据
+## 使用CLI进行高速跨域日志复制、历史数据重新索引与数仓投递
 
 ## 背景
-开启了字段索引却无法对历史日志起作用，而手动重建索引又很困难怎么办？
-需要迁移数据，复制数据到其他区域logstore，写代码实现大并发复制又很复杂怎么办？
-投递日志到OSS/ODPS仅仅对新数据起作用，又想投递历史日志怎么办？
+使用日志服务是不是常常遇到如下烦恼？
+1. 开启了字段索引却无法对历史日志起作用，而手动重建索引又很困难怎么办？
+2. 需要迁移数据，复制数据到其他区域logstore，写代码实现大并发复制又很复杂怎么办？
+3. 投递日志到OSS/ODPS仅仅对新数据起作用，又想投递历史日志怎么办？
 
 现在使用CLI就可以帮你轻松实现这些操作。
 
@@ -14,12 +15,12 @@
 2. 速度快, 易并发, 且支持传输压缩.
 3. 拉取的数据按照服务器接受的时间排序.
 4. 支持跨域、跨项目库复制。
-5. 支持复制数据到同一个logstore（为了重新索引）
+5. 支持复制数据到同一个logstore（重新索引）。
 
 ## 前提
 这里假设已经完成了CLI的[安装](http://aliyun-log-cli.readthedocs.io/en/latest/README_CN.html#id1).
 
-### 1. 配置多区域账户
+### 配置多区域账户
 
 首先CLI中配置多个区域账户, 以便后续操作, 这一步也是一次性的. 如果之前已经做过, 这里可以跳过.
 
@@ -55,8 +56,7 @@ aliyunlog log copy_data --project="源project" --logstore="源logstore" --from_t
 有时需要将某一个logstore的日志迁移到另外一个logstore中去时，可以如下操作：
 
 ### 准备好目标logstore
-假设目标logstore已经创建好了，并且配置好了索引。可以直接[复制logstore配置](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)
-也可以使用[create_logstore](https://aliyun-log-cli.readthedocs.io/en/latest/api.html#aliyun.log.LogClient.copy_logstore)创建日志库，在配置索引，可以通过命令[get_index_config](https://aliyun-log-cli.readthedocs.io/en/latest/api.html#aliyun.log.LogClient.get_index_config)获取索引，再调用命令[create_index](https://aliyun-log-cli.readthedocs.io/en/latest/api.html#aliyun.log.LogClient.create_index)来实现。
+假设目标logstore已经创建好了，并且配置好了索引。这一步操作可以在Web控制台完成，也可以通过CLI的[复制logstore配置](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)来完成，或者使用CLI的[create_logstore](https://aliyun-log-cli.readthedocs.io/en/latest/api.html#aliyun.log.LogClient.copy_logstore)创建日志库，再配置索引，通过命令[get_index_config](https://aliyun-log-cli.readthedocs.io/en/latest/api.html#aliyun.log.LogClient.get_index_config)获取索引，调用命令[create_index](https://aliyun-log-cli.readthedocs.io/en/latest/api.html#aliyun.log.LogClient.create_index)来实现。
 
 
 ### 复制数据
@@ -70,11 +70,11 @@ aliyunlog log copy_data --project="源项目" --logstore="源logstore" --from_ti
 这里将杭州区域的`源project`的`源logstore`中服务器在时间范围["2018-09-05 0:0:0 CST","2018-09-06 0:0:0 CST")内接收到的数据，写入到`北京`区域的`目标project`的`目标logstore`中去。
 
 **注意:**
-这里用`--to_client`指定操作目标project的账户为`bj`，是前面前提中配置的账户（以及其Endpoint）。
+这里用`--to_client`指定操作目标project的账户为`bj`，是前面前提中配置的账户名。
 
 
 ### 投递历史日志到OSS/ODPS
-日志服务的投递功能，仅仅对新数据产生作用。这里也可以借助复制数据来实现投递历史日志的效果：
+日志服务的投递任务配置好后，仅仅对新接受数据产生作用。这里也可以借助复制数据来实现投递历史日志的效果：
 
 1. 创建一个临时的logstore（不需要配置索引）
 2. 在临时logstore上配置投递OSS/ODPS的任务
