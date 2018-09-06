@@ -52,6 +52,8 @@ The time format passed to the CLI is recommend as `%Y-%m-%d %H:%M:%S %Z`, like `
 
 **Note：** The time-zone could not only be `CST` but also any other valid ones. Try to use more accurate time zone format like `UTC-8` or `UTC+8` when you could not find the wanted time. 
 
+Actually, it's also supported to use relative format like `2 day ago`, `now`, `yesterday 0:0`, `-1week` etc.
+
 ## Time range
 When passing time range parameters to `get_log(s)` or `get_log_all`, please note:
 

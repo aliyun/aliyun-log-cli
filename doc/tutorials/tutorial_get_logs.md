@@ -51,6 +51,8 @@ aliyun log get_log_all --project="p1" --logstore="l1" --query="host:test.com and
 
 **注意：** 时区不仅可以是CST，如果发现拿不到数据，可以改成特定时区例如 UTC-8 或者 UTC+8 
 
+CLI还支持更多其他格式的时间格式，例如`2 day ago`等，参考[这里](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_human_readable_datetime.html).
+
 ## 时间范围
 命令`get_log(s)`或`get_log_all`传入的时间范围, 需要注意几点:
 

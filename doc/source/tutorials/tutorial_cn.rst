@@ -10,6 +10,7 @@
    tutorial_manage_cross_region_copy.rst
    tutorial_pull_logs.rst
    tutorial_get_logs.rst
+   tutorial_copy_data.rst
    jmes_filter_usage.rst
    tutorial_log_upload.rst
    tutorial_manage_cross_region_copy_index_dashboard.rst
