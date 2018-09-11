@@ -117,6 +117,7 @@ Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 
 pip/pip3 install -U aliyun-log-cli --index http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 ```
 
+Note：也可以使用清华的索引`-i https://pypi.tuna.tsinghua.edu.cn/simple`
 
 <h2 id="离线安装">离线安装</h2>
 
