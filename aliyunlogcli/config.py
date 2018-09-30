@@ -8,7 +8,7 @@ import logging
 from .exceptions import IncompleteAccountInfoError
 
 LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
-                                'set_user_agent', 'get_unicode', 'list_logstores'
+                                'set_user_agent', 'get_unicode', 'list_logstores', 'put_log_raw'
                                 )
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')
