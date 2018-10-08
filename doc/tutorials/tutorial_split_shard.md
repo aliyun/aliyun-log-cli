@@ -24,4 +24,9 @@ aliyunlog log arrange_shard --project=my_project1 --logstore=my_logstore1 --coun
 
 ## 原理与注意事项
 命令`arrange_shard`根据期望shard的数量，以及目前shard分区范围，自动均匀的将目前分裂。
-注意：这个命令也是通过`split_shard`进行分裂，因此分裂过程中会制造出多个只读的shard。在一个Project最多有200个shard的情况下，如果一个Project只包含一个logstore，这个logstore可以配置为最多100个读写shard。
+
+**注意：**
+1. 这个命令也是通过`split_shard`进行分裂，因此分裂过程中会制造出多个只读的shard。在一个Project最多有200个shard的情况下，如果一个Project只包含一个logstore，这个logstore可以配置为最多100个读写shard。
+2. 因为服务器同步的原因，分裂命令完成后，在Web控制台一般需要1分钟左右可以看到最新shard数量。
+
+
