@@ -680,6 +680,8 @@ All the commands support below optional global options:
 - [Pull Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
 - [Get Logs](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_get_logs.html)
 - [Elasticsearch data migration](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)
+- [Flexible Datatime format](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_human_readable_datetime.html)
+- [Copy Data cross region & Reindex data](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_copy_data.html)
 
 
 

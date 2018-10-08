@@ -694,6 +694,9 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
 - [拉取日志](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_pull_logs.html)
 - [查询日志](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_get_logs.html)
 - [Elasticsearch 数据迁移](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)
+- [支持的灵活时间格式](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_human_readable_datetime.html)
+- [高速跨域日志复制、历史数据重新索引与数仓投递](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_copy_data.html)
+
 
 <h1 id="错误诊断">错误诊断</h1>
 
