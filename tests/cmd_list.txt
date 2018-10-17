@@ -18,6 +18,7 @@ aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logs
 
 aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --ttl=2 --shard_count="2" --enable_tracking=true
 
+aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --ttl=2 --shard_count="2"
 
 # create index
 aliyun log create_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --index_detail="file://create_index.json"
@@ -210,6 +211,10 @@ aliyun log split_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore
 > "exclusiveEndKey": "80000000000000000000000000000000", "inclusiveBeginKey": "00000000000000000000000000000000", "shardID": 0, "status": "readonly"
 > "exclusiveEndKey": "40000000000000000000000000000000", "inclusiveBeginKey": "00000000000000000000000000000000", "shardID": 2, "status": "readwrite"
 > "exclusiveEndKey": "80000000000000000000000000000000", "inclusiveBeginKey": "40000000000000000000000000000000", "shardID": 3, "status": "readwrite"
+
+# test arrange shard and resource usage
+aliyun log arrange_shard --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --count=30
+aliyun log get_resource_usage --project="dlq-test-cli-${RANDOM_NUMBER}"
 
 
 # check-point
@@ -409,6 +414,8 @@ aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logs
 aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
 
 aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3"
+
+aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4"
 
 sleep 40
 
