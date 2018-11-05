@@ -194,6 +194,13 @@ for linux or mac, it could be put under `/usr/bin/`.
 > aliyunlog --version
 ```
 
+
+3. Fail to install module `regex`?
+
+Refer to below link to install python-devel via `yun`, `apt-get` or manually.
+https://rpmfind.net/linux/rpm2html/search.php?query=python-devel
+
+
 ### Full Usage list
 
 Run below command to get the full usage list: 

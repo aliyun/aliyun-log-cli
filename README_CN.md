@@ -201,6 +201,12 @@ if __name__ == '__main__':
 > aliyunlog --version
 
 
+3. Regex模块安装失败?
+如果存在安装Regex失败的错误, 可以参考使用`yun`/`apt-get`或者手动安装一下python-devel
+https://rpmfind.net/linux/rpm2html/search.php?query=python-devel
+
+
+
 <h2 id="完整参数列表">完整参数列表</h2>
 
 执行以下命令查看日志服务CLI参数列表。
