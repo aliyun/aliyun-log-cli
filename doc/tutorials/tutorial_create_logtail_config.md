@@ -29,7 +29,7 @@ Logtail配置项目包含如下内容:
 这里配置一个杭州公有云的账户
 
 ```shell
-> aliyun configure AKID****123 AKKEY****123 cn-hangzhou.log.aliyuncs.com
+> aliyunlog configure AKID****123 AKKEY****123 cn-hangzhou.log.aliyuncs.com
 ```
 
 **参考:**
@@ -46,7 +46,7 @@ Logtail配置项目包含如下内容:
 这里我们在项目组`project1`中创建一个极简模式的logtail配置:
 
 ```shell
-> aliyun log create_logtail_config --project_name="project1" --config_detail="file://simple_1.json"
+> aliyunlog log create_logtail_config --project_name="project1" --config_detail="file://simple_1.json"
 ```
 
 文件`simple_1.json`的内容如下: 
@@ -82,7 +82,7 @@ JSON模式适用于文件本身就是JSON的情况.
 这里我们在项目组`project1`中创建一个JSON模式的logtail配置:
 
 ```shell
-> aliyun log create_logtail_config --project_name="project1" --config_detail="file://json_1.json"
+> aliyunlog log create_logtail_config --project_name="project1" --config_detail="file://json_1.json"
 ```
 
 文件`json_1.json`的内容如下:
@@ -150,7 +150,7 @@ JSON模式适用于文件本身就是JSON的情况.
 这里我们在项目组`project1`中创建一个分隔符模式的logtail配置:
 
 ```shell
-> aliyun log create_logtail_config --project_name="project1" --config_detail="file://sep_1.json"
+> aliyunlog log create_logtail_config --project_name="project1" --config_detail="file://sep_1.json"
 ```
 
 文件`sep_1.json`的内容如下:
@@ -229,7 +229,7 @@ JSON模式适用于文件本身就是JSON的情况.
 例如，这里我们在项目组`project1`中创建一个分隔符为`\u0001`的的logtail配置:
 
 ```shell
-> aliyun log create_logtail_config --project_name="project1" --config_detail="file://sep_2.json"
+> aliyunlog log create_logtail_config --project_name="project1" --config_detail="file://sep_2.json"
 ```
 
 文件`sep_2.json`的内容如下:
@@ -279,7 +279,7 @@ JSON模式适用于文件本身就是JSON的情况.
 这里我们在项目组`project1`中创建一个正则表达式模式的logtail配置:
 
 ```shell
-> aliyun log create_logtail_config --project_name="project1" --config_detail="file://reg_1.json"
+> aliyunlog log create_logtail_config --project_name="project1" --config_detail="file://reg_1.json"
 ```
 
 文件`reg_1.json`的内容如下:
@@ -345,7 +345,7 @@ syslog与文件方式互补, 收集部署上更方便. 除了通过CLI进行配�
 这里我们在项目组`project1`中创建一个syslog模式的logtail配置:
 
 ```shell
-> aliyun log create_logtail_config --project_name="project1" --config_detail="file://syslog_1.json"
+> aliyunlog log create_logtail_config --project_name="project1" --config_detail="file://syslog_1.json"
 ```
 
 文件`syslog_1.json`的内容如下:

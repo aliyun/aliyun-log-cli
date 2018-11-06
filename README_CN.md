@@ -211,9 +211,10 @@ https://rpmfind.net/linux/rpm2html/search.php?query=python-devel
 
 执行以下命令查看日志服务CLI参数列表。
 ```shell
-> aliyun --help
 > aliyunlog --help
 ```
+
+注意: 命令`aliyun`已经废弃(为了避免与通用阿里云CLI冲突).
 
 会显示[完整命令](https://github.com/aliyun/aliyun-log-cli/blob/master/options.txt)。
 
@@ -412,10 +413,10 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
   - 复制所有源project的logstore, logtail, machine group和index配置等到目标project中.
 
 ```shell
-> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
+> aliyunlog log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
 ```
 
-  - 注意: `to_client`是通过aliyun configure配置的其他账户, 也可以不传或传`main`同域复制.
+  - 注意: `to_client`是通过aliyunlog configure配置的其他账户, 也可以不传或传`main`同域复制.
   - 参考[跨域复制项目组配置](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html)了解如何跨域复制项目组配置.
 
 <h3 id="2-日志库管理">2. 日志库管理</h3>

@@ -27,8 +27,8 @@
 这里配置2个域的账户, 一个杭州公有云, 一个北京公有云.
 
 ```shell
-> aliyun configure AKID****123 AKKEY****123 cn-hangzhou.log.aliyuncs.com
-> aliyun configure AKID****123 AKKEY****123 cn-beijing.log.aliyuncs.com bj
+> aliyunlog configure AKID****123 AKKEY****123 cn-hangzhou.log.aliyuncs.com
+> aliyunlog configure AKID****123 AKKEY****123 cn-beijing.log.aliyuncs.com bj
 ```
 
 **注意:** 这里的最后一个参数, 仅仅用于表明这个账户的名字, 以便后续使用. 不传入默认是`main`, 也是默认使用的账户, 这里使用杭州的账户作为默认账户.

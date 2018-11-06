@@ -64,8 +64,8 @@ Subcommand:
 {grouped_api}
 """ + GLOBAL_OPTIONS_STR
 
-MORE_DOCOPT_CMD = """aliyun configure <secure_id> <secure_key> <endpoint> [<client_name>]
-aliyun configure [--format-output=json] [--default-client=<client_name>] [--decode-output=utf8,latin1]
+MORE_DOCOPT_CMD = """aliyunlog configure <secure_id> <secure_key> <endpoint> [<client_name>]
+aliyunlog configure [--format-output=json] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 """
 
 DEBUG_SECTION_NAME = "__logging__"

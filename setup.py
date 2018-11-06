@@ -53,7 +53,6 @@ setup(
     long_description=long_description,
     entry_points={
         'console_scripts': [
-            'aliyun=aliyunlogcli.cli:main',
             'aliyunlog=aliyunlogcli.cli:main'
         ],
     }

@@ -87,8 +87,8 @@ def run_test(cmd_file):
             pre_cmd = cmd
 
     for cmd, check_items in cmd_dict.items():
-        if cmd.startswith("aliyun "):
-            cmd = cli + " " + cmd[len("aliyun "):]
+        if cmd.startswith("aliyunlog "):
+            cmd = cli + " " + cmd[len("aliyunlog "):]
 
         output, return_code = run_cmd(cmd)
         for check_item in check_items:

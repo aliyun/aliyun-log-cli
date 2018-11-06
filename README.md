@@ -207,8 +207,9 @@ Run below command to get the full usage list:
 
 ```shell
 > aliyunlog --help
-> aliyun --help
 ```
+
+Note: `aliyun` command is deprecated to prevent conflict with Universal Ali-cloud CLI.
 
 it will show the [full usage](https://github.com/aliyun/aliyun-log-cli/blob/master/options.txt).
 
@@ -407,10 +408,10 @@ All the commands support below optional global options:
   - copy all configurations including logstore, logtail, and index config from project to another project which could be in different region. 
 
 ```shell
-> aliyun log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
+> aliyunlog log copy_project --from_project="p1" --to_project="p1" --to_client="account2"
 ```
 
-  - Note: `to_client` is another account configured via `aliyun configure`, it's OK to pass `main` or not to copy inside the same region.
+  - Note: `to_client` is another account configured via `aliyunlog configure`, it's OK to pass `main` or not to copy inside the same region.
   - Refer to [Copy project settings cross regions](http://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_manage_cross_region_copy.html) to learn more. 
 
 

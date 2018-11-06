@@ -125,5 +125,5 @@ aliyunlog log get_log....  --format-output=json
 如果期望所有输出都是这样，可以修改配置项来完成：
 
 ```shell
-aliyun log configure --format-output=json
+aliyunlog log configure --format-output=json
 ```

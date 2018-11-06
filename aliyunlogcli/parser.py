@@ -89,7 +89,7 @@ def _parse_method_cli(func):
         args_list += arg_doc
         param_usage_doc += arg_doc + '\t\t: ' + param_docs.get(arg, arg) + "\n"
 
-    opt_doc = 'aliyun log ' + func.__name__ + ' ' + args_list + SYSTEM_OPTIONS_STR + '\n'
+    opt_doc = 'aliyunlog log ' + func.__name__ + ' ' + args_list + SYSTEM_OPTIONS_STR + '\n'
 
     return opt_doc, param_usage_doc
 

@@ -1,100 +1,99 @@
 # create project and log
-aliyun log create_project --project_name="dlq-test-cli-${RANDOM_NUMBER}" --project_des="testdata1"
+aliyunlog log create_project --project_name="dlq-test-cli-${RANDOM_NUMBER}" --project_des="testdata1"
 
 sleep 60
 
 
 
-aliyun log list_project
+aliyunlog log list_project
 > "projectName": "dlq-test-cli-${RANDOM_NUMBER}"
 
-aliyun log list_project --size=-1
+aliyunlog log list_project --size=-1
 > "projectName": "dlq-test-cli-${RANDOM_NUMBER}"
 
 
-aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --ttl=2 --shard_count="2"
+aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --ttl=2 --shard_count="2"
 
-aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=2 --shard_count="2"
+aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=2 --shard_count="2"
 
-aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --ttl=2 --shard_count="2" --enable_tracking=true
+aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --ttl=2 --shard_count="2" --enable_tracking=true
 
-aliyun log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --ttl=2 --shard_count="2"
 
 # create index
-aliyun log create_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --index_detail="file://create_index.json"
+aliyunlog log create_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --index_detail="file://create_index.json"
 
 
 # craete relative items
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="{\"config_name\": \"config_name1\", \"logstore_name\": \"logstore1\", \"file_pattern\": \"file_pattern\", \"time_format\": \"%Y-%m-%d %H:%M:%S\", \"log_path\": \"/log_path\", \"endpoint\": \"endpoint\", \"log_parse_regex\": \"xxx ([\\\\w\\\\-]+\\\\s[\\\\d\\\\:]+)\\\\s+(.*)\", \"log_begin_regex\": \"xxx.*\", \"reg_keys\": [\"reg_key1\",\"reg_key2\"], \"topic_format\":\"none\", \"filter_keys\": [\"time\",\"value\"], \"filter_keys_reg\":[\"time\",\"value\"], \"logSample\":\"xxx 2017-11-11 11:11:11 hello alicloud.\"}"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="{\"config_name\": \"config_name1\", \"logstore_name\": \"logstore1\", \"file_pattern\": \"file_pattern\", \"time_format\": \"%Y-%m-%d %H:%M:%S\", \"log_path\": \"/log_path\", \"endpoint\": \"endpoint\", \"log_parse_regex\": \"xxx ([\\\\w\\\\-]+\\\\s[\\\\d\\\\:]+)\\\\s+(.*)\", \"log_begin_regex\": \"xxx.*\", \"reg_keys\": [\"reg_key1\",\"reg_key2\"], \"topic_format\":\"none\", \"filter_keys\": [\"time\",\"value\"], \"filter_keys_reg\":[\"time\",\"value\"], \"logSample\":\"xxx 2017-11-11 11:11:11 hello alicloud.\"}"
 
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
 
-aliyun log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="{\"machine_list\": [\"machine1\", \"machine2\"], \"machine_type\": \"userdefined\", \"group_name\": \"group_name1\", \"group_type\":\"Armory\", \"group_attribute\": {\"externalName\":\"ex name\", \"groupTopic\":\"topic x\"} }"
+aliyunlog log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="{\"machine_list\": [\"machine1\", \"machine2\"], \"machine_type\": \"userdefined\", \"group_name\": \"group_name1\", \"group_type\":\"Armory\", \"group_attribute\": {\"externalName\":\"ex name\", \"groupTopic\":\"topic x\"} }"
 
-aliyun log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
+aliyunlog log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
 
-aliyun log create_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --timeout=20 --in_order="true"
+aliyunlog log create_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --timeout=20 --in_order="true"
 
-aliyun log create_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
+aliyunlog log create_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
 > {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
 
 # apply machine group
-aliyun log apply_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1" --group_name="group_name1"
+aliyunlog log apply_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1" --group_name="group_name1"
 
-aliyun log get_project --project_name="dlq-test-cli-${RANDOM_NUMBER}"
+aliyunlog log get_project --project_name="dlq-test-cli-${RANDOM_NUMBER}"
 > "description": "testdata1"
 > "projectName": "dlq-test-cli-${RANDOM_NUMBER}"
 > "status": "Normal"
 
-aliyun log get_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
+aliyunlog log get_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
 > "logstoreName": "logstore2"
 > "shardCount": 2
 > "autoSplit": false
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1"
 > "configName": "config_name1"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": false, "enableTag": false, "fileEncoding": "utf8", "filePattern": "file_pattern", "filterKey": ["time", "value"], "filterRegex": ["time", "value"], "key": ["reg_key1", "reg_key2"], "localStorage": true, "logBeginRegex": "xxx.*", "logPath": "/log_path", "logTimezone": "", "logType": "common_reg_log", "maxDepth": 1000, "maxSendRate": -1, "mergeType": "topic", "preserve": true, "preserveDepth": 0, "priority": 0, "regex": "xxx ([\\w\\-]+\\s[\\d\\:]+)\\s+(.*)", "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "timeFormat": "%Y-%m-%d %H:%M:%S", "topicFormat": "none"}
 #> "inputType": "file"
 #> "logSample": "xxx 2017-11-11 11:11:11 hello alicloud."
 
 
-aliyun log get_config_applied_machine_groups --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1"
+aliyunlog log get_config_applied_machine_groups --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1"
 > {"count": 1, "machinegroups": ["group_name1"]}
 
-aliyun log get_index_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
+aliyunlog log get_index_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
 > "index_mode": "v2", "keys": {"key1": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key2": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key3": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}, "key4": {"caseSensitive": false, "doc_value": true, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"], "type": "text"}}
 > "line": {"caseSensitive": false, "chn": false, "token": [",", " ", "'", "\"", ";", "=", "(", ")", "[", "]", "{", "}", "?", "@", "&", "<", ">", "/", ":", "\n", "\t"]}, "storage": "pg"
 
 
-aliyun log get_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
+aliyunlog log get_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
 > "groupAttribute": {"externalName": "ex name", "groupTopic": "topic x"}, "groupName": "group_name1", "groupType": "Armory"
 > "machineIdentifyType": "userdefined", "machineList": ["machine1", "machine2"]
 
 
-aliyun log get_machine_group_applied_configs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
+aliyunlog log get_machine_group_applied_configs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
 > {"configs": ["config_name1"], "count": 1}
 
-aliyun log get_shipper_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
+aliyunlog log get_shipper_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
 > {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
-aliyun log get_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --start_time=1510300126 --end_time=1510304126 --status_type="success" --offset=0 --size=100
+aliyunlog log get_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --start_time=1510300126 --end_time=1510304126 --status_type="success" --offset=0 --size=100
 > {"errorCode": "ParameterInvalid", "errorMessage": "only support query last 48 hours task status"
 
 # need to sleep for 60 seconds
 sleep 90
 
 
-aliyun log get_begin_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0
+aliyunlog log get_begin_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0
 > {"cursor": "MTU
 
-aliyun log get_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --start_time=111111
+aliyunlog log get_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --start_time=111111
 > {"cursor": "MTU
 
-# aliyun log get_cursor_time --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ=="
+# aliyunlog log get_cursor_time --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ=="
 
-aliyun log get_previous_cursor_time --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ=="
+aliyunlog log get_previous_cursor_time --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ=="
 
-aliyun log get_end_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0
+aliyunlog log get_end_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0
 > {"cursor": "MTU
 
 
@@ -103,7 +102,7 @@ aliyun log get_end_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logst
 # prepare request json
 rm -f ./put_logs_${RANDOM_NUMBER}.json
 echo "{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"logstore\": \"logstore1\",\"topic\": \"topic1\",\"source\": \"source1\",\"logtags\": [ [\"tag1\", \"v1\"], [\"tag2\", \"v2\"]],\"hashKey\": \"1231231234\",\"logitems\": [{\"timestamp\": ${TIME-ONE-HOUR-AGO},\"contents\": [[\"key1\", \"v1\"],[\"key2\", \"v2\"]]},{\"timestamp\": ${TIME-ONE-HOUR-AGO},\"contents\": [[\"key3\", \"v3\"],[\"key4\", \"v4\"]]}]}" >> put_logs_${RANDOM_NUMBER}.json
-aliyun log put_logs --request="file://./put_logs_${RANDOM_NUMBER}.json"
+aliyunlog log put_logs --request="file://./put_logs_${RANDOM_NUMBER}.json"
 sleep 10
 ###########
 
@@ -114,268 +113,270 @@ sleep 10
 # prepare request json
 rm -f ./put_logs_${RANDOM_NUMBER}.json
 echo "{\"compress\": \"true\", \"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"logstore\": \"logstore2\",\"topic\": \"topic1\",\"source\": \"source1\",\"logtags\": [ [\"tag1\", \"v1\"], [\"tag2\", \"v2\"]],\"hashKey\": \"1231231234\",\"logitems\": [{\"timestamp\": ${TIME-ONE-HOUR-AGO},\"contents\": [[\"key1\", \"v1\"],[\"key2\", \"v2\"]]},{\"timestamp\": ${TIME-ONE-HOUR-AGO},\"contents\": [[\"key3\", \"v3\"],[\"key4\", \"v4\"]]}]}" >> put_logs_${RANDOM_NUMBER}.json
-aliyun log put_logs --request="file://./put_logs_${RANDOM_NUMBER}.json"
+aliyunlog log put_logs --request="file://./put_logs_${RANDOM_NUMBER}.json"
 ###########
 
 
 # get logs
-aliyun log get_log --topic="" --logstore="logstore1" --project="dlq-test-cli-${RANDOM_NUMBER}" --to_time=${TIME-NOW} --offset=0 --query="*" --size=10 --from_time=${TIME-ONE-HOUR-AGO} --reverse="false"
+aliyunlog log get_log --topic="" --logstore="logstore1" --project="dlq-test-cli-${RANDOM_NUMBER}" --to_time=${TIME-NOW} --offset=0 --query="*" --size=10 --from_time=${TIME-ONE-HOUR-AGO} --reverse="false"
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "v1", "key2": "v2"}
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key3": "v3", "key4": "v4"}
 
-aliyun log get_log --logstore="logstore1" --project="dlq-test-cli-${RANDOM_NUMBER}" --to_time=${TIME-NOW} --from_time=${TIME-ONE-HOUR-AGO}
+aliyunlog log get_log --logstore="logstore1" --project="dlq-test-cli-${RANDOM_NUMBER}" --to_time=${TIME-NOW} --from_time=${TIME-ONE-HOUR-AGO}
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "v1", "key2": "v2"}
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key3": "v3", "key4": "v4"}
 
 
-aliyun log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-${RANDOM_NUMBER}\", \"toTime\": \"${TIME-NOW}\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"${TIME-ONE-HOUR-AGO}\", \"reverse\":\"false\"}"
+aliyunlog log get_logs --request="{\"topic\": \"\", \"logstore\": \"logstore1\", \"project\": \"dlq-test-cli-${RANDOM_NUMBER}\", \"toTime\": \"${TIME-NOW}\", \"offset\": \"0\", \"query\": \"*\", \"line\": \"10\", \"fromTime\": \"${TIME-ONE-HOUR-AGO}\", \"reverse\":\"false\"}"
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "v1", "key2": "v2"}
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key3": "v3", "key4": "v4"}
 
 
 rm -f ./get_logs_${RANDOM_NUMBER}.json
 echo "{\"topic\": \"\",\"logstore\": \"logstore1\",\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"toTime\": \"${TIME-NOW}\",\"offset\": \"0\",\"query\": \"*\",\"line\": \"10\",\"fromTime\": \"${TIME-ONE-HOUR-AGO}\",\"reverse\": \"true\"}" >> ./get_logs_${RANDOM_NUMBER}.json
-aliyun log get_logs --request="file://./get_logs_${RANDOM_NUMBER}.json"
+aliyunlog log get_logs --request="file://./get_logs_${RANDOM_NUMBER}.json"
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "v1", "key2": "v2"}
 > {"__source__": "source1", "__tag__:tag1": "v1", "__tag__:tag2": "v2", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key3": "v3", "key4": "v4"}
 
 
 rm -f ./get_project_logs_${RANDOM_NUMBER}.json
 echo "{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"query\": \"select * from logstore1 where __time__ >= ${TIME-ONE-HOUR-AGO} and __time__ <= ${TIME-NOW}\"}" >> ./get_project_logs_${RANDOM_NUMBER}.json
-aliyun log get_project_logs --request="file://./get_project_logs_${RANDOM_NUMBER}.json"
+aliyunlog log get_project_logs --request="file://./get_project_logs_${RANDOM_NUMBER}.json"
 > {"__date__": "null", "__line__": "null", "__sls_query_parameter__": "null", "__source__": "source1", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "v1", "key2": "v2", "key3": "null", "key4": "null"}
 > {"__date__": "null", "__line__": "null", "__sls_query_parameter__": "null", "__source__": "source1", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "null", "key2": "null", "key3": "v3", "key4": "v4"}
 
 
-aliyun log get_histograms --request="{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\", \"logstore\": \"logstore1\", \"topic\": \"topic1\", \"fromTime\": \"${TIME-ONE-HOUR-AGO}\", \"toTime\": \"${TIME-NOW}\"}"
+aliyunlog log get_histograms --request="{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\", \"logstore\": \"logstore1\", \"topic\": \"topic1\", \"fromTime\": \"${TIME-ONE-HOUR-AGO}\", \"toTime\": \"${TIME-NOW}\"}"
 
 
-aliyun log pull_logs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --count="10" --end_cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --compress="false"
+aliyunlog log pull_logs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --count="10" --end_cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --compress="false"
 
 #test compression
-aliyun log pull_logs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --count="10" --end_cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --compress="true"
+aliyunlog log pull_logs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0 --cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --count="10" --end_cursor="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --compress="true"
 
 
-aliyun log list_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1"
+aliyunlog log list_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1"
 > [{"name": "consumer_group1", "order": true, "timeout": 20}]
 
-aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="logstore" --offset=0 --size=100
+aliyunlog log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="logstore" --offset=0 --size=100
 > {"count": 3, "logstores": ["logstore1", "logstore2", "logstore3"], "total": 3}
 
-aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="logstore" --offset=0 --size=-1
+aliyunlog log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="logstore" --offset=0 --size=-1
 > {"count": 3, "logstores": ["logstore1", "logstore2", "logstore3"], "total": 3}
 
-aliyun log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="test123" --offset=0 --size=-1
+aliyunlog log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="test123" --offset=0 --size=-1
 > {"count": 0, "total": 0}
 
-aliyun log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
+aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --ttl=2 --shard_count="2"
+
+aliyunlog log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
 > {"configs": ["config_name1", "config_name2"], "count": 2, "total": 2}
 
-aliyun log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=-1
+aliyunlog log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=-1
 > {"configs": ["config_name1", "config_name2"], "count": 2, "total": 2}
 
 
-aliyun log list_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
+aliyunlog log list_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
 > {"count": 2, "machinegroups": ["group_name1", "group_name2"], "total": 2}
 
-aliyun log list_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=-1
+aliyunlog log list_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=-1
 > {"count": 2, "machinegroups": ["group_name1", "group_name2"], "total": 2}
 
-aliyun log list_machines --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1" --offset=0 --size=100
+aliyunlog log list_machines --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1" --offset=0 --size=100
 > {"count": 0, "machines": [], "total": 0}
 
-aliyun log list_machines --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1" --offset=0 --size=-1
+aliyunlog log list_machines --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1" --offset=0 --size=-1
 > {"count": 0, "machines": [], "total": 0}
 
-aliyun log list_shards --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
+aliyunlog log list_shards --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
 > "exclusiveEndKey": "80000000000000000000000000000000", "inclusiveBeginKey": "00000000000000000000000000000000", "shardID": 0, "status": "readwrite"
 > "exclusiveEndKey": "ffffffffffffffffffffffffffffffff", "inclusiveBeginKey": "80000000000000000000000000000000", "shardID": 1, "status": "readwrite"
 
 
-aliyun log list_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
+aliyunlog log list_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
 > {"count": 0, "shipper": [], "total": 0}
 
-#aliyun log list_logstores --request={\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\"}
+#aliyunlog log list_logstores --request={\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\"}
 #> {"count": 3, "logstores": ["logstore1", "logstore2", "logstore3"], "total": 3}
 
-aliyun log list_topics --request="{\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\", \"logstore\":\"logstore1\", \"token\":\"token1212\", \"line\":123}"
+aliyunlog log list_topics --request="{\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\", \"logstore\":\"logstore1\", \"token\":\"token1212\", \"line\":123}"
 
 
-aliyun log merge_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --shardId="0"
+aliyunlog log merge_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --shardId="0"
 > "exclusiveEndKey": "ffffffffffffffffffffffffffffffff", "inclusiveBeginKey": "00000000000000000000000000000000", "shardID": 2, "status": "readwrite"
 > "exclusiveEndKey": "80000000000000000000000000000000", "inclusiveBeginKey": "00000000000000000000000000000000", "shardID": 0, "status": "readonly"
 > "exclusiveEndKey": "ffffffffffffffffffffffffffffffff", "inclusiveBeginKey": "80000000000000000000000000000000", "shardID": 1, "status": "readonly"
 
 
-aliyun log split_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --shardId="0" --split_hash="40000000000000000000000000000000"
+aliyunlog log split_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --shardId="0" --split_hash="40000000000000000000000000000000"
 > "exclusiveEndKey": "80000000000000000000000000000000", "inclusiveBeginKey": "00000000000000000000000000000000", "shardID": 0, "status": "readonly"
 > "exclusiveEndKey": "40000000000000000000000000000000", "inclusiveBeginKey": "00000000000000000000000000000000", "shardID": 2, "status": "readwrite"
 > "exclusiveEndKey": "80000000000000000000000000000000", "inclusiveBeginKey": "40000000000000000000000000000000", "shardID": 3, "status": "readwrite"
 
 # test arrange shard and resource usage
-aliyun log arrange_shard --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --count=30
-aliyun log get_resource_usage --project="dlq-test-cli-${RANDOM_NUMBER}"
+aliyunlog log arrange_shard --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --count=30
+aliyunlog log get_resource_usage --project="dlq-test-cli-${RANDOM_NUMBER}"
 
 
 # check-point
-aliyun log update_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --shard="0" --check_point="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --consumer="testdata1" --force_success="true"
+aliyunlog log update_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --shard="0" --check_point="MTUxMDMwODcyMDA5NjE0Mzg1MQ==" --consumer="testdata1" --force_success="true"
 
 
-aliyun log update_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --index_detail="file://create_index.json"
+aliyunlog log update_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --index_detail="file://create_index.json"
 
 
-aliyun log update_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --timeout=20 --in_order="true"
+aliyunlog log update_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --timeout=20 --in_order="true"
 
 
-# aliyun log update_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=3 --enable_tracking=true
+# aliyunlog log update_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2" --ttl=3 --enable_tracking=true
 
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
-aliyun log update_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
-aliyun log update_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
+aliyunlog log update_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
+aliyunlog log update_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
 > {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
 
 
-aliyun log retry_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --task_list="[\"task1\",\"task2\"]"
+aliyunlog log retry_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --task_list="[\"task1\",\"task2\"]"
 > {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
-aliyun log get_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --shard="0"
+aliyunlog log get_check_point --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --shard="0"
 > [{"checkpoint": "MTU
 
 ######
 # test logtail config creation.
 
 # more logtail config test
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_2.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_1.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_2.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_3.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/ngnix_1.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_1.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_2.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_3.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_1.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_2.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_3.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_1.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_2.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_3.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/syslog_1.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_2.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_1.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_2.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_3.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/ngnix_1.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_1.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_2.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_3.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_1.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_2.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_3.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_1.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_2.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_3.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/syslog_1.json"
 
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_4_docker.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_4_docker.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_4_docker.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_4_docker.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/docker-stdout-config.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-binlog-config.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-rawsql-config.json"
-aliyun log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/nginx-status-config.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_4_docker.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_4_docker.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_4_docker.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_4_docker.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/docker-stdout-config.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-binlog-config.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-rawsql-config.json"
+aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/nginx-status-config.json"
 
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_2.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_1.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_2.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_3.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/ngnix_1.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_1.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_2.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_3.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_1.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_2.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_3.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_1.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_2.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_3.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/syslog_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_2.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_2.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_3.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/ngnix_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_2.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_3.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_2.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_3.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_2.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_3.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/syslog_1.json"
 
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_4_docker.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_4_docker.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_4_docker.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_4_docker.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/docker-stdout-config.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-binlog-config.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-rawsql-config.json"
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/nginx-status-config.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/json_4_docker.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/reg_4_docker.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/sep_4_docker.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/simple_4_docker.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/docker-stdout-config.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-binlog-config.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/mysql-rawsql-config.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/nginx-status-config.json"
 
 
-aliyun log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
+aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./logtail/feitian_1.json"
 
 
 # more logtail config test
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_1"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": false, "enableTag": false, "fileEncoding": "utf8", "filePattern": "test.log", "filterKey": [], "filterRegex": [], "localStorage": true, "logBeginRegex": "#\\d+.+", "logPath": "/feitian", "logTimezone": "", "logType": "apsara_log", "maxDepth": 1000, "maxSendRate": -1, "mergeType": "topic", "preserve": true, "preserveDepth": 0, "priority": 0, "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "topicFormat": "none"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_2"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_2"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "localStorage": false, "logBeginRegex": "#\\d+.+", "logPath": "/feitian", "logTimezone": "", "logType": "apsara_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_1"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": false, "enableTag": false, "fileEncoding": "utf8", "filePattern": "test.log", "filterKey": [], "filterRegex": [], "localStorage": true, "logPath": "/json_1", "logTimezone": "", "logType": "json_log", "maxDepth": 1000, "maxSendRate": -1, "mergeType": "topic", "preserve": true, "preserveDepth": 0, "priority": 0, "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "timeFormat": "", "timeKey": "", "topicFormat": "none"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_2"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_2"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "localStorage": false, "logPath": "/json_1", "logTimezone": "", "logType": "json_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "timeFormat": "%Y-%M-%D", "timeKey": "my_key_time", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_3"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_3"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "localStorage": false, "logPath": "/json_1", "logTimezone": "", "logType": "json_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "sendRateExpire": 0, "sensitive_keys": [], "shardHashKey": [], "tailExisted": false, "timeFormat": "%Y-%M-%D", "timeKey": "my_key_time", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="ngnix_1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="ngnix_1"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "\u6b63\u5219.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "key": ["http_x_forwarded_for", "remote_user", "time_local", "request_method", "request_uri", "status", "body_bytes_sent", "http_referer", "http_user_agent"], "localStorage": false, "logBeginRegex": ".*", "logPath": "/\u6b63\u52192", "logTimezone": "", "logType": "common_reg_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "regex": "([0-9a-zA-Z., -]*)\\s*-\\s*(\\S+)\\s*\\s*\\[(\\d+/\\S+/\\d+:\\d+:\\d+:\\d+)\\s+\\S+\\]\\s*\\s*\\s*\"(\\S+)\\s+(\\S+)\\s+\\S+\"\\s*\\s*(\\S+)\\s*(\\S+)\\s*\\s*\"(\\S+)\"\\s*\\s*\"([\\S ]*)\"\\s*.*", "sendRateExpire": 0, "sensitive_keys": [], "shardHashKey": [], "tailExisted": false, "timeFormat": "", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_1"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": false, "enableTag": false, "fileEncoding": "utf8", "filePattern": "test.log", "filterKey": [], "filterRegex": [], "key": ["content"], "localStorage": true, "logBeginRegex": ".*", "logPath": "/reg1", "logTimezone": "", "logType": "common_reg_log", "maxDepth": 1000, "maxSendRate": -1, "mergeType": "topic", "preserve": true, "preserveDepth": 0, "priority": 0, "regex": "(.*)", "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "timeFormat": "", "topicFormat": "none"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_2"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_2"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "\u6b63\u5219.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "key": ["time1", "who", "city"], "localStorage": false, "logBeginRegex": ".*", "logPath": "/\u6b63\u52192", "logTimezone": "", "logType": "common_reg_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "regex": "(\\d+) (\\w+) live in (\\w+)", "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "timeFormat": "%Y", "timeKey": "time1", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_3"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_3"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "localStorage": false, "logPath": "/json_1", "logTimezone": "", "logType": "json_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "sendRateExpire": 0, "sensitive_keys": [], "shardHashKey": [], "tailExisted": false, "timeFormat": "%Y-%M-%D", "timeKey": "my_key_time", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_1"
 #> "inputDetail": {"adjustTimezone": false, "autoExtend": true, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": false, "enableTag": false, "fileEncoding": "utf8", "filePattern": "test.log", "filterKey": [], "filterRegex": [], "key": ["\u8fd9\u662f", "\u6d4b\u8bd5", "\u7528\u4f8b", "\u54c8\u54c8"], "localStorage": true, "logPath": "/user", "logTimezone": "", "logType": "delimiter_log", "maxDepth": 1000, "maxSendRate": -1, "mergeType": "topic", "preserve": true, "preserveDepth": 0, "priority": 0, "quote": "\"", "sendRateExpire": 0, "sensitive_keys": [], "separator": "||", "tailExisted": false, "timeFormat": "", "timeKey": "", "topicFormat": "none"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_2"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_2"
 #> "inputDetail": {"adjustTimezone": false, "autoExtend": true, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "key": ["\u8fd9\u662f", "\u6d4b\u8bd5", "\u7528\u4f8b", "\u54c8\u54c8"], "localStorage": false, "logPath": "/user", "logTimezone": "", "logType": "delimiter_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "quote": "\"", "sendRateExpire": 0, "sensitive_keys": [], "separator": "||", "tailExisted": false, "timeFormat": "2017-1-1", "timeKey": "\u8fd9\u662f", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_3"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_3"
 #> "inputDetail": {"adjustTimezone": false, "autoExtend": true, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "key": ["\u8fd9\u662f", "\u6d4b\u8bd5", "\u7528\u4f8b", "\u54c8\u54c8"], "localStorage": false, "logPath": "/user", "logTimezone": "", "logType": "delimiter_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "quote": "\"", "sendRateExpire": 0, "sensitive_keys": [], "separator": "||", "shardHashKey": [], "tailExisted": false, "timeFormat": "2017-1-1", "timeKey": "\u8fd9\u662f", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_1"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": false, "enableTag": false, "fileEncoding": "utf8", "filePattern": "test.log", "filterKey": [], "filterRegex": [], "key": ["content"], "localStorage": true, "logBeginRegex": ".*", "logPath": "/user", "logTimezone": "", "logType": "common_reg_log", "maxDepth": 1000, "maxSendRate": -1, "mergeType": "topic", "preserve": true, "preserveDepth": 0, "priority": 0, "regex": "(.*)", "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "timeFormat": "", "topicFormat": "none"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_2"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_2"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test2.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "key": ["content"], "localStorage": false, "logBeginRegex": ".*", "logPath": "/user", "logTimezone": "", "logType": "common_reg_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "regex": "(.*)", "sendRateExpire": 0, "sensitive_keys": [], "tailExisted": false, "timeFormat": "", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_3"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_3"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "discardUnmatch": true, "dockerFile": false, "enableRawLog": true, "enableTag": false, "fileEncoding": "gbk", "filePattern": "test2.log", "filterKey": ["filter_reg1", "filter_reg2"], "filterRegex": ["`12[];',./~!@#$%^&*(){}:\"<>?", "`12[];',./~!@#$%^&*(){}:\"<>?"], "key": ["content"], "localStorage": false, "logBeginRegex": ".*", "logPath": "/user", "logTimezone": "", "logType": "common_reg_log", "maxDepth": 200, "maxSendRate": -1, "mergeType": "topic", "preserve": false, "preserveDepth": 3, "priority": 0, "regex": "(.*)", "sendRateExpire": 0, "sensitive_keys": [], "shardHashKey": [], "tailExisted": false, "timeFormat": "", "topicFormat": "(file_reg_for_topic).*"}, "inputType": "file"
 
-aliyun log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="syslog_1"
+aliyunlog log get_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="syslog_1"
 #> "inputDetail": {"adjustTimezone": false, "delayAlarmBytes": 0, "discardNonUtf8": false, "dockerFile": false, "enableRawLog": false, "enableTag": false, "filterKey": [], "filterRegex": [], "localStorage": true, "logTimezone": "", "maxSendRate": -1, "mergeType": "topic", "priority": 0, "sendRateExpire": 0, "sensitive_keys": [], "shardHashKey": [], "tag": "tag1"}, "inputType": "syslog"
 
 ## delete all of them
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_1"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_2"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_1"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_2"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_3"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="ngnix_1"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_1"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_2"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_3"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_1"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_2"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_3"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_1"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_2"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_3"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="syslog_1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="feitian_2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_3"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="ngnix_1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_3"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_3"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_3"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="syslog_1"
 
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_4_docker"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_4_docker"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_4_docker"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_4_docker"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="docker-stdout-config"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="mysql-binlog-config"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="mysql-rawsql-config"
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="nginx-status-config"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="json_4_docker"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="reg_4_docker"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="sep_4_docker"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="simple_4_docker"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="docker-stdout-config"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="mysql-binlog-config"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="mysql-rawsql-config"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="nginx-status-config"
 
 
 
@@ -385,86 +386,86 @@ aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" 
 
 
 # copy project
-aliyun log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied" --copy_machine_group="true"
+aliyunlog log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied" --copy_machine_group="true"
 
 # copy with another account, here we use main
-aliyun log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied2" --to_client="main"
+aliyunlog log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied2" --to_client="main"
 
 
 # clean up
-aliyun log remove_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1" --group_name="group_name1"
+aliyunlog log remove_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1" --group_name="group_name1"
 
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name1"
 
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_name="config_name2"
 
-aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
+aliyunlog log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
 
-aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name2"
+aliyunlog log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name2"
 
-aliyun log delete_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1"
+aliyunlog log delete_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1"
 
-aliyun log delete_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
+aliyunlog log delete_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
 > {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
-aliyun log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
+aliyunlog log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4"
 
 sleep 40
 
-aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}"
+aliyunlog log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}"
 
 # clean up copied project
-aliyun log remove_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --config_name="config_name1" --group_name="group_name1"
+aliyunlog log remove_config_to_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --config_name="config_name1" --group_name="group_name1"
 
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --config_name="config_name1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --config_name="config_name1"
 
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --config_name="config_name2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --config_name="config_name2"
 
-aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --group_name="group_name1"
+aliyunlog log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --group_name="group_name1"
 
-aliyun log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --group_name="group_name2"
+aliyunlog log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --group_name="group_name2"
 
-aliyun log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore1"
+aliyunlog log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore1"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore1"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore1"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore2"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore2"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore3"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore3"
 
 sleep 40
 
-aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied"
+aliyunlog log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied"
 
 # clean up copied project 2
 
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name1"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name1"
 
-aliyun log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name2"
+aliyunlog log delete_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --config_name="config_name2"
 
-aliyun log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore1"
+aliyunlog log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore1"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore1"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore1"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore2"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore2"
 
-aliyun log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore3"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2" --logstore_name="logstore3"
 
 sleep 40
 
-aliyun log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2"
+aliyunlog log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied2"
 
 
-aliyun configure access_id access_key endpoint123
-aliyun configure a b c xyz
+aliyunlog configure access_id access_key endpoint123
+aliyunlog configure a b c xyz
 
 cat ~/.aliyunlogcli
 > [main]
