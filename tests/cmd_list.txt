@@ -214,7 +214,7 @@ aliyunlog log split_shard --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logst
 > "exclusiveEndKey": "80000000000000000000000000000000", "inclusiveBeginKey": "40000000000000000000000000000000", "shardID": 3, "status": "readwrite"
 
 # test arrange shard and resource usage
-aliyunlog log arrange_shard --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --count=30
+aliyunlog log arrange_shard --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore4" --count=30
 aliyunlog log get_resource_usage --project="dlq-test-cli-${RANDOM_NUMBER}"
 
 
