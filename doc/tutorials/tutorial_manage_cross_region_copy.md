@@ -30,11 +30,11 @@
 这里配置2个域的账户, 一个杭州公有云, 一个北京公有云.
 
 ```shell
-> aliyunlog configure AKID****123 AKKEY****123 cn-hangzhou.log.aliyuncs.com
+> aliyunlog configure AKID****123 AKKEY****123 cn-hangzhou.log.aliyuncs.com hz
 > aliyunlog configure AKID****123 AKKEY****123 cn-beijing.log.aliyuncs.com bj
 ```
 
-**注意:** 这里的最后一个参数, 用于表明这个账户的名字, 以便后续使用. 不传入默认是`main`, 也是默认使用的账户, 这里使用杭州的账户作为默认账户.
+**注意:** 这里的最后一个参数, 用于表明这个账户的名字, 以便后续使用. 不传入默认是`main`, 也是默认使用的账户.
 
 **参考:**
 
@@ -46,10 +46,11 @@
 假设我们需要将杭州公有云的项目组`project1`复制到北京公有云, 这可以这样操作:
 
 ```shell
-> aliyunlog log copy_project --from_project="project1" --to_project="project1" --to_client=bj
+> aliyunlog log copy_project --from_project="project1" --to_project="project1" --client-name=hz --to_client=bj
 ```
 
-这里CLI就会使用默认账户`main`来读取源项目组`project1`的相关配置, 并使用账户`bj`来构建一个新的项目组`project1`. 
+这里CLI就会使用账户`hz`来读取源项目组`project1`的相关配置, 并使用账户`bj`来构建一个新的项目组`project1`.
+如果使用默认账户读取读取源项目组, 可以省略参数`--client-name`
 
 ### 3. 同域项目组配置复制
 
