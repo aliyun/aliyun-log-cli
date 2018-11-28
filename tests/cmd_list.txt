@@ -141,8 +141,8 @@ aliyunlog log get_logs --request="file://./get_logs_${RANDOM_NUMBER}.json"
 rm -f ./get_project_logs_${RANDOM_NUMBER}.json
 echo "{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"query\": \"select * from logstore1 where __time__ >= ${TIME-ONE-HOUR-AGO} and __time__ <= ${TIME-NOW}\"}" >> ./get_project_logs_${RANDOM_NUMBER}.json
 aliyunlog log get_project_logs --request="file://./get_project_logs_${RANDOM_NUMBER}.json"
-> {"__date__": "null", "__line__": "null", "__sls_query_parameter__": "null", "__source__": "source1", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "v1", "key2": "v2", "key3": "null", "key4": "null"}
-> {"__date__": "null", "__line__": "null", "__sls_query_parameter__": "null", "__source__": "source1", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "null", "key2": "null", "key3": "v3", "key4": "v4"}
+> "__source__": "source1", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "v1", "key2": "v2", "key3": "null", "key4": "null"
+> "__source__": "source1", "__time__": "${TIME-ONE-HOUR-AGO}", "__topic__": "topic1", "key1": "null", "key2": "null", "key3": "v3", "key4": "v4"
 
 
 aliyunlog log get_histograms --request="{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\", \"logstore\": \"logstore1\", \"topic\": \"topic1\", \"fromTime\": \"${TIME-ONE-HOUR-AGO}\", \"toTime\": \"${TIME-NOW}\"}"
