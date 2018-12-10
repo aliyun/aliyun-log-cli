@@ -132,7 +132,7 @@ aliyunlog log configure --format-output=json
 
 **Not escape Non-ANSI**
 
-By default, for non-ANSI characters, it will escape it as as "\uAB12". If you want to view the raw string, you could add a `no_escape` to format of output:
+By default, for non-ANSI characters, it will escape it. If you want to view the raw string, you could add a `no_escape` to format of output:
 ```shell
 aliyunlog log get_log....  --format-output=json,no_escape
 ```

@@ -133,7 +133,7 @@ aliyunlog log configure --format-output=json
 
 **Not escape Non-ANSI**
 
-对于非英文字符, 默认是转义为如"\uAB12"的形式. 如果期望可以看到原始字符, 可以添加`no_escape`到`format-ouput`选项中:
+对于非英文字符, 默认是转义的形式. 如果期望可以看到原始字符, 可以添加`no_escape`到`format-ouput`选项中:
 
 ```shell
 aliyunlog log get_log....  --format-output=json,no_escape
