@@ -117,6 +117,8 @@ This command will switch default account to the one `beijing`.
 
 ## Format output
 
+**JSON Format**
+
 Output is in json format normally, which is printed in one line in console. In some cases, it's useful to show them in pretty format. You could use option `--format-output=json` in each command for this:
 ```shell
 aliyunlog log get_log....  --format-output=json
@@ -127,3 +129,18 @@ But if you want to make it a default behavior, configure it directly:
 ```shell
 aliyunlog log configure --format-output=json
 ```
+
+**Not escape Non-ANSI**
+
+By default, for non-ANSI characters, it will escape it as as "\uAB12". If you want to view the raw string, you could add a `no_escape` to format of output:
+```shell
+aliyunlog log get_log....  --format-output=json,no_escape
+```
+It could be `no_escape` or combine with other value in `format-output` with `,`
+
+And if you want to make it a default behavior, configure it directly:
+
+```shell
+aliyunlog log configure --format-output=json,no_escape
+```
+

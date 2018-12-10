@@ -13,6 +13,7 @@ CLI的配置项目包含如下内容:
     - 配置多个账户，以便访问特定区域，用于测试或者跨域操作等。
 - [输出格式](#输出格式)
     - 修改输出json的格式化方式，默认是在一行打印。
+    - 修改输出非英文转义方式，默认转义.
 
 
 <h2 id="配置秘钥与服务入口">配置秘钥与服务入口</h2>
@@ -117,6 +118,8 @@ aliyunlog configure --default-client=beijing
 
 <h1 id="输出格式">输出格式</h1>
 
+**JSON格式**
+
 输出格式一般是以json形式输出，并且是打印在一行上面，某些情况下需要格式化输出方便查看，可以在特定命令上配置`--format-output=json`，这样CLI会将输出进行格式化。
 ```shell
 aliyunlog log get_log....  --format-output=json
@@ -127,3 +130,19 @@ aliyunlog log get_log....  --format-output=json
 ```shell
 aliyunlog log configure --format-output=json
 ```
+
+**Not escape Non-ANSI**
+
+对于非英文字符, 默认是转义为如"\uAB12"的形式. 如果期望可以看到原始字符, 可以添加`no_escape`到`format-ouput`选项中:
+
+```shell
+aliyunlog log get_log....  --format-output=json,no_escape
+```
+
+与其他选项用逗号分隔即可.
+如果期望所有输出都是这样，可以修改配置项来完成：
+
+```shell
+aliyunlog log configure --format-output=json,no_escape
+```
+

@@ -34,13 +34,13 @@ API_GROUP = [('project$', 'Project'), 'logstore', ('index|topics', "Index"),
 
 GLOBAL_OPTIONS_STR = """
 Global Options:
-[--access-id=<value>]		: use this access id in this command
-[--access-key=<value>]		: use this access key in this command
-[--region-endpoint=<value>]	: use this endpoint in this command
-[--client-name=<value>]		: use this client name in configured accounts
-[--jmes-filter=<value>]		: filter results using JMES syntax
-[--format-output=json]		: print formatted json results or else print in one line
-[--decode-output=<value>]	: encoding list to decode response, comma separated like "utf8,lartin1,gbk", default is "utf8". 
+[--access-id=<value>]		        : use this access id in this command
+[--access-key=<value>]		        : use this access key in this command
+[--region-endpoint=<value>]	        : use this endpoint in this command
+[--client-name=<value>]		        : use this client name in configured accounts
+[--jmes-filter=<value>]		        : filter results using JMES syntax
+[--format-output=json,no_escape]    : print formatted json results or else print in one line; if escape non-ANSI or not with `no_escape`. like: "json", "json,no_escape", "no_escape"
+[--decode-output=<value>]	        : encoding list to decode response, comma separated like "utf8,lartin1,gbk", default is "utf8". 
 
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
 """
@@ -50,14 +50,14 @@ Usage:
 
 1. aliyunlog log <subcommand> [parameters | global options]
 2. aliyunlog configure <access_id> <access-key> <endpoint> [<client-name>]
-3. aliyunlog configure [--format-output=json] [--default-client=<client_name>] [--decode-output=utf8,latin1]
+3. aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 4. aliyunlog [--help | --version]
 
 
 Examples:
 
 1. aliyunlog configure AKID123 AKKEY123 cn-hangzhou.log.aliyuncs.com
-2. aliyunlog configure --format-output=json --default-client=beijing
+2. aliyunlog configure --format-output=json,no_escape --default-client=beijing
 3. aliyunlog log create_project --project_name="test"
 
 Subcommand:
@@ -65,7 +65,7 @@ Subcommand:
 """ + GLOBAL_OPTIONS_STR
 
 MORE_DOCOPT_CMD = """aliyunlog configure <secure_id> <secure_key> <endpoint> [<client_name>]
-aliyunlog configure [--format-output=json] [--default-client=<client_name>] [--decode-output=utf8,latin1]
+aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 """
 
 DEBUG_SECTION_NAME = "__logging__"

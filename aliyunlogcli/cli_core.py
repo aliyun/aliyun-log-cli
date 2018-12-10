@@ -136,14 +136,18 @@ def show_result(result, format_output, decode_output=None):
         if isinstance(result, (six.text_type, six.binary_type)):
             print(result)
         else:
+            fmt = format_output.lower().strip()
+            escape = 'no_escape' not in fmt
+            json_fmt = 'json' in fmt
             if six.PY2:
                 last_ex = None
                 for encoding in encodings:
                     try:
-                        if format_output.lower().strip() == 'json':
-                            print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '), encoding=encoding))
+                        if json_fmt:
+                            print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '),
+                                             encoding=encoding, ensure_ascii=escape))
                         else:
-                            print(json.dumps(result, sort_keys=True, encoding=encoding))
+                            print(json.dumps(result, sort_keys=True, encoding=encoding, ensure_ascii=escape))
 
                         break
                     except UnicodeDecodeError as ex:
@@ -151,10 +155,12 @@ def show_result(result, format_output, decode_output=None):
                 else:
                     raise last_ex
             else:
-                if format_output.lower().strip() == 'json':
-                    print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '), cls=get_encoder_cls(encodings)))
+                if json_fmt:
+                    print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '),
+                                     cls=get_encoder_cls(encodings), ensure_ascii=escape))
                 else:
-                    print(json.dumps(result, sort_keys=True, cls=get_encoder_cls(encodings)))
+                    print(json.dumps(result, sort_keys=True, cls=get_encoder_cls(encodings),
+                                     ensure_ascii=escape))
 
 
 def _process_response_data(data, jmes_filter, format_output, decode_output):

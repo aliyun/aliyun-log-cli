@@ -30,7 +30,7 @@
 例如：
 
 ```shell
-aliyunlog log get_resource_usage  --project="my project name"  --format-output=json
+aliyunlog log get_resource_usage  --project="my project name"  --format-output=json,no_escape
 ```
 
 返回的格式是一个json，例如：
