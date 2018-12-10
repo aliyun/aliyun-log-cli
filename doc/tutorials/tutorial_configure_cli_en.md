@@ -130,7 +130,7 @@ But if you want to make it a default behavior, configure it directly:
 aliyunlog log configure --format-output=json
 ```
 
-**Not escape Non-ANSI**
+**不转义非ANSI字符**
 
 By default, for non-ANSI characters, it will escape it. If you want to view the raw string, you could add a `no_escape` to format of output:
 ```shell
