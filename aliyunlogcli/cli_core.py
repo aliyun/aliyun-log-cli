@@ -144,10 +144,15 @@ def show_result(result, format_output, decode_output=None):
                 for encoding in encodings:
                     try:
                         if json_fmt:
-                            print(json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '),
-                                             encoding=encoding, ensure_ascii=escape))
+                            result = json.dumps(result, sort_keys=True, indent=2, separators=(',', ': '),
+                                             encoding=encoding, ensure_ascii=escape)
                         else:
-                            print(json.dumps(result, sort_keys=True, encoding=encoding, ensure_ascii=escape))
+                            result = json.dumps(result, sort_keys=True, encoding=encoding, ensure_ascii=escape)
+                        if not escape:
+                            # for redirection consideration
+                            print(result.encode('utf8'))
+                        else:
+                            print(result)
 
                         break
                     except UnicodeDecodeError as ex:
