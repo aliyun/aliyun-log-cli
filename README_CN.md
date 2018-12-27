@@ -711,9 +711,11 @@ CLI默认把执行过程中的警告和错误存储在`~/aliyunlogcli.log`中, �
 
 ```ini
 [__logging__]
-filename=  # 默认是: ~/aliyunlogcli.log
-filemode=  # 默认是: a, 可以是: w, a
-format=    # 默认是: %(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s
+filename=  # 默认是: ~/aliyunlogcli.log, 进行轮转
+filebytes=   # 默认是5242880 (5MB), 单个文件大小, 单位Byte
+backupcount= # 默认是5个, 轮转文件的个数
+#filemode=  # 废弃
+format=    # 默认是: %(asctime)s %(threadName)s:%(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s
 datefmt=   # 默认是: "%Y-%m-%d %H:%M:%S", 可以是strftime()兼容的日期/时间格式化字符串
 level=     # 默认是: warn, 可以是info, error, fatal, critical, debug
 ```

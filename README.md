@@ -699,8 +699,10 @@ By default, CLI store erros or warnings at `~/aliyunlogcli.log`, it's also confi
 
 ```ini
 [__logging__]
-filename=  # default: ~/aliyunlogcli.log
-filemode=  # default: a, could also be: w, a
+filename=  # default: ~/aliyunlogcli.log, Rotated when hit filebytes
+filebytes=   # Deafult: 5242880 (5MB), file size of each log before rotation, Unit: Bytes
+backupcount= # Default: 5, file backup file
+#filemode=  # deprecated
 format=    # default: %(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s
 datefmt=   # default: "%Y-%m-%d %H:%M:%S", could be strftime() compitable date/time formatting string
 level=     # default: warn, could be: info, error, fatal, critical, debug

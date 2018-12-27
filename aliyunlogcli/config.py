@@ -5,6 +5,7 @@ import six
 import jmespath
 from jmespath.exceptions import ParseError
 import logging
+from logging.handlers import RotatingFileHandler
 from .exceptions import IncompleteAccountInfoError
 
 LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
@@ -13,7 +14,7 @@ LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard',
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')
 DEFAULT_DEBUG_LOG_FILE_PATH = "%s/aliyunlogcli.log" % os.path.expanduser('~')
-DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(funcName)s %(message)s"
+DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(threadName)s:%(filename)s:%(lineno)d %(funcName)s %(message)s"
 
 LOG_CONFIG_SECTION = "main"
 GLOBAL_OPTION_SECTION = "__option__"
@@ -171,19 +172,23 @@ def load_debug_from_config_file():
     config = configparser.RawConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
-    opt = {"filename": DEFAULT_DEBUG_LOG_FILE_PATH, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
+    handlers = [RotatingFileHandler(DEFAULT_DEBUG_LOG_FILE_PATH, maxBytes=100 * 1024 * 1024, backupCount=5)]
+
+    opt = {"handlers": handlers, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
     client_name = DEBUG_SECTION_NAME
     if config.has_section(client_name):
         filename = _get_section_option(config, client_name, 'filename', None)
         level = _get_section_option(config, client_name, 'level', None)
-        filemode = _get_section_option(config, client_name, 'filemode', None)
+        # filemode = _get_section_option(config, client_name, 'filemode', None)
         fmt = _get_section_option(config, client_name, 'format', None)
         datefmt = _get_section_option(config, client_name, 'datefmt', None)
+        filebytes = _get_section_option(config, client_name, 'filebytes', 100 * 1024 * 1024)
+        backupcount = _get_section_option(config, client_name, 'backupcount', 10)
 
         if filename is not None:
-            opt['filename'] = filename
-        if filemode is not None:
-            opt['filemode'] = filemode
+            opt['handlers'] = [RotatingFileHandler(filename, maxBytes=filebytes, backupCount=backupcount)]
+        # if filemode is not None:
+        #     opt['filemode'] = filemode
         if fmt is not None:
             opt['format'] = fmt
         if datefmt is not None:
