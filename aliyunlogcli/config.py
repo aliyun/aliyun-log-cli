@@ -174,7 +174,8 @@ def load_debug_from_config_file():
 
     handlers = [RotatingFileHandler(DEFAULT_DEBUG_LOG_FILE_PATH, maxBytes=100 * 1024 * 1024, backupCount=5)]
 
-    opt = {"handlers": handlers, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
+    # opt = {"handlers": handlers, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
+    opt = {"filename": DEFAULT_DEBUG_LOG_FILE_PATH, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
     client_name = DEBUG_SECTION_NAME
     if config.has_section(client_name):
         filename = _get_section_option(config, client_name, 'filename', None)
