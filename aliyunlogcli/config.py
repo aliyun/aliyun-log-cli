@@ -167,34 +167,29 @@ __LOGGING_LEVEL_MAP = {
 }
 
 
-def load_debug_from_config_file():
+def config_logging_from_config_file():
     # load debug config from file
     config = configparser.RawConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
-    handlers = [RotatingFileHandler(DEFAULT_DEBUG_LOG_FILE_PATH, maxBytes=100 * 1024 * 1024, backupCount=5)]
+    filename = DEFAULT_DEBUG_LOG_FILE_PATH
+    level = "warn"          # use string first
+    fmt = DEFAULT_DEBUG_LOG_FORMAT
+    datefmt = None
+    filebytes = 100 * 1024 * 1024
+    backupcount = 5
 
-    # opt = {"handlers": handlers, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
-    opt = {"filename": DEFAULT_DEBUG_LOG_FILE_PATH, "level": logging.WARN, "format": DEFAULT_DEBUG_LOG_FORMAT}
     client_name = DEBUG_SECTION_NAME
     if config.has_section(client_name):
-        filename = _get_section_option(config, client_name, 'filename', None)
-        level = _get_section_option(config, client_name, 'level', None)
-        # filemode = _get_section_option(config, client_name, 'filemode', None)
-        fmt = _get_section_option(config, client_name, 'format', None)
-        datefmt = _get_section_option(config, client_name, 'datefmt', None)
-        filebytes = _get_section_option(config, client_name, 'filebytes', 100 * 1024 * 1024)
-        backupcount = _get_section_option(config, client_name, 'backupcount', 10)
+        filename = _get_section_option(config, client_name, 'filename', filename)
+        level = _get_section_option(config, client_name, 'level', level)
+        fmt = _get_section_option(config, client_name, 'format', fmt)
+        datefmt = _get_section_option(config, client_name, 'datefmt', datefmt)
+        filebytes = _get_section_option(config, client_name, 'filebytes', filebytes)
+        backupcount = _get_section_option(config, client_name, 'backupcount', backupcount)
 
-        if filename is not None:
-            opt['handlers'] = [RotatingFileHandler(filename, maxBytes=filebytes, backupCount=backupcount)]
-        # if filemode is not None:
-        #     opt['filemode'] = filemode
-        if fmt is not None:
-            opt['format'] = fmt
-        if datefmt is not None:
-            opt['datefmt'] = datefmt
-
-        opt['level'] = __LOGGING_LEVEL_MAP.get(level.lower().strip(), logging.WARN)
-
-    return opt
+    root = logging.getLogger()
+    handler = RotatingFileHandler(filename, maxBytes=filebytes, backupCount=backupcount)
+    root.setLevel(__LOGGING_LEVEL_MAP.get(level.lower().strip(), logging.WARN))
+    root.addHandler(handler)
+    handler.setFormatter(logging.Formatter(fmt=fmt, datefmt=datefmt))
