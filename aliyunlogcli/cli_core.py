@@ -199,7 +199,7 @@ def main():
     method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient,
                                                                                            LOG_CLIENT_METHOD_BLACK_LIST)
 
-    arguments = docopt_ex(optdoc, usage, method_param_usage, hlp=False, ver=__version__)
+    arguments = docopt_ex(optdoc, usage, method_param_usage, hlp=False, ver=USER_AGENT)
     if arguments is None:
         exit(1)
 
