@@ -185,8 +185,8 @@ def config_logging_from_config_file():
         level = _get_section_option(config, client_name, 'level', level)
         fmt = _get_section_option(config, client_name, 'format', fmt)
         datefmt = _get_section_option(config, client_name, 'datefmt', datefmt)
-        filebytes = _get_section_option(config, client_name, 'filebytes', filebytes)
-        backupcount = _get_section_option(config, client_name, 'backupcount', backupcount)
+        filebytes = int(_get_section_option(config, client_name, 'filebytes', filebytes))
+        backupcount = int(_get_section_option(config, client_name, 'backupcount', backupcount))
 
     root = logging.getLogger()
     handler = RotatingFileHandler(filename, maxBytes=filebytes, backupCount=backupcount)
