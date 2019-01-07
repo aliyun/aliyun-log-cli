@@ -193,3 +193,23 @@ def config_logging_from_config_file():
     root.setLevel(__LOGGING_LEVEL_MAP.get(level.lower().strip(), logging.WARN))
     root.addHandler(handler)
     handler.setFormatter(logging.Formatter(fmt=fmt, datefmt=datefmt))
+
+
+class monkey_patch(object):
+    def __init__(self, src_obj, src_prop, dst=None):
+        self.src_obj = src_obj
+        self.src_prop = src_prop
+        self.activated = False
+
+        if hasattr(self.src_obj, self.src_prop):
+            self.origin = getattr(self.src_obj, self.src_prop)
+            setattr(self.src_obj, self.src_prop, dst)
+            self.activated = True
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.activated:
+            setattr(self.src_obj, self.src_prop, self.origin)
+
