@@ -13,6 +13,8 @@ import sys
 import json
 import logging
 from json import JSONEncoder
+from functools import partial
+from .config import monkey_patch
 
 logger = logging.getLogger(__name__)
 
@@ -173,7 +175,13 @@ def _process_response_data(data, jmes_filter, format_output, decode_output):
         if jmes_filter:
             # filter with jmes
             try:
-                show_result(jmespath.compile(jmes_filter).search(data), format_output, decode_output)
+                if 'no_escape' in format_output.strip().lower():
+                    with monkey_patch(json, 'dumps', partial(json.dumps, ensure_ascii=False)):
+                        result = jmespath.compile(jmes_filter).search(data)
+                else:
+                    result = jmespath.compile(jmes_filter).search(data)
+
+                show_result(result, format_output, decode_output)
             except jmespath.exceptions.ParseError as ex:
                 logger.error("fail to parse with JMES path, original data: %s", ex)
                 show_result(data, format_output, decode_output)
