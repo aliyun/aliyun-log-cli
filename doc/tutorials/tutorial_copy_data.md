@@ -44,10 +44,10 @@
 例如：
 
 ```shell
-aliyunlog log copy_data --project="源project" --logstore="源logstore" --from_time="2018-09-05 0:0:0 CST" --to_time="2018-09-06 0:0:0 CST"
+aliyunlog log copy_data --project="源project" --logstore="源logstore" --from_time="2018-09-05 0:0:0+8:00" --to_time="2018-09-06 0:0:0+8:00"
 ```
 
-这里将杭州区域的`源project`的`源logstore`中服务器在时间范围["2018-09-05 0:0:0 CST","2018-09-06 0:0:0 CST")内接收到的数据，重新写入到`源logstore`中去。
+这里将杭州区域的`源project`的`源logstore`中服务器在时间范围["2018-09-05 0:0:0+8:00","2018-09-06 0:0:0+8:00")内接收到的数据，重新写入到`源logstore`中去。
 
 **注意：**
 这里仅仅是复制一份数据进入目标logstore，并在写入时自动对其索引，原来的没有被索引的日志依然存在。
@@ -64,10 +64,10 @@ aliyunlog log copy_data --project="源project" --logstore="源logstore" --from_t
 例如：
 
 ```shell
-aliyunlog log copy_data --project="源项目" --logstore="源logstore" --from_time="2018-09-05 0:0:0 CST" --to_time="2018-09-06 0:0:0 CST" --to_project="目标project" --to_logstore="目标logstore" --to_client="bj"
+aliyunlog log copy_data --project="源项目" --logstore="源logstore" --from_time="2018-09-05 0:0:0+8:00" --to_time="2018-09-06 0:0:0+8:00" --to_project="目标project" --to_logstore="目标logstore" --to_client="bj"
 ```
 
-这里将杭州区域的`源project`的`源logstore`中服务器在时间范围["2018-09-05 0:0:0 CST","2018-09-06 0:0:0 CST")内接收到的数据，写入到`北京`区域的`目标project`的`目标logstore`中去。
+这里将杭州区域的`源project`的`源logstore`中服务器在时间范围["2018-09-05 0:0:0+8:00","2018-09-06 0:0:0+8:00")内接收到的数据，写入到`北京`区域的`目标project`的`目标logstore`中去。
 
 **注意:**
 这里用`--to_client`指定操作目标project的账户为`bj`，是前面前提中配置的账户名。
@@ -83,9 +83,9 @@ aliyunlog log copy_data --project="源项目" --logstore="源logstore" --from_ti
 
 
 ## 时间格式
-时间格式推荐是`%Y-%m-%d %H:%M:%S %Z`, 如`2018-01-24 17:00:00 CST`, 但也支持其他合法的时间格式, 例如:`Jan 01 2018 10:10:10 CST`
+时间格式推荐是`%Y-%m-%d %H:%M:%S %Z`, 如`2018-01-24 17:00:00+8:00`, 但也支持其他合法的时间格式, 例如:`Jan 01 2018 10:10:10+8:00`
 
-**注意：** 时区不仅可以是CST，如果发现拿不到数据，可以改成特定时区例如 UTC-8 或者 UTC+8
+**注意：** `+8:00`是时区信息.
 
 CLI还支持更多其他格式的时间格式，例如`2 day ago`等，参考[这里](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_human_readable_datetime.html).
 
@@ -104,16 +104,16 @@ CLI还支持更多其他格式的时间格式，例如`2 day ago`等，参考[�
 特殊游标包括`begin`和`end`. 例如:
 
 ```shell
-aliyunlog log copy_data --project="p1" --logstore="l1" --from_time="begin" --to_time="2018-01-24 17:00:00 CST" --to_logstore="l2"
+aliyunlog log copy_data --project="p1" --logstore="l1" --from_time="begin" --to_time="2018-01-24 17:00:00+8:00" --to_logstore="l2"
 ```
 
-这里复制所有`2018-01-24 17:00:00 CST`之前服务器接收到的日志到logstore`l2`。
+这里复制所有`2018-01-24 17:00:00+8:00`之前服务器接收到的日志到logstore`l2`。
 
 
 又例如:
 
 ```shell
-aliyunlog log copy_data --project="p1" --logstore="l1" --from_time="2018-01-24 17:00:00 CST" --to_time="end" --to_logstore="l2"
+aliyunlog log copy_data --project="p1" --logstore="l1" --from_time="2018-01-24 17:00:00+8:00" --to_time="end" --to_logstore="l2"
 ```
 
-这里复制所有`2018-01-24 17:00:00 CST`开始及之后服务器接收到的日志到logstore`l2`。
+这里复制所有`2018-01-24 17:00:00+8:00`开始及之后服务器接收到的日志到logstore`l2`。

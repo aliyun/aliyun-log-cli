@@ -20,7 +20,7 @@
 | get_histograms | 获取查询范围内的日志分布。 |
 
 ## 支持的时间格式
-除了常规的格式，例如："%Y-%m-%d %H:%M:%S CST"的例子"2018-01-02 12:12:10 CST"；
+除了常规的格式，例如："%Y-%m-%d %H:%M:%S+8:00"的例子"2018-01-02 12:12:10+8:00"；
 也支持"1 hour ago", "now", "yesterday 0:0:0"等格式了。更多格式也可以参考https://dateparser.readthedocs.io/en/latest/
 
 **相对1分钟:** -1min ~ now， 或 1 min ago ~ now

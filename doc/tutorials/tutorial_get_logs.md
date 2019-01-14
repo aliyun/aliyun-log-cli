@@ -16,10 +16,10 @@
 根据设定好的查询语句查询数据, 即可通过CLI轻松查询数据. 下面例子查询某个时间范围, 某台服务器响应速度大于5秒的访问日志.
 
 ```shell
-aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST"
+aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00+8:00" --to_time="2018-01-24 17:00:00 +8:00"
 ```
 
-这里拉取从时间`2018-01-24 16:00:00 CST`到`2018-01-24 17:00:00 CST`在内满足条件`host:test.com and response_time>5000`的日志, 例如:
+这里拉取从时间`2018-01-24 16:00:00+8:00`到`2018-01-24 17:00:00+8:00`在内满足条件`host:test.com and response_time>5000`的日志, 例如:
 ```shell
 [{"k1":"a1", "k2":"a2"}, {"k1":"b1", "k2":"b2"}, ... ]
 ```
@@ -35,7 +35,7 @@ aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com 
 例如:
 
 ```shell
-aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST" --jmes-filter="join('\n', map(&to_string(@), @))" >> ~/Desktop/test.data
+aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00+8:00" --to_time="2018-01-24 17:00:00 +8:00" --jmes-filter="join('\n', map(&to_string(@), @))" >> ~/Desktop/test.data
 ``` 
 
 输出将被存储在文件`test.data`中, 格式为:
@@ -47,9 +47,9 @@ aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com 
 ```
 
 ## 时间格式
-时间格式推荐是`%Y-%m-%d %H:%M:%S %Z`, 如`2018-01-24 17:00:00 CST`, 但也支持其他合法的时间格式, 例如:`Jan 01 2018 10:10:10 CST`
+时间格式推荐是`%Y-%m-%d %H:%M:%S %Z`, 如`2018-01-24 17:00:00+8:00`, 但也支持其他合法的时间格式, 例如:`Jan 01 2018 10:10:10+8:00`
 
-**注意：** 时区不仅可以是CST，如果发现拿不到数据，可以改成特定时区例如 UTC-8 或者 UTC+8 
+**注意：** `+8:00` 是时区信息.
 
 CLI还支持更多其他格式的时间格式，例如`2 day ago`等，参考[这里](https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_human_readable_datetime.html).
 

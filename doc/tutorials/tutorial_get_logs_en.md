@@ -17,10 +17,10 @@ Refer to [Query logs](https://www.alibabacloud.com/help/doc-detail/43772.htm) to
 Using CLI, it's very easy to query logs basing on prepared search statements. Below is an example, it all slow access logs on a specific server among a specific time range.
 
 ```shell
-aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST"
+aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00+8:00" --to_time="2018-01-24 17:00:00 +8:00"
 ```
 
-It get all logs that his the conditions (`host:test.com and response_time>5000`) from time range (from `2018-01-24 16:00:00 CST` to `2018-01-24 17:00:00 CST`) like:
+It get all logs that his the conditions (`host:test.com and response_time>5000`) from time range (from `2018-01-24 16:00:00+8:00` to `2018-01-24 17:00:00+8:00`) like:
 
 ```shell
 [{"k1":"a1", "k2":"a2"}, {"k1":"b1", "k2":"b2"}, ... ]
@@ -36,7 +36,7 @@ The example above shows the format of get log is a big JSON formatted data, if w
 Examples:
 
 ```shell
-aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST" --jmes-filter="join('\n', map(&to_string(@), @))" >> ~/Desktop/test.data
+aliyunlog log get_log_all --project="p1" --logstore="l1" --query="host:test.com and response_time>5000" --from_time="2018-01-24 16:00:00+8:00" --to_time="2018-01-24 17:00:00 +8:00" --jmes-filter="join('\n', map(&to_string(@), @))" >> ~/Desktop/test.data
 ``` 
 
 It will store the results to file `test.data` in below format:
@@ -48,9 +48,9 @@ It will store the results to file `test.data` in below format:
 ```
 
 ## Time format
-The time format passed to the CLI is recommend as `%Y-%m-%d %H:%M:%S %Z`, like `2018-01-24 17:00:00 CST`. But the CLI also support popular format like `Jan 01 2018 10:10:10 CST`
+The time format passed to the CLI is recommend as `%Y-%m-%d %H:%M:%S %Z`, like `2018-01-24 17:00:00+8:00`. But the CLI also support popular format like `Jan 01 2018 10:10:10+8:00`
 
-**Note：** The time-zone could not only be `CST` but also any other valid ones. Try to use more accurate time zone format like `UTC-8` or `UTC+8` when you could not find the wanted time. 
+**Note：** `+8:00` is the timezone info.
 
 Actually, it's also supported to use relative format like `2 day ago`, `now`, `yesterday 0:0`, `-1week` etc.
 

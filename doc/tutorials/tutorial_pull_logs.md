@@ -13,10 +13,10 @@
 命令`pull_log_dump`针对下载做了优化，直接指定文件路径，即可将日志下载在本地。
 
 ```shell
-aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --from_time="2018-01-24 16:00:00 CST" --to_time="2018-01-24 17:00:00  CST" --file_path="/data/dump_{}.data"
+aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --from_time="2018-01-24 16:00:00+8:00" --to_time="2018-01-24 17:00:00 +8:00" --file_path="/data/dump_{}.data"
 ```
 
-这里拉取从时间`2018-01-24 16:00:00 CST`到`2018-01-24 17:00:00 CST`并把数据下载本地，因为是并发，所以会存储在多个文件中，文件名根据`/data/dump_{}.data`中的`{}`替换成多个并发的数字（一般是`分区号`）。文件的内容格式为一行一个日志，例如：
+这里拉取从时间`2018-01-24 16:00:00+8:00`到`2018-01-24 17:00:00+8:00`并把数据下载本地，因为是并发，所以会存储在多个文件中，文件名根据`/data/dump_{}.data`中的`{}`替换成多个并发的数字（一般是`分区号`）。文件的内容格式为一行一个日志，例如：
 
 ```shell
 {"k1":"a1", "k2":"a2"}
@@ -33,9 +33,9 @@ aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --from_time
 
 
 ## 时间格式
-时间格式推荐是`%Y-%m-%d %H:%M:%S %Z`, 如`2018-01-24 17:00:00 CST`, 但也支持其他合法的时间格式, 例如:`Jan 01 2018 10:10:10 CST`
+时间格式推荐是`%Y-%m-%d %H:%M:%S %Z`, 如`2018-01-24 17:00:00+8:00`, 但也支持其他合法的时间格式, 例如:`Jan 01 2018 10:10:10+8:00`
 
-**注意：** 时区不仅可以是CST，如果发现拿不到数据，可以改成特定时区例如 UTC-8 或者 UTC+8
+**注意：** `+8:00` is timezone info.
 
 ## 时间范围
 命令`pull_log_dump`传入的时间范围, 需要注意几点:
@@ -52,16 +52,16 @@ aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --from_time
 特殊游标包括`begin`和`end`. 例如:
 
 ```shell
-aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="begin" --to_time="2018-01-24 17:00:00 CST"
+aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="begin" --to_time="2018-01-24 17:00:00+8:00"
 ```
 
-这里拉取所有`2018-01-24 17:00:00 CST`之前服务器接收到的日志.
+这里拉取所有`2018-01-24 17:00:00+8:00`之前服务器接收到的日志.
 
 
 又例如:
 
 ```shell
-aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="2018-01-24 17:00:00 CST" --to_time="end"
+aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --shard_id=3 --from_time="2018-01-24 17:00:00+8:00" --to_time="end"
 ```
 
-这里拉取所有`2018-01-24 17:00:00 CST`开始及之后服务器接收到的日志.
+这里拉取所有`2018-01-24 17:00:00+8:00`开始及之后服务器接收到的日志.
