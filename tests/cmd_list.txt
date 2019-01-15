@@ -155,8 +155,8 @@ aliyunlog log pull_logs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstor
 
 
 # pull_log_dump
-aliyunlog log pull_log_dump --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --from_time="begin" --to_time="end" --file_path="./dump1_{}.data"
-aliyunlog log pull_log_dump --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --from_time="begin" --to_time="end" --file_path="./dump2_{}.data" --batch_size=1 --compress=false --shard_list="0-10" --no_escape=true
+aliyunlog log pull_log_dump --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --from_time="begin" --to_time="end" --file_path="./dump1_{0}.data"
+aliyunlog log pull_log_dump --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --from_time="begin" --to_time="end" --file_path="./dump2_{0}.data" --batch_size=1 --compress=false --shard_list="0-10" --no_escape=true
 
 ######
 # cover more commmand

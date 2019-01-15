@@ -14,7 +14,7 @@ LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard',
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')
 DEFAULT_DEBUG_LOG_FILE_PATH = "%s/aliyunlogcli.log" % os.path.expanduser('~')
-DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(threadName)s:%(filename)s:%(lineno)d %(funcName)s %(message)s"
+DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(process)s:%(threadName)s:%(filename)s:%(lineno)d %(funcName)s %(message)s"
 
 LOG_CONFIG_SECTION = "main"
 GLOBAL_OPTION_SECTION = "__option__"
