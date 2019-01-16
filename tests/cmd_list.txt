@@ -179,8 +179,8 @@ aliyunlog log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --log
 aliyunlog log list_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name_pattern="test123" --offset=0 --size=-1
 > {"count": 0, "total": 0}
 
-aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --ttl=2 --shard_count="2"
-aliyunlog log update_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --append_meta=true --auto_split=true --max_split_shard=10 --preserve_storage=true
+aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --ttl=2 --shard_count="20"
+aliyunlog log update_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4" --append_meta=true --auto_split=true --max_split_shard=30 --preserve_storage=true
 
 aliyunlog log list_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --offset=0 --size=100
 > {"configs": ["config_name1", "config_name2"], "count": 2, "total": 2}
@@ -401,8 +401,8 @@ aliyunlog log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_p
 aliyunlog log copy_project --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied2" --to_client="main"
 
 # copy logstore
-aliyunlog log copy_logstore --from_project="dlq-test-cli-${RANDOM_NUMBER}" --from_logstore=logstore1 --to_logstore=logstore1_copied
-aliyunlog log copy_logstore --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied" --from_logstore=logstore1  --to_logstore=logstore1_copied
+aliyunlog log copy_logstore --from_project="dlq-test-cli-${RANDOM_NUMBER}" --from_logstore=logstore4 --to_logstore=logstore4_copied
+aliyunlog log copy_logstore --from_project="dlq-test-cli-${RANDOM_NUMBER}" --to_project="dlq-test-cli-${RANDOM_NUMBER}-copied" --from_logstore=logstore4  --to_logstore=logstore4_copied
 
 
 # clean up
@@ -431,7 +431,7 @@ aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --l
 
 aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4"
 
-aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1_copied"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4_copied"
 
 sleep 40
 
@@ -456,7 +456,7 @@ aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copi
 
 aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore3"
 
-aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore1_copied"
+aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore4_copied"
 
 sleep 40
 
