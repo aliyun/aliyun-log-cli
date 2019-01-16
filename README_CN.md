@@ -90,22 +90,39 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 执行以下命令安装日志服务CLI。
 
 ```shell
-> pip install -U aliyun-log-cli
+# pypy3
+> pypy3 -m pip install aliyun-log-python-sdk aliyun-log-cli -U --no-cache
+
+# pip3
+> pip3 install aliyun-log-python-sdk aliyun-log-cli -U --no-cache
 ```
 
-**注意** 
+**pypy/pypy3与pip安装**
+如果使用`copy_data`、`pull_log_dump`等需要大量下载、传输数据的命令，**为了获得更好的性能**，推荐使用`pypy`或`pypy3`来安装。
+这里[下载](https://www.pypy.org/download.html)和安装。如果是Mac可以使用`brew install pypy3`来安装。
+默认pip会附带，如果没有配套的pip，可以这里获取：https://github.com/pypa/get-pip/blob/master/get-pip.py
+下载后运行：`pypy3 get-pip.py`后即可安装`pip`，但后续在pypy3上安装时，需要将`pip/pip3`修改为：`pypy3 -m pip instal ....`
+也可以查看现有pip的路径: `which pip`，修改第一行命令行指向pypy3的绝对路径即可。
 
-Mac上推荐使用pip3安装CLI，首选需要安装Python3：
+**Mac相关**
+
+Mac上推荐使用pip3安装CLI，首选需要安装Python3或pypy3：
  
 ```shell
+# Pypy3
+> brew install pypy3
+> pypy3 -m pip install aliyun-log-python-sdk aliyun-log-cli -U --no-cache
+
+# Python3
 > brew install python3
-> pip3 install -U aliyun-log-cli
+> pip/pip3 install -U aliyun-log-cli --no-cache
+
 ```
 
 Mac上如果你安装时遇到了权限相关的错误，如：`OSError: [Errno 1] Operation not permitted`，尝试使用如下命令安装：
 
 ```shell
-> pip3 install -U aliyun-log-cli --user
+> pip/pip3 install -U aliyun-log-cli --user
 ``` 
 
 
@@ -136,7 +153,7 @@ python pip-10.0.1-py2.py3-none-any.whl/pip install --no-index cli_packages/pip-1
 4. 安装CLI:
 
 ```shell
-pip install aliyun-log-cli --no-index --find-links=cli_packages
+pip/pip3 install aliyun-log-cli --no-index --find-links=cli_packages
 ```
 
 5. 验证:
@@ -149,7 +166,7 @@ pip install aliyun-log-cli --no-index --find-links=cli_packages
 1. 安装时报TLSV1_ALERT_PROTOCOL_VERSION错误
 
 ```shell
-> pip install aliyun-log-cli
+> pip/pip3 install aliyun-log-cli
 
 Collecting aliyun-log-cli
   Could not fetch URL https://pypi.python.org/simple/aliyun-log-cli/: There was a problem confirming the ssl certificate: [SSL: TLSV1_ALERT_PROTOCOL_VERSION] tlsv1 alert protocol version (_ssl.c:590) - skipping
@@ -160,7 +177,7 @@ No matching distribution found for aliyun-log-cli
 **解答**： 请先升级pip：
 
 ```shell
-pip install pip -U
+pip/pypy3 install pip -U
 ```
 
 
