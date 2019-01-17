@@ -98,6 +98,7 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 ```
 
 **pypy/pypy3与pip安装**
+
 如果使用`copy_data`、`pull_log_dump`等需要大量下载、传输数据的命令，**为了获得更好的性能**，推荐使用`pypy`或`pypy3`来安装。
 这里[下载](https://www.pypy.org/download.html)和安装。如果是Mac可以使用`brew install pypy3`来安装。
 默认pip会附带，如果没有配套的pip，可以这里获取：https://github.com/pypa/get-pip/blob/master/get-pip.py
