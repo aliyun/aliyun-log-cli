@@ -18,4 +18,9 @@
    tutorial_manage_cross_region_copy_index_dashboard.rst
    tutorial_human_readable_datetime.rst
    tutorial_es_migration_cn.rst
+   tutorial_etl_intro_scenario.rst
+   tutorial_etl_deployment_management.rst
+   tutorial_etl_orchestration_transform.rst
+   tutorial_etl_extension_udf.rst
+
 
