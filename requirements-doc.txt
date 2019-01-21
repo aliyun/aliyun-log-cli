@@ -3,3 +3,4 @@ pypandoc
 six
 aliyun-log-python-sdk
 pathlib
+sphinx_rtd_theme
