@@ -49,6 +49,8 @@ TRANSFORM_EVENT_data = [
 
 6. 重命名字段
 `RENAME_FIELDS_xxx = {"field1": "new_field1","field2": "new_field2"}`
+也支持正则表达式，例如将不同大小写统一：
+`RENAME_FIELDS_xxx = {"(?i)user_name": "User_Name"}`
 
 7. 分派转换
 `DISPATCH_EVENT_xxx = 条件式转换列表`
