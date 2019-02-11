@@ -258,6 +258,7 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
                 show_result(data, format_output)
             else:
                 print(ex)
+            logger.error("fail to call subcommand: " + str(ex), exc_info=True)
             exit(3)
 
     # process configure command
