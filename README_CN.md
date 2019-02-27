@@ -92,7 +92,14 @@
 
 <h2 id="支持版本">支持版本</h2>
 
-Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
+支持以下Python版本：
+Python 2.6、2.7、3.3、3.4、3.5、3.6、3.7，PyPy和PyPy3。
+
+**安装Python与pip**
+系统需要安装`Python`以及`pip`，这里可以[下载Python](https://www.python.org/downloads/)。默认`pip`会附带，如果没有配套的`pip`（通过命令行`pip`或者`<python路径> -m pip`来判断是否部署了），可以这里获取：https://github.com/pypa/get-pip/blob/master/get-pip.py
+下载后运行：`<python程序路径> get-pip.py`后即可安装`pip`。
+
+**注意** Windows下安装Python时，需要将Python的路径加入到PATH中（默认安装程序可以支持这点）。
 
 <h2 id="安装方式">安装方式</h2>
 
@@ -106,7 +113,7 @@ Python 2.6、2.7、3.3、3.4、3.5、3.6、PyPy和PyPy3。
 > pip3 install aliyun-log-python-sdk aliyun-log-cli -U --no-cache
 ```
 
-**pypy/pypy3与pip安装**
+**pypy/pypy3与配置的pip安装**
 
 如果使用`copy_data`、`pull_log_dump`等需要大量下载、传输数据的命令，**为了获得更好的性能**，推荐使用`pypy`或`pypy3`来安装。
 这里[下载](https://www.pypy.org/download.html)和安装。如果是Mac可以使用`brew install pypy3`来安装。
