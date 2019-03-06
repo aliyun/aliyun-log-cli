@@ -218,14 +218,14 @@ which python
 #!<python路径放这里,注意有一个感叹号!>
 import re
 import sys
-from pkg_resources import load_entry_point
+
+from aliyunlogcli.cli import main
 
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-    sys.exit(
-        load_entry_point('aliyun-log-cli', 'console_scripts', 'aliyunlog')()
-    )
+    sys.exit(main())
 ```
+
 
 对于linux或mac, 可以考虑放到`/usr/bin/`目录下
 
