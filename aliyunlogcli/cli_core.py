@@ -136,7 +136,12 @@ def show_result(result, format_output, decode_output=None):
     encodings = decode_output or ('utf8', 'latin1', 'gbk')
     if result != "" and result != b'':
         if isinstance(result, (six.text_type, six.binary_type)):
-            print(result)
+            try:
+                print(result)
+            except UnicodeEncodeError as ex:
+                # workaround issue #59 temporarily
+                logger.warning("fail to print result: %s", ex)
+                print(result.encode('utf8'))
         else:
             fmt = format_output.lower().strip()
             escape = 'no_escape' not in fmt
