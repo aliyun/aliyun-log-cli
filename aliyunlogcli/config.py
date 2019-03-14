@@ -92,6 +92,8 @@ def load_config_from_cloudshell(default_ak_id='', default_ak_key='', default_end
     access_id = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_ID', default_ak_id)
     access_key = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_SECRET', default_ak_key)
     endpoint = os.environ.get('ALIBABA_CLOUD_DEFAULT_REGION', default_endpoint)
+    if endpoint and not endpoint.endswith('.com'):
+        endpoint = endpoint + '.log.aliyuncs.com'
 
     return access_id, access_key, endpoint
 
