@@ -87,14 +87,25 @@ def load_kv_from_file(section, key, default=None):
     return _get_section_option(config, section, key, default)
 
 
+def load_config_from_cloudshell(default_ak_id='', default_ak_key='', default_endpoint=''):
+    # Cloudshell envs
+    access_id = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_ID', default_ak_id)
+    access_key = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_SECRET', default_ak_key)
+    endpoint = os.environ.get('ALIBABA_CLOUD_DEFAULT_REGION', default_endpoint)
+
+    return access_id, access_key, endpoint
+
+
 def load_confidential_from_file(client_name):
     # load config from file
     config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
-    access_id = _get_section_option(config, client_name, 'access-id', '')
-    access_key = _get_section_option(config, client_name, 'access-key', '')
-    endpoint = _get_section_option(config, client_name, 'region-endpoint', '')
+    access_id, access_key, endpoint = load_config_from_cloudshell()
+
+    access_id = _get_section_option(config, client_name, 'access-id', access_id)
+    access_key = _get_section_option(config, client_name, 'access-key', access_key)
+    endpoint = _get_section_option(config, client_name, 'region-endpoint', endpoint)
 
     return access_id, access_key, endpoint
 
