@@ -158,7 +158,7 @@ No matching distribution found for aliyun-log-cli
 pip install pip -U
 ```
 
-2. On Linux/Mac, cannot find command `aliyunlog`?
+2. Cannot find command `aliyunlog`?
 
 it's caused by the missing of shell of `aliyunlog`, you could make one by yourself.
 
@@ -171,27 +171,32 @@ for linux or mac:
 which python
 ```
 
-2.2. create a shell script named `aliyunlog` with below content and allow to execute it. And put it into path folder:
+on windows, it's probably located in `c:\PythonXX` (XX means version like 27 or 37）
+
+2.2. create a shell script named `aliyunlog` (on linux/mac) or `aliyunlog.py` with below content and allow to execute it. And put it into `PATH` folder:
 
 ```python
 #!<python path here with ! ahead>
 import re
 import sys
-from pkg_resources import load_entry_point
+
+from aliyunlogcli.cli import main
 
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-    sys.exit(
-        load_entry_point('aliyun-log-cli', 'console_scripts', 'aliyunlog')()
-    )
+    sys.exit(main())
 ```
 
 for linux or mac, it could be put under `/usr/bin/`.
+On Windows, it could be put under `c:/windows`.
 
 
 2.3. verify it
 ```shell
+# linux or mac
 > aliyunlog --version
+# windows
+> aliyunlog.py --version
 ```
 
 

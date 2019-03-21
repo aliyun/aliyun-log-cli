@@ -200,7 +200,7 @@ pip/pypy3 install pip -U
 
 2. 找不到命令`aliyunlog`?
 
-Linux/Mac下, 因为某种原因创建脚本`aliyunlog`链接时未成功, 可以手工创建一个, 如下:
+因为某种原因创建脚本`aliyunlog`链接时未成功, 可以手工创建一个, 如下:
 
 
 2.1. 找到Python路径:
@@ -211,8 +211,13 @@ Linux/Mac下, 因为某种原因创建脚本`aliyunlog`链接时未成功, 可�
 which python
 ```
 
+Windows上，很可能位于`c:\PythonXX` (XX指版本27或37等）
 
-2.2. 创建一个叫做`aliyunlog`文件, 赋予执行权限, 内容如下, 并放到PATH目录下 :
+
+2.2. Mac/Linux下，创建一个叫做`aliyunlog`文件, 赋予执行权限；Windows下，创建一个`aliyunlog.py`文件；
+
+文件内容如下, 并放到PATH目录下 ：
+
 
 ```python
 #!<python路径放这里,注意有一个感叹号!>
@@ -228,12 +233,15 @@ if __name__ == '__main__':
 
 
 对于linux或mac, 可以考虑放到`/usr/bin/`目录下
-
+Windows下可以考虑放到`c:/windows`目录下等
 
 2.3. 验证, 执行如试下命令看一下是否成功.
 ```shell
+# linux/mac
 > aliyunlog --version
-
+# windows
+> aliyunlog.py --version
+```
 
 3. Regex模块安装失败?
 如果存在安装Regex失败的错误, 可以参考使用`yun`/`apt-get`或者手动安装一下python-devel
