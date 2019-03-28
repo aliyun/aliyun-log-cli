@@ -34,7 +34,13 @@ aliyunlog log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}
 
 aliyunlog log create_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1" --timeout=20 --in_order="true"
 
-aliyunlog log create_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
+#BUG fixed: aliyunlog log create_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
+
+aliyunlog log create_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --detail="file://shipper/oss_csv.json"
+> {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
+aliyunlog log create_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --detail="file://shipper/oss_json.json"
+> {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
+aliyunlog log create_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --detail="file://shipper/oss_parquet.json"
 > {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
 
 # apply machine group
@@ -72,7 +78,8 @@ aliyunlog log get_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" -
 aliyunlog log get_machine_group_applied_configs --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
 > {"configs": ["config_name1"], "count": 1}
 
-aliyunlog log get_shipper_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
+#BUf fixed: aliyunlog log get_shipper_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
+aliyunlog log get_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --entity="shipper1"
 > {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
 aliyunlog log get_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --start_time=1510300126 --end_time=1510304126 --status_type="success" --offset=0 --size=100
@@ -207,7 +214,8 @@ aliyunlog log list_shards --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logst
 > "exclusiveEndKey": "ffffffffffffffffffffffffffffffff", "inclusiveBeginKey": "80000000000000000000000000000000", "shardID": 1, "status": "readwrite"
 
 
-aliyunlog log list_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
+# BUG FIXED: aliyunlog log list_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore2"
+aliyunlog log list_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore2"
 > {"count": 0, "shipper": [], "total": 0}
 
 #aliyunlog log list_logstores --request={\"project\":\"dlq-test-cli-${RANDOM_NUMBER}\"}
@@ -246,8 +254,14 @@ aliyunlog log update_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --
 
 aliyunlog log update_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
 aliyunlog log update_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
-aliyunlog log update_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
-> {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
+
+#BUG FIXED: aliyunlog log update_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper" --shipper_type="oss" --shipper_config="file://create_oss_shipper_config.json"
+aliyunlog log update_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --detail="file://shipper/oss_csv.json"
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName oss-ship-test1 does not exist"
+aliyunlog log update_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --detail="file://shipper/oss_json.json"
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName oss-ship-test1 does not exist"
+aliyunlog log update_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --detail="file://shipper/oss_parquet.json"
+> {"errorCode": "ParameterInvalid", "errorMessage": "shipperName oss-ship-test1 does not exist"
 
 
 aliyunlog log retry_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1" --task_list="[\"task1\",\"task2\"]"
@@ -419,7 +433,8 @@ aliyunlog log delete_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}
 
 aliyunlog log delete_consumer_group --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --consumer_group="consumer_group1"
 
-aliyunlog log delete_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
+#BUG FIXED: aliyunlog log delete_shipper --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shipper_name="shipper1"
+aliyunlog log delete_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstore="logstore1" --entity="shipper1"
 > {"errorCode": "ParameterInvalid", "errorMessage": "shipperName shipper1 does not exist"
 
 aliyunlog log delete_index --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1"
