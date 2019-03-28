@@ -109,7 +109,7 @@ aliyunlog log get_end_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --lo
 rm -f ./put_logs_${RANDOM_NUMBER}.json
 echo "{\"project\": \"dlq-test-cli-${RANDOM_NUMBER}\",\"logstore\": \"logstore1\",\"topic\": \"topic1\",\"source\": \"source1\",\"logtags\": [ [\"tag1\", \"v1\"], [\"tag2\", \"v2\"]],\"hashKey\": \"1231231234\",\"logitems\": [{\"timestamp\": ${TIME-ONE-HOUR-AGO},\"contents\": [[\"key1\", \"v1\"],[\"key2\", \"v2\"]]},{\"timestamp\": ${TIME-ONE-HOUR-AGO},\"contents\": [[\"key3\", \"v3\"],[\"key4\", \"v4\"]]}]}" >> put_logs_${RANDOM_NUMBER}.json
 aliyunlog log put_logs --request="file://./put_logs_${RANDOM_NUMBER}.json"
-sleep 10
+sleep 30
 ###########
 
 
