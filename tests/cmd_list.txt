@@ -19,7 +19,7 @@ aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --l
 aliyunlog log create_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore3" --ttl=2 --shard_count="2" --enable_tracking=true
 
 # need to sleep for 60 seconds
-sleep 60
+sleep 61
 
 
 # create index
@@ -47,7 +47,7 @@ aliyunlog log create_shipper --project="dlq-test-cli-${RANDOM_NUMBER}" --logstor
 > {"errorCode": "Unauthorized", "errorMessage": "denied by sts or ram, action: ram:PassRole, resource: acs:ram::1234:role/aliyunlogdefaultrole"
 
 # need to sleep for 60 seconds
-sleep 60
+sleep 62
 
 
 # apply machine group
@@ -93,7 +93,7 @@ aliyunlog log get_shipper_tasks --project_name="dlq-test-cli-${RANDOM_NUMBER}" -
 > {"errorCode": "ParameterInvalid", "errorMessage": "only support query last 48 hours task status"
 
 # need to sleep for 60 seconds
-sleep 60
+sleep 63
 
 
 aliyunlog log get_begin_cursor --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore1" --shard_id=0
@@ -458,7 +458,7 @@ aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --l
 
 aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}" --logstore_name="logstore4_copied"
 
-sleep 40
+sleep 41
 
 aliyunlog log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}"
 
@@ -483,7 +483,7 @@ aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copi
 
 aliyunlog log delete_logstore --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied" --logstore_name="logstore4_copied"
 
-sleep 40
+sleep 42
 
 aliyunlog log delete_project --project_name="dlq-test-cli-${RANDOM_NUMBER}-copied"
 
