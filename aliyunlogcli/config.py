@@ -22,11 +22,13 @@ GLOBAL_OPTION_KEY_FORMAT_OUTPUT = "format-output"
 GLOBAL_OPTION_KEY_DEFAULT_CLIENT = "default-client"
 GLOBAL_OPTION_KEY_DECODE_OUTPUT = "decode-output"
 
-SYSTEM_OPTIONS = ['access-id', 'access-key', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output',
+STS_TOKEN_SEP = "::"
+
+SYSTEM_OPTIONS = ['access-id', 'access-key', 'sts-token', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output',
                   'decode-output']
 SYSTEM_OPTIONS_STR = ' '.join('[--' + x + '=<value>]' for x in SYSTEM_OPTIONS)
 
-SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint jmes_filter format_output decode_output")
+SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint sts_token, jmes_filter format_output decode_output")
 
 API_GROUP = [('project$', 'Project'), 'logstore', ('index|topics', "Index"),
              ('logtail_config', "Logtail Config"), ('machine', "Machine Group"), 'shard',
@@ -37,6 +39,7 @@ GLOBAL_OPTIONS_STR = """
 Global Options:
 [--access-id=<value>]		        : use this access id in this command
 [--access-key=<value>]		        : use this access key in this command
+[--sts-token=<value>]		        : use this sts token in this command
 [--region-endpoint=<value>]	        : use this endpoint in this command
 [--client-name=<value>]		        : use this client name in configured accounts
 [--jmes-filter=<value>]		        : filter results using JMES syntax
@@ -50,7 +53,7 @@ USAGE_STR_TEMPLATE = """
 Usage:
 
 1. aliyunlog log <subcommand> [parameters | global options]
-2. aliyunlog configure <access_id> <access-key> <endpoint> [<client-name>]
+2. aliyunlog configure <access_id> <access_key> <endpoint> [<client-name>] [sts_token]
 3. aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 4. aliyunlog [--help | --version]
 
@@ -60,12 +63,13 @@ Examples:
 1. aliyunlog configure AKID123 AKKEY123 cn-hangzhou.log.aliyuncs.com
 2. aliyunlog configure --format-output=json,no_escape --default-client=beijing
 3. aliyunlog log create_project --project_name="test"
+4. aliyunlog configure AKID124 AKKey123 cn-hangzhou.log.aliyuncs.com main StsTokenValue1234
 
 Subcommand:
 {grouped_api}
 """ + GLOBAL_OPTIONS_STR
 
-MORE_DOCOPT_CMD = """aliyunlog configure <secure_id> <secure_key> <endpoint> [<client_name>]
+MORE_DOCOPT_CMD = """aliyunlog configure <secure_id> <secure_key> <endpoint> [<client_name>] [<sts_token>]
 aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 """
 
@@ -98,29 +102,58 @@ def load_config_from_cloudshell(default_ak_id='', default_ak_key='', default_end
     return access_id, access_key, endpoint
 
 
+def verify_sts_token(ac_id, sts_token, use=False):
+    sts_token = sts_token or ""
+
+    if sts_token:
+        if STS_TOKEN_SEP in sts_token:
+            if sts_token.startswith(ac_id):
+                if not use:
+                    return sts_token
+                else:
+                    v = sts_token.split(STS_TOKEN_SEP)[1]
+                    if not v:
+                        v = None
+                    return v
+        else:
+            if not use:
+                return ac_id + STS_TOKEN_SEP + sts_token
+            else:
+                return sts_token
+
+    if use:
+        return None
+    else:
+        return ""
+
+
 def load_confidential_from_file(client_name):
     # load config from file
     config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
     access_id, access_key, endpoint = load_config_from_cloudshell()
+    sts_token = ""
 
     access_id = _get_section_option(config, client_name, 'access-id', access_id)
     access_key = _get_section_option(config, client_name, 'access-key', access_key)
     endpoint = _get_section_option(config, client_name, 'region-endpoint', endpoint)
+    sts_token = _get_section_option(config, client_name, 'sts-token', sts_token)
+    sts_token = verify_sts_token(access_id, sts_token)
 
-    return access_id, access_key, endpoint
+    return access_id, access_key, endpoint, sts_token
 
 
 def load_default_config_from_file_env():
-    access_id, access_key, endpoint = load_confidential_from_file(LOG_CONFIG_SECTION)
+    access_id, access_key, endpoint, sts_token = load_confidential_from_file(LOG_CONFIG_SECTION)
 
     # load config from envs
     access_id = os.environ.get('ALIYUN_LOG_CLI_ACCESSID', access_id)
     access_key = os.environ.get('ALIYUN_LOG_CLI_ACCESSKEY', access_key)
     endpoint = os.environ.get('ALIYUN_LOG_CLI_ENDPOINT', endpoint)
+    sts_token = os.environ.get('ALIYUN_LOG_CLI_STS_TOKEN', sts_token)
 
-    return access_id, access_key, endpoint
+    return access_id, access_key, endpoint, sts_token
 
 
 def load_config(system_options):
@@ -135,12 +168,13 @@ def load_config(system_options):
     format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, '')
     decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
-    access_id, access_key, endpoint = load_confidential_from_file(client_name)
+    access_id, access_key, endpoint, sts_token = load_confidential_from_file(client_name)
 
     # load config from envs
     access_id = os.environ.get('ALIYUN_LOG_CLI_ACCESSID', access_id)
     access_key = os.environ.get('ALIYUN_LOG_CLI_ACCESSKEY', access_key)
     endpoint = os.environ.get('ALIYUN_LOG_CLI_ENDPOINT', endpoint)
+    sts_token = os.environ.get('ALIYUN_LOG_CLI_STS_TOKEN', sts_token)
     format_output = os.environ.get('ALIYUN_LOG_CLI_FORMAT_OUTPUT', format_output)
     decode_output = os.environ.get('ALIYUN_LOG_CLI_DECODE_OUTPUT', decode_output)
 
@@ -148,6 +182,7 @@ def load_config(system_options):
     access_id = system_options.get('access-id', access_id)
     access_key = system_options.get('access-key', access_key)
     endpoint = system_options.get('region-endpoint', endpoint)
+    sts_token = system_options.get('sts-token', sts_token)
     format_output = system_options.get('format-output', format_output)
     decode_output = system_options.get('decode-output', decode_output)
 
@@ -163,7 +198,7 @@ def load_config(system_options):
             print(ex)
             raise ValueError("Invalid JMES filter path")
 
-    return SystemConfig(access_id, access_key, endpoint, jmes_filter, format_output, decode_output)
+    return SystemConfig(access_id, access_key, endpoint, sts_token, jmes_filter, format_output, decode_output)
 
 
 __LOGGING_LEVEL_MAP = {

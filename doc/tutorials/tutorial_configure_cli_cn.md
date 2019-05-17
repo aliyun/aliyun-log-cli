@@ -23,10 +23,11 @@ CLI的配置项目包含如下内容:
 - 参数
 
 ```shell
-> aliyunlog log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
+> aliyunlog log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value> --sts-token=<value>
 ```
 
   **注意:** 任意log子命令都支持以上方式定义特定的AK与Endpoint(覆盖后面的方式)
+  **注意:** sts-token用于STS模式时使用。
 
 
 - 环境变量
@@ -34,6 +35,7 @@ CLI的配置项目包含如下内容:
   - ALIYUN_LOG_CLI_ACCESSID
   - ALIYUN_LOG_CLI_ACCESSKEY
   - ALIYUN_LOG_CLI_ENDPOINT
+  - ALIYUN_LOG_CLI_STS_TOKEN
 
 - 本地配置文件
 
@@ -44,6 +46,7 @@ CLI的配置项目包含如下内容:
 access-id=
 access-key=
 region-endpoint=
+sts-token=
 ```
 
 <h2 id="使用HTTPS连接">使用HTTPS连接</h2>
@@ -57,7 +60,9 @@ Configure命令可以修改配置文件内容.
 
 ```shell
 > aliyunlog configure access_id access_key cn-beijing.log.aliyuncs.com
+> aliyunlog configure access_id access_key cn-beijing.log.aliyuncs.com main sts_token
 ```
+
 
 <h1 id="多账户">多账户</h1>
 

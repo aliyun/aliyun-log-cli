@@ -6,7 +6,7 @@ from aliyun import log
 from aliyun.log import *
 from aliyun.log.util import Util
 from .config import *
-from .config import load_default_config_from_file_env, load_confidential_from_file, LOG_CONFIG_SECTION
+from .config import load_default_config_from_file_env, load_confidential_from_file, LOG_CONFIG_SECTION, verify_sts_token
 
 
 try:
@@ -282,14 +282,16 @@ def _requests_maker(*cls_args):
 
 def _chained_method_maker(*method_list):
     def maker(value):
+        exceptions = []
         for method in method_list:
             try:
                 obj = method(value)
                 return obj
             except Exception as ex:
-                logger.warn("error to call {0}, detail: {1}, skip to next".format(method, str(ex)))
+                exceptions.append(str(ex))
+                logger.debug("error to call {0}, detail: {1}, skip to next".format(method, str(ex)))
 
-        logger.warn("*** cannot construct relative object '{0}' with value '{1}'".format(str(method_list), value))
+        logger.warn("*** cannot construct relative object '{0}' with value '{1}', detail: {2}".format(str(method_list), value, exceptions))
         return value
 
     return maker
@@ -298,14 +300,14 @@ def _chained_method_maker(*method_list):
 def _make_log_client(to_client):
     if to_client:
         if to_client == LOG_CONFIG_SECTION:
-            access_id, access_key, endpoint = load_default_config_from_file_env()
+            access_id, access_key, endpoint, sts_token = load_default_config_from_file_env()
         else:
-            access_id, access_key, endpoint = load_confidential_from_file(to_client)
+            access_id, access_key, endpoint, sts_token = load_confidential_from_file(to_client)
 
         assert endpoint and access_id and access_key, \
             ValueError("endpoint, access_id or key is not configured for section {0}".format(to_client))
 
-        return LogClient(endpoint, access_id, access_key)
+        return LogClient(endpoint, access_id, access_key, securityToken=verify_sts_token(access_id, sts_token, use=True))
 
     raise ValueError("fail to convert section {0} to log client instance.".format(to_client))
 

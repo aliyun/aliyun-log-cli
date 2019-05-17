@@ -23,16 +23,18 @@ There're three ways to configure the access key and endpoint and they're priorit
 - Parameters
 
 ```shell
-> aliyunlog log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value>
+> aliyunlog log create_project ..... --access-id=<value> --access-key=<value> --region-endpoint=<value> --sts-token=<value>
 ```
 
   **Note:** Any sub command support such way to overwrite the AK setings in later ways (env or config file) for the specific operations.
+  **Note:** sts-token is used in STS mode
 
 - Environment Variables
 
   - ALIYUN_LOG_CLI_ACCESSID
   - ALIYUN_LOG_CLI_ACCESSKEY
   - ALIYUN_LOG_CLI_ENDPOINT
+  - ALIYUN_LOG_CLI_STS_TOKEN
 
 - Local configuration file
 
@@ -43,6 +45,7 @@ There're three ways to configure the access key and endpoint and they're priorit
 access-id=
 access-key=
 region-endpoint=
+sts-token=
 ```
 
 ### Enable Https Connection
@@ -56,6 +59,8 @@ Use the command "configure" to modify the configuration file:
 
 ```shell
 > aliyunlog configure access_id access_key cn-beijing.log.aliyuncs.com
+> aliyunlog configure access_id access_key cn-beijing.log.aliyuncs.com main sts_token
+
 ```
 
 

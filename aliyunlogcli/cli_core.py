@@ -19,7 +19,7 @@ from .config import monkey_patch
 logger = logging.getLogger(__name__)
 
 
-def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONFIG_SECTION):
+def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONFIG_SECTION, sts_token=None):
     """ configure confidential
     :type secure_id: string
     :param secure_id: secure id
@@ -32,6 +32,9 @@ def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONF
 
     :type client_name: string
     :param client_name: section name, default is "main"
+
+    :type sts_token: string
+    :param sts_token: sts token name, default is None
 
     :return:
     """
@@ -46,6 +49,7 @@ def configure_confidential(secure_id, secure_key, endpoint, client_name=LOG_CONF
     config.set(client_name, 'access-id', secure_id)
     config.set(client_name, 'access-key', secure_key)
     config.set(client_name, 'region-endpoint', endpoint)
+    config.set(client_name, 'sts-token', verify_sts_token(secure_id, sts_token))
 
     with open(LOG_CREDS_FILENAME, 'w') as configfile:
         config.write(configfile)
@@ -164,6 +168,8 @@ def show_result(result, format_output, decode_output=None):
                         break
                     except UnicodeDecodeError as ex:
                         last_ex = ex
+                    except UnicodeEncodeError as ex:
+                        last_ex = ex
                 else:
                     raise last_ex
             else:
@@ -221,7 +227,7 @@ def main():
     # process normal log command
     if arguments.get('log', False):
         try:
-            access_id, access_key, endpoint, jmes_filter, format_output, decode_output = load_config(system_options)
+            access_id, access_key, endpoint, sts_token, jmes_filter, format_output, decode_output = load_config(system_options)
 
             decode_output = _to_string_list(decode_output)  # convert decode to list if any
 
@@ -237,9 +243,11 @@ The default account is not configured or the command doesn't have a well-configu
 
 Fix it by either configuring a default account as: 
 > aliyunlog configure <access_id> <access-key> <endpoint>
+> aliyunlog configure <access_id> <access-key> main <sts_token>
 
 or use option --client-name to specify a well-configured account as:
 > aliyunlog configure <access_id> <access-key> <endpoint> <user-bj>
+> aliyunlog configure <access_id> <access-key> <endpoint> <user-bj> <sts_token>
 > aliyunlog log .....  --client-name=user-bj
 
 Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_configure_cli_en.html for more info.
@@ -247,7 +255,7 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
             """)
             exit(2)
 
-        client = LogClient(endpoint, access_id, access_key)
+        client = LogClient(endpoint, access_id, access_key, securityToken=verify_sts_token(access_id, sts_token, use=True))
         client.set_user_agent(USER_AGENT)
 
         assert hasattr(client, method_name), "Unknown parsed command:" + method_name
@@ -275,9 +283,9 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
             configure_default_options(options)
         else:
             args = arguments['<secure_id>'], arguments['<secure_key>'], arguments['<endpoint>'], \
-                   arguments['<client_name>'] or LOG_CONFIG_SECTION
+                   arguments['<client_name>'] or LOG_CONFIG_SECTION, arguments['<sts_token>']
 
-            if args[0] is None or args[1] is None or args[1] is None:
+            if args[0] is None or args[1] is None or args[2] is None:
                 print("Invalid parameters.\n")
                 print("Usage:\n" + MORE_DOCOPT_CMD)
                 exit(1)
@@ -293,7 +301,7 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
             configure_default_options(options)
         else:
             args = arguments['<secure_id>'], arguments['<secure_key>'], arguments['<endpoint>'], \
-                   arguments['<client_name>'] or LOG_CONFIG_SECTION
+                   arguments['<client_name>'] or LOG_CONFIG_SECTION, arguments['<sts_token>']
 
             if args[0] is None or args[1] is None or args[1] is None:
                 print("Invalid parameters.\n")
