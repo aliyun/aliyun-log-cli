@@ -30,6 +30,7 @@ aliyunlog log pull_log_dump --project_name="p1" --logstore_name="l1" --from_time
 {"files": {"/data/dump_1.data": 75, "/data/dump_2.data": 14}, "total_count": 89}
 ```
 
+**注意： ** `file_path`参数支持传递相对路径与绝对路径，如果`file_path`参数以`~`开头，`~`将会被自动替换为当前用户的home目录.
 
 
 ## 时间格式
