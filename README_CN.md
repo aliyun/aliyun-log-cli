@@ -728,10 +728,29 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
   - 参考[Elasticsearch 数据迁移](https://github.com/aliyun/aliyun-log-cli/tree/master/doc/tutorials/tutorial_es_migration_cn.md)了解如何将 Elasticsearch 中的数据导入日志服务。
 
 <h3 id="13-其他配置管理">13. 其他配置管理</h3>
+
 - 报警管理
+
 - 快速查询管理
+
 - 报表管理
+
+复制仪表盘举例: 
+
+```text
+1. 下载到本地
+aliyunlog log get_dashboard --project=项目名 --entity=仪表盘名 >> dashboard.json
+https://aliyun-log-cli.readthedocs.io/en/latest/api.html#aliyun.log.LogClient.get_dashboard
+
+2. 修改本地的dahboard.json, 主要调整里面的dashboard name, title以及logstore
+如果是跨project复制, 目前不存在同name的仪表盘, 且关联logstore名字一样, 可以跳过
+
+3. 创建到目标项目中
+aliyunlog log create_dashboard --project=新项目名 --detail=file://./dashboard.json
+```
+
 - 外部存储管理
+
 
 参考命令行帮助
 
