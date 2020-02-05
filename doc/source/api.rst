@@ -1,10 +1,28 @@
 
-Mapped SDK API
-===============
+API
+====
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+Main Class
+-----------
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   LogClient
+   LogException
+   LogResponse
+
+
+Logging Handler Class
+--------------------------
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   SimpleLogHandler
+   QueuedLogHandler
+   UwsgiQueuedLogHandler
+   LogFields
 
 
 Request and Config Class
@@ -30,6 +48,105 @@ Request and Config Class
    OssShipperConfig
    OdpsShipperConfig
    ShipperTask
+
+
+Response Class
+-----------------
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   CreateProjectResponse
+   DeleteProjectResponse
+   GetProjectResponse
+   ListProjectResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   GetLogsResponse
+   ListLogstoresResponse
+   ListTopicsResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   GetCursorResponse
+   GetCursorTimeResponse
+   ListShardResponse
+   DeleteShardResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   GetHistogramsResponse
+   Histogram
+   GetLogsResponse
+   QueriedLog
+   PullLogResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   CreateIndexResponse
+   UpdateIndexResponse
+   DeleteIndexResponse
+   GetIndexResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   CreateLogtailConfigResponse
+   DeleteLogtailConfigResponse
+   GetLogtailConfigResponse
+   UpdateLogtailConfigResponse
+   ListLogtailConfigResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   CreateMachineGroupResponse
+   DeleteMachineGroupResponse
+   GetMachineGroupResponse
+   UpdateMachineGroupResponse
+   ListMachineGroupResponse
+   ListMachinesResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   ApplyConfigToMachineGroupResponse
+   RemoveConfigToMachineGroupResponse
+   GetMachineGroupAppliedConfigResponse
+   GetConfigAppliedMachineGroupsResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   CreateShipperResponse
+   UpdateShipperResponse
+   DeleteShipperResponse
+   GetShipperConfigResponse
+   ListShipperResponse
+   GetShipperTasksResponse
+   RetryShipperTasksResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   ConsumerGroupEntity
+   CreateConsumerGroupResponse
+   ConsumerGroupCheckPointResponse
+   ConsumerGroupHeartBeatResponse
+   ConsumerGroupUpdateCheckPointResponse
+   DeleteConsumerGroupResponse
+   ListConsumerGroupResponse
+   UpdateConsumerGroupResponse
+
+.. py:currentmodule:: aliyun.log
+.. autosummary::
+   CreateEntityResponse
+   UpdateEntityResponse
+   DeleteEntityResponse
+   GetEntityResponse
+   ListEntityResponse
+
+
+ES Migration Class
+--------------------------
+.. py:currentmodule:: aliyun.log.es_migration
+.. autosummary::
+   MigrationManager
 
 
 Project
@@ -139,29 +256,34 @@ Consumer group
 Dashboard
 ----------
 .. autosummary::
+   list_dashboard
    create_dashboard
+   get_dashboard
    update_dashboard
    delete_dashboard
-   get_dashboard
-   list_dashboard
 
-Alert
-----------
-.. autosummary::
-   create_alert
-   update_alert
-   delete_alert
-   get_alert
-   list_alert
 
-Savedsearch
-----------
+
+Saved search
+----------------
 .. autosummary::
+   list_savedsearch
    create_savedsearch
+   get_savedsearch
    update_savedsearch
    delete_savedsearch
-   get_savedsearch
-   list_savedsearch
+
+
+
+Alert
+-----------------
+.. autosummary::
+   list_alert
+   create_alert
+   get_alert
+   update_alert
+   delete_alert
+
 
 Shipper
 ----------
@@ -169,16 +291,11 @@ Shipper
    create_shipper
    update_shipper
    delete_shipper
-   get_shipper_config
+   get_shipper
    list_shipper
    get_shipper_tasks
    retry_shipper_tasks
 
-ES Migration
---------------------------
-.. py:currentmodule:: aliyun.log.es_migration
-.. autosummary::
-   MigrationManager
 
 Definitions
 -------------
@@ -204,8 +321,125 @@ Definitions
 .. autoclass:: SyslogConfigDetail
 .. autoclass:: MachineGroupDetail
 .. autoclass:: PutLogsRequest
-.. autoclass:: OssShipperConfig
-.. autoclass:: OdpsShipperConfig
 .. autoclass:: ShipperTask
+
+.. autoclass:: LogResponse
+   :members:
+.. autoclass:: CreateProjectResponse
+   :members:
+.. autoclass:: DeleteProjectResponse
+   :members:
+.. autoclass:: GetProjectResponse
+   :members:
+.. autoclass:: ListProjectResponse
+   :members:
+
+.. autoclass:: GetLogsResponse
+   :members:
+.. autoclass:: ListLogstoresResponse
+   :members:
+.. autoclass:: ListTopicsResponse
+   :members:
+
+.. autoclass:: GetCursorResponse
+   :members:
+.. autoclass:: GetCursorTimeResponse
+   :members:
+.. autoclass:: ListShardResponse
+   :members:
+.. autoclass:: DeleteShardResponse
+   :members:
+
+.. autoclass:: GetHistogramsResponse
+   :members:
+.. autoclass:: Histogram
+   :members:
+.. autoclass:: GetLogsResponse
+   :members:
+.. autoclass:: QueriedLog
+   :members:
+.. autoclass:: PullLogResponse
+   :members:
+
+.. autoclass:: CreateIndexResponse
+   :members:
+.. autoclass:: UpdateIndexResponse
+   :members:
+.. autoclass:: DeleteIndexResponse
+   :members:
+.. autoclass:: GetIndexResponse
+   :members:
+
+.. autoclass:: CreateLogtailConfigResponse
+   :members:
+.. autoclass:: DeleteLogtailConfigResponse
+   :members:
+.. autoclass:: GetLogtailConfigResponse
+   :members:
+.. autoclass:: UpdateLogtailConfigResponse
+   :members:
+.. autoclass:: ListLogtailConfigResponse
+   :members:
+
+.. autoclass:: CreateMachineGroupResponse
+   :members:
+.. autoclass:: DeleteMachineGroupResponse
+   :members:
+.. autoclass:: GetMachineGroupResponse
+   :members:
+.. autoclass:: UpdateMachineGroupResponse
+   :members:
+.. autoclass:: ListMachineGroupResponse
+   :members:
+.. autoclass:: ListMachinesResponse
+   :members:
+
+.. autoclass:: ApplyConfigToMachineGroupResponse
+   :members:
+.. autoclass:: RemoveConfigToMachineGroupResponse
+   :members:
+.. autoclass:: GetMachineGroupAppliedConfigResponse
+   :members:
+.. autoclass:: GetConfigAppliedMachineGroupsResponse
+   :members:
+
+.. autoclass:: GetShipperTasksResponse
+   :members:
+.. autoclass:: RetryShipperTasksResponse
+   :members:
+
+.. autoclass:: ConsumerGroupEntity
+   :members:
+.. autoclass:: CreateConsumerGroupResponse
+   :members:
+.. autoclass:: ConsumerGroupCheckPointResponse
+   :members:
+.. autoclass:: ConsumerGroupHeartBeatResponse
+   :members:
+.. autoclass:: ConsumerGroupUpdateCheckPointResponse
+   :members:
+.. autoclass:: DeleteConsumerGroupResponse
+   :members:
+.. autoclass:: ListConsumerGroupResponse
+   :members:
+.. autoclass:: UpdateConsumerGroupResponse
+   :members:
+
+.. autoclass:: CreateEntityResponse
+   :members:
+.. autoclass:: UpdateEntityResponse
+   :members:
+.. autoclass:: DeleteEntityResponse
+   :members:
+.. autoclass:: GetEntityResponse
+   :members:
+.. autoclass:: ListEntityResponse
+   :members:
+
+.. autoclass:: SimpleLogHandler
+.. autoclass:: QueuedLogHandler
+.. autoclass:: UwsgiQueuedLogHandler
+.. autoclass:: LogFields
+
 .. py:currentmodule:: aliyun.log.es_migration
 .. autoclass:: MigrationManager
