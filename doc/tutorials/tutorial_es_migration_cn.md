@@ -24,6 +24,7 @@
 | batch_size | no | 批量写入 SLS 的日志数目。SLS 要求同时写入的一批数据不超过 512KB，而且不超过1024条。 | 1000 |
 | wait_time_in_secs | no | 指定 logstore、索引创建好后，CLI 执行数据迁移任务前需要等待的时间。<br>默认值为 60，表示等待 60s。 | 60 |
 | auto_creation | no | 指定是否让 MigrationManager 为您自动创建好 logstore 和 索引。<br>默认值为 True，表示自动创建。 | True<br>False |
+| retries_failed | no | 对出错的迁移任务进行重试的次数。 <br>默认值为 10。 | 10 |
 
 > aliyun-log-cli.readthedocs.io 无法正常显示表格，请参阅[tutorial_es_migration_cn.md](https://github.com/aliyun/aliyun-log-cli/blob/master/doc/tutorials/tutorial_es_migration_cn.md)
 
@@ -171,10 +172,6 @@ aliyunlog log es_migration --cache_path=/path/to/cache --hosts=user:secret@local
 
 ## 常见问题
 
-**Q**：支持的 ES 哪些版本？
-
-**A**：最新版本的 Aliyun-Log-Python-SDK 迁移工具支持 ES v7.x。如果需要迁移 ES v6.x，请使用 Aliyun-Log-Python-SDK v0.6.47。
-
 **Q**：是否支持抓取特定时间范围内的 ES 数据？
 
 **A**：ES 本身并没有内置 time 字段，如果文档中某个字段代表时间，可以使用参数 query 进行过滤。
@@ -186,10 +183,6 @@ aliyunlog log es_migration --cache_path=/path/to/cache --hosts=user:secret@local
 **Q**：time_reference 有什么作用？
 
 **A**：参数 time_reference 用于标记日志在 SLS 中的时间戳，另外还用于在迁移过程中的 chenkpoint，在中断重启时快速定位到续传点。所以应尽可能指定 time_reference 参数。
-
-**Q**：是否支持 Python 2.7？
-
-**A**：ES 迁移工具只支持 Python 3.x，请安装 Python 3.x 进行操作。
 
 **Q**：数据迁移的速度有多快？
 
