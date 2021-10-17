@@ -11,19 +11,22 @@
 | 参数 | 必选 | 说明 | 样例 |
 | -------- | -------- | -------- | -------- |
 | cache_path | yes | 用于缓存迁移进度的本地文件位置，实现断点续传。当存在迁移缓存的时候，以下参数中`time_reference`更改无效。对新的迁移任务，请确认指定路径为空文件夹，以防迁移任务受干扰。 | /path/to/cache |
-| hosts | yes | elasticsearch 数据源地址列表，多个 host 之间用逗号分隔。 | 127.0.0.1:9200<br>localhost:9200,other_host:9200<br>user:secret@localhost:9200 |
-| project_name | yes | 日志服务中用于存储迁移数据的 project。<br>需要您提前创建好。 | your_project |
-| indexes | no | elasticsearch index 列表，多个 index 之间用逗号分隔，支持通配符(*)。<br>默认抓取目标 es 中所有 index 的数据。 | index1<br>my_index*,other_index |
+| cache_duration | no | 缓存有效时间，基于 elasticsearch scroll 实现。当前一次迁移操作退出时间长度超过该时间段时，缓存失效，不能继续使用于断点续传。默认值是 1d。 | 1d<br>20h |
+| hosts | yes | elasticsearch 数据源地址列表，多个 host 之间用逗号分隔。 | "127.0.0.1:9200"<br>"localhost:9200,other_host:9200"<br>"user:secret@localhost:9200" |
+| indexes | no | elasticsearch index 列表，多个 index 之间用逗号分隔，支持通配符(*)。<br>默认抓取目标 es 中所有 index 的数据。 | "index1"<br>"my_index*,other_index" |
 | query | no | 用于过滤文档，使用该参数您可以指定需要迁移的文档。<br>默认不会对文档进行过滤。 | '{"query": {"match": {"title": "python"}}}' |
-| scroll | no | 用于告诉 elasticsearch 需要将查询上下文信息保留多长时间。<br>默认值为 5m。 | 5m |
+| endpoint | yes | 日志服务中用于存储迁移数据的 project 所属 endpoint。 | "cn-beijing.log.aliyuncs.com" |
+| project_name | yes | 日志服务中用于存储迁移数据的 project。<br>需要您提前创建好。 | "your_project" |
+| access_key_id | yes | 用户访问秘钥对中的 access_key_id。 | |
+| access_key | yes | 用户访问秘钥对中的 access_key_secret。 | |
 | logstore_index_mappings | no | 用于配置日志服务中的 logstore 和 elasticsearch 中的 index 间的映射关系。支持使用通配符指定 index，多个 index 之间用逗号分隔。<br>可选参数，默认情况下 logstore 和 index 是一一映射，这里允许用户将多个index 上的数据发往一个 logstore。 | '{"logstore1": "my_index\*", "logstore2": "index1,index2", "logstore3": "index3"}'<br>'{"your_logstore": "\*"}'  |
 | pool_size | no | 指定用于执行迁移任务的进程池大小。<br>CLI 会针对每个 shard 创建一个数据迁移任务，任务会被提交到进程池中执行。<br>默认为 min(10, shard_count)。 | 10 |
-| time_reference | no | 将 elasticsearch 文档中指定的字段映射成日志的 time 字段。<br>默认使用当前时间戳作为日志 time 字段的值。 | field1 |
-| source | no | 指定日志的 source 字段的值。<br>默认值为参数 hosts 的值。 | your_source |
-| topic | no | 指定日志的 topic 字段的值。<br>默认值为空。 | your_topic |
+| time_reference | no | 将 elasticsearch 文档中指定的字段映射成日志的 time 字段。<br>默认使用当前时间戳作为日志 time 字段的值。 | "field1" |
+| source | no | 指定日志的 source 字段的值。<br>默认值为参数 hosts 的值。 | "your_source" |
+| topic | no | 指定日志的 topic 字段的值。<br>默认值为空。 | "your_topic" |
 | batch_size | no | 批量写入 SLS 的日志数目。SLS 要求同时写入的一批数据不超过 512KB，而且不超过1024条。 | 1000 |
 | wait_time_in_secs | no | 指定 logstore、索引创建好后，CLI 执行数据迁移任务前需要等待的时间。<br>默认值为 60，表示等待 60s。 | 60 |
-| auto_creation | no | 指定是否让 MigrationManager 为您自动创建好 logstore 和 索引。<br>默认值为 True，表示自动创建。 | True<br>False |
+| auto_creation | no | 指定是否让 CLI 为您自动创建好 logstore 和 索引。<br>默认值为 True，表示自动创建。 | True<br>False |
 | retries_failed | no | 对出错的迁移任务进行重试的次数。 <br>默认值为 10。 | 10 |
 
 > aliyun-log-cli.readthedocs.io 无法正常显示表格，请参阅[tutorial_es_migration_cn.md](https://github.com/aliyun/aliyun-log-cli/blob/master/doc/tutorials/tutorial_es_migration_cn.md)
