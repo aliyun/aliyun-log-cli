@@ -1,4 +1,5 @@
 import os
+import json
 from collections import namedtuple
 import six.moves.configparser as configparser
 import six
@@ -7,14 +8,19 @@ from jmespath.exceptions import ParseError
 import logging
 from logging.handlers import RotatingFileHandler
 from .exceptions import IncompleteAccountInfoError
+import requests
+from aliyunsdkcore import client
+from aliyunsdksts.request.v20150401 import AssumeRoleRequest
 
 LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
                                 'set_user_agent', 'get_unicode', 'list_logstores', 'put_log_raw'
                                 )
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')
+ALIYUN_CLI_CONF_FILENAME = "%s/.aliyun/config.json" % os.path.expanduser('~')
 DEFAULT_DEBUG_LOG_FILE_PATH = "%s/aliyunlogcli.log" % os.path.expanduser('~')
 DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(process)s:%(threadName)s:%(filename)s:%(lineno)d %(funcName)s %(message)s"
+ECS_RAM_ROLE_URL = "http://100.100.100.200/latest/meta-data/Ram/security-credentials/"
 
 LOG_CONFIG_SECTION = "main"
 GLOBAL_OPTION_SECTION = "__option__"
@@ -155,6 +161,71 @@ def load_default_config_from_file_env():
 
     return access_id, access_key, endpoint, sts_token
 
+def parse_authenticity_from_response(response):
+    if isinstance(response, bytes):
+        response = response.decode()
+    response = json.loads(response)
+    credentials = response.get("Credentials")
+    sts_token = credentials.get("SecurityToken", "")
+    ak_id = credentials.get("AccessKeyId", "")
+    ak_key = credentials.get("AccessKeySecret", "")
+    return ak_id, ak_key, sts_token
+
+def parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn):
+    endpoint = endpoint.rstrip(".log.aliyuncs.com") if endpoint.endswith(".log.aliyuncs.com") else endpoint
+    clt = client.AcsClient(access_id, access_key, endpoint)
+    # 构造"AssumeRole"请求
+    request = AssumeRoleRequest.AssumeRoleRequest()
+    # 指定角色
+    request.set_RoleArn(ram_role_arn)
+    # 设置会话名称，审计服务使用此名称区分调用者
+    request.set_RoleSessionName('etl-test')
+    # 发起请求，并得到response
+    response = clt.do_action_with_exception(request)
+    ak_id, ak_key, sts_token = parse_authenticity_from_response(response)
+    return ak_id, ak_key, sts_token
+
+def parse_ecs_ram_role_authenticity_from_response(ram_role_name):
+    url = ECS_RAM_ROLE_URL + ram_role_name
+    response = requests.get(url)
+    content = response.content
+    if isinstance(content, bytes):
+        content = content.decode()
+    authenticity = json.loads(content)
+    ak_id = authenticity.get("AccessKeyId", "")
+    ak_key = authenticity.get("AccessKeySecret", "")
+    sts_token = authenticity.get("SecurityToken", "")
+    return ak_id, ak_key, sts_token
+
+def load_confidential_from_aliyun_client_file(config_file, ak_id="", ak_key="", endpoint="", sts_token=""):
+    try:
+        with open(config_file) as cf:
+            cf_content = json.load(cf)
+            current_profile = cf_content.get("current")
+            profiles = cf_content.get("profiles")
+            for profile in profiles:
+                if profile.get("name") == current_profile:
+                    access_id = profile.get("access_key_id", ak_id)
+                    access_key = profile.get("access_key_secret", ak_key)
+                    endpoint = profile.get("region_id", endpoint)
+                    endpoint = endpoint + '.log.aliyuncs.com' if endpoint != "" else "cn-hangzhou.log.aliyuncs.com"
+                    sts_token = profile.get("sts_token", sts_token)
+                    #RamRoleArn config
+                    if current_profile == "ramRoleArnProfile":
+                        ram_role_arn = profile.get("ram_role_arn")
+                        ak_id, ak_secret, sts_token = parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn)
+                        return ak_id, ak_secret, endpoint, sts_token
+                    #EcsRamRole config
+                    if current_profile == "ecsRamRoleProfile":
+                        ram_role_name = profile.get("ram_role_name")
+                        ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(ram_role_name)
+                        return ak_id, ak_secret, endpoint, sts_token
+                    break
+    except Exception as e:
+        print("waring: failed to load aliyun config file, the reason is %s" % (str(e)))
+        return "", "", "", ""
+    return access_id, access_key, endpoint, sts_token
+
 
 def load_config(system_options):
     # load config from file
@@ -168,7 +239,24 @@ def load_config(system_options):
     format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, '')
     decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
+    #load config from aliyun cfg file
+    access_id, access_key, endpoint, sts_token = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME)
+
+    #load config from aliyun envs
+    access_id = os.environ.get('ALICLOUD_ACCESS_KEY_ID', access_id)
+    _access_id = os.environ.get('ALIBABACLOUD_ACCESS_KEY_ID', access_id)
+    access_key = os.environ.get('ALICLOUD_ACCESS_KEY_SECRET', access_key)
+    _access_key = os.environ.get('ALIBABACLOUD_ACCESS_KEY_SECRET', access_key)
+    endpoint = os.environ.get('ALICLOUD_REGION_ID', endpoint)
+    _endpoint = os.environ.get('ALIBABACLOUD_REGION_ID', endpoint)
+    _sts_token = os.environ.get('SECURITY_TOKEN', sts_token)
+
+    #load config from sls cfg file
     access_id, access_key, endpoint, sts_token = load_confidential_from_file(client_name)
+    access_id = access_id if access_id else _access_id
+    access_key = access_key if access_key else _access_key
+    endpoint = endpoint if endpoint else _endpoint
+    sts_token = sts_token if sts_token else _sts_token
 
     # load config from envs
     access_id = os.environ.get('ALIYUN_LOG_CLI_ACCESSID', access_id)
