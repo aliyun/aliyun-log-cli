@@ -1,3 +1,6 @@
 docopt
 aliyun-log-python-sdk>=0.6.11
 jmespath
+aliyun-python-sdk-core
+aliyun-python-sdk-sts
+requests
