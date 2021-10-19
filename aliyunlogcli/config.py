@@ -31,7 +31,7 @@ GLOBAL_OPTION_KEY_DECODE_OUTPUT = "decode-output"
 STS_TOKEN_SEP = "::"
 
 SYSTEM_OPTIONS = ['access-id', 'access-key', 'sts-token', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output',
-                  'decode-output']
+                  'decode-output', 'profile']
 SYSTEM_OPTIONS_STR = ' '.join('[--' + x + '=<value>]' for x in SYSTEM_OPTIONS)
 
 SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint sts_token, jmes_filter format_output decode_output")
@@ -51,6 +51,7 @@ Global Options:
 [--jmes-filter=<value>]		        : filter results using JMES syntax
 [--format-output=json,no_escape]    : print formatted json results or else print in one line; if escape non-ANSI or not with `no_escape`. like: "json", "json,no_escape", "no_escape"
 [--decode-output=<value>]	        : encoding list to decode response, comma separated like "utf8,lartin1,gbk", default is "utf8". 
+[--profile=<value>]	                : use the authentication mode in this command.
 
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
 """
@@ -197,32 +198,37 @@ def parse_ecs_ram_role_authenticity_from_response(ram_role_name):
     sts_token = authenticity.get("SecurityToken", "")
     return ak_id, ak_key, sts_token
 
-def load_confidential_from_aliyun_client_file(config_file, ak_id="", ak_key="", endpoint="", sts_token=""):
+def load_confidential_from_aliyun_client_file(config_file, profile_name='', ak_id="", ak_key="", endpoint="", sts_token=""):
+    user_define_profile = True if profile_name else False
     try:
         with open(config_file) as cf:
             cf_content = json.load(cf)
             current_profile = cf_content.get("current")
             profiles = cf_content.get("profiles")
-            for profile in profiles:
-                if profile.get("name") == current_profile:
-                    access_id = profile.get("access_key_id", ak_id)
-                    access_key = profile.get("access_key_secret", ak_key)
-                    endpoint = profile.get("region_id", endpoint)
-                    endpoint = endpoint + '.log.aliyuncs.com' if endpoint != "" else "cn-hangzhou.log.aliyuncs.com"
-                    sts_token = profile.get("sts_token", sts_token)
-                    #RamRoleArn config
-                    if current_profile == "ramRoleArnProfile":
-                        ram_role_arn = profile.get("ram_role_arn")
-                        ak_id, ak_secret, sts_token = parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn)
-                        return ak_id, ak_secret, endpoint, sts_token
-                    #EcsRamRole config
-                    if current_profile == "ecsRamRoleProfile":
-                        ram_role_name = profile.get("ram_role_name")
-                        ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(ram_role_name)
-                        return ak_id, ak_secret, endpoint, sts_token
+            profile = None
+            for _profile in profiles:
+                profile_name = _profile.get("name")
+                if (user_define_profile and profile_name == profile_name) or (profile_name == current_profile and not user_define_profile):
+                    profile = _profile
                     break
+            current_mode = profile.get("mode")
+            access_id = profile.get("access_key_id", ak_id)
+            access_key = profile.get("access_key_secret", ak_key)
+            endpoint = profile.get("region_id", endpoint)
+            endpoint = endpoint + '.log.aliyuncs.com' if endpoint != "" else "cn-hangzhou.log.aliyuncs.com"
+            sts_token = profile.get("sts_token", sts_token)
+            #RamRoleArn config
+            if current_mode == "RamRoleArn":
+                ram_role_arn = profile.get("ram_role_arn")
+                ak_id, ak_secret, sts_token = parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn)
+                return ak_id, ak_secret, endpoint, sts_token
+            #EcsRamRole config
+            if current_mode == "EcsRamRole":
+                ram_role_name = profile.get("ram_role_name")
+                ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(ram_role_name)
+                return ak_id, ak_secret, endpoint, sts_token
     except Exception as e:
-        print("waring: failed to load aliyun config file, the reason is %s" % (str(e)))
+        print("warning: failed to load aliyun config file, the reason is %s" % (str(e)))
         return "", "", "", ""
     return access_id, access_key, endpoint, sts_token
 
@@ -265,6 +271,16 @@ def load_config(system_options):
     sts_token = os.environ.get('ALIYUN_LOG_CLI_STS_TOKEN', sts_token)
     format_output = os.environ.get('ALIYUN_LOG_CLI_FORMAT_OUTPUT', format_output)
     decode_output = os.environ.get('ALIYUN_LOG_CLI_DECODE_OUTPUT', decode_output)
+
+    # load config from profile mode
+    profile = system_options.get('profile', '')
+    _access_id, _access_key, _endpoint, _sts_token = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME, profile_name=profile) \
+                                if profile else load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME)
+    if all((_access_id, _access_key, _endpoint)):
+        access_id = _access_id
+        access_key = _access_key
+        endpoint = _endpoint
+        sts_token = _sts_token
 
     # load config from command lines
     access_id = system_options.get('access-id', access_id)
