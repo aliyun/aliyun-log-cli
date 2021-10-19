@@ -51,7 +51,7 @@ Global Options:
 [--jmes-filter=<value>]		        : filter results using JMES syntax
 [--format-output=json,no_escape]    : print formatted json results or else print in one line; if escape non-ANSI or not with `no_escape`. like: "json", "json,no_escape", "no_escape"
 [--decode-output=<value>]	        : encoding list to decode response, comma separated like "utf8,lartin1,gbk", default is "utf8". 
-[--profile=<value>]	                : use the authentication mode in this command.
+[--profile=<value>]	                : use the authentication mode in this command, specify authentication profile configured from Alibaba Cloud CLI.
 
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
 """
@@ -228,7 +228,6 @@ def load_confidential_from_aliyun_client_file(config_file, profile_mode='', ak_i
             ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(ram_role_name)
             return ak_id, ak_secret, endpoint, sts_token
     except Exception as e:
-        print("warning: failed to load aliyun config file, the reason is %s" % (str(e)))
         return "", "", "", ""
     return access_id, access_key, endpoint, sts_token
 
