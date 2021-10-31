@@ -8,7 +8,14 @@ except ImportError:
 import re
 import sys
 
-install_requires = ['aliyun-log-python-sdk>=0.6.37', 'jmespath', 'docopt']
+install_requires = [
+    'aliyun-log-python-sdk>=0.6.37',
+    'jmespath',
+    'docopt',
+    'requests',
+    'aliyun-python-sdk-core',
+    'aliyun-python-sdk-sts',
+]
 
 if sys.version_info[:2] == (2, 6):
     install_requires += ['ordereddict']
