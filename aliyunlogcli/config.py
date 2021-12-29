@@ -251,7 +251,20 @@ def load_config(system_options):
     if all((_access_id, _access_key)):
         access_id, access_key, sts_token = _access_id, _access_key, _sts_token
 
-    #load config from aliyun envs
+    #load config from aliyun-cli envs
+    alicloud_access_id, alicloud_access_key, alicloud_endpoint, alicloud_sts_token = os.environ.get('ALICLOUD_ACCESS_KEY_ID'), os.environ.get('ALICLOUD_ACCESS_KEY_SECRET'), \
+        os.environ.get('ALICLOUD_REGION_ID'), os.environ.get('SECURITY_TOKEN')
+    endpoint = alicloud_endpoint or endpoint
+    if all((alicloud_access_id, alicloud_access_key)):
+        access_id, access_key, sts_token = alicloud_access_id, alicloud_access_key, alicloud_sts_token
+
+    alibabacloud_access_id, alibabacloud_access_key, alibabacloud_endpoint, alibabacloud_sts_token = os.environ.get('ALIBABACLOUD_ACCESS_KEY_ID'), os.environ.get('ALIBABACLOUD_ACCESS_KEY_SECRET'), \
+        os.environ.get('ALIBABACLOUD_REGION_ID'), os.environ.get('SECURITY_TOKEN')
+    endpoint = alibabacloud_endpoint or endpoint
+    if all((alibabacloud_access_id, alibabacloud_access_key)):
+        access_id, access_key, sts_token = alibabacloud_access_id, alibabacloud_access_key, alibabacloud_sts_token
+
+    #load config from cloudshell envs
     alicloud_access_id, alicloud_access_key, alicloud_endpoint, alicloud_sts_token = os.environ.get('ALICLOUD_ACCESS_KEY'), os.environ.get('ALICLOUD_SECRET_KEY'), \
         os.environ.get('ALICLOUD_REGION'), os.environ.get('SECURITY_TOKEN')
     endpoint = alicloud_endpoint or endpoint
