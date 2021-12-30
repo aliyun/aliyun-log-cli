@@ -146,7 +146,7 @@ def load_confidential_from_file(client_name):
     access_key = _get_section_option(config, client_name, 'access-key', "")
     endpoint = _get_section_option(config, client_name, 'region-endpoint', "")
     sts_token = _get_section_option(config, client_name, 'sts-token', "")
-    sts_token = verify_sts_token(access_id, "")
+    sts_token = verify_sts_token(access_id, sts_token)
 
     return access_id, access_key, endpoint, sts_token
 
