@@ -173,7 +173,7 @@ def parse_authenticity_from_response(response):
     return ak_id, ak_key, sts_token
 
 def parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn):
-    endpoint = endpoint.rstrip(".log.aliyuncs.com") if endpoint.endswith(".log.aliyuncs.com") else endpoint
+    endpoint = endpoint.replace(".log.aliyuncs.com", "") if endpoint.endswith(".log.aliyuncs.com") else endpoint
     clt = client.AcsClient(access_id, access_key, endpoint)
     # 构造"AssumeRole"请求
     request = AssumeRoleRequest.AssumeRoleRequest()
