@@ -31,7 +31,7 @@ aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER
 
 aliyunlog log create_logtail_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --config_detail="file://./create_logtail_config_file.json"
 
-aliyunlog log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="{\"machine_list\": [\"machine1\", \"machine2\"], \"machine_type\": \"userdefined\", \"group_name\": \"group_name1\", \"group_type\":\"Armory\", \"group_attribute\": {\"externalName\":\"ex name\", \"groupTopic\":\"topic x\"} }"
+aliyunlog log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="{\"machine_list\": [\"machine1\", \"machine2\"], \"machine_type\": \"userdefined\", \"group_name\": \"group_name1\", \"group_type\":\"\", \"group_attribute\": {\"groupTopic\":\"topic x\"} }"
 
 aliyunlog log create_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_detail="file://./create_machine_group.json"
 
@@ -78,7 +78,7 @@ aliyunlog log get_index_config --project_name="dlq-test-cli-${RANDOM_NUMBER}" --
 
 
 aliyunlog log get_machine_group --project_name="dlq-test-cli-${RANDOM_NUMBER}" --group_name="group_name1"
-> "groupAttribute": {"externalName": "ex name", "groupTopic": "topic x"}, "groupName": "group_name1", "groupType": "Armory"
+> "groupAttribute": {"groupTopic": "topic x"}, "groupName": "group_name1", "groupType": ""
 > "machineIdentifyType": "userdefined", "machineList": ["machine1", "machine2"]
 
 
