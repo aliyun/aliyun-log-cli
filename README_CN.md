@@ -491,9 +491,8 @@ def create_logstore(self, project_name, logstore_name, ttl=2, shard_count=30):
  ],
  "machine_type": "userdefined",
  "group_name": "group_name2",
- "group_type": "Armory",
+ "group_type": "",
  "group_attribute": {
-   "externalName": "ex name",
    "groupTopic": "topic x"
  }
 }
