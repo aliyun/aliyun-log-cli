@@ -1,5 +1,5 @@
 docopt
-aliyun-log-python-sdk>=0.6.11
+aliyun-log-python-sdk>=0.8.1
 jmespath
 aliyun-python-sdk-core
 aliyun-python-sdk-sts
