@@ -229,9 +229,7 @@ def load_kv_from_file(section, key, default=None):
     return _get_section_option(config, section, key, default)
 
 
-def load_config_from_cloudshell(
-    default_ak_id="", default_ak_key="", default_endpoint=""
-):
+def load_config_from_cloudshell(default_ak_id="", default_ak_key="", default_endpoint=""):
     # Cloudshell envs
     access_id = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_ID", default_ak_id)
     access_key = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_SECRET", default_ak_key)
