@@ -12,17 +12,6 @@ import requests
 from aliyunsdkcore import client
 from aliyunsdksts.request.v20150401 import AssumeRoleRequest
 
-LOG_CLIENT_METHOD_BLACK_LIST = (
-    r"_.+",
-    r"\w+acl",
-    "set_source",
-    "delete_shard",
-    "heart_beat",
-    "set_user_agent",
-    "get_unicode",
-    "list_logstores",
-    "put_log_raw",
-)
 
 LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser("~")
 ALIYUN_CLI_CONF_FILENAME = "%s/.aliyun/config.json" % os.path.expanduser("~")
@@ -55,22 +44,6 @@ SystemConfig = namedtuple(
     "SystemConfig",
     "access_id access_key endpoint sts_token, jmes_filter format_output decode_output",
 )
-
-# API_GROUP = [
-#     ("project$", "Project"),
-#     "logstore",
-#     ("index|topics", "Index"),
-#     ("logtail_config", "Logtail Config"),
-#     ("machine", "Machine Group"),
-#     "shard",
-#     "cursor",
-#     ("log|histogram", "Logs"),
-#     ("consumer|check_point", "Consumer Group"),
-#     "dashboard",
-#     "savedsearch",
-#     "alert",
-#     ("external_store", "External Store"),
-# ]
 
 GLOBAL_OPTIONS_STR = """
 Global Options:
