@@ -419,22 +419,22 @@ def _get_grouped_usage(method_list):
     return usage.getvalue()
 
 
-def _get_method_list(cls, black_list=None):
+def _get_method_list(cls, black_list=None, white_list=None):
     if black_list is None:
         black_list = (r'^_.+',)
 
     method_list = []
     for k in dir(cls):
         m = getattr(cls, k, None)
-        if not k.startswith('_') and not _match_black_list(k, black_list) \
+        if k in white_list and not _match_black_list(k, black_list) \
                 and (inspect.isfunction(m) or inspect.ismethod(m)):
             method_list.append(k)
 
     return method_list
 
 
-def parse_method_types_optdoc_from_class(cls, black_list=None):
-    method_list = _get_method_list(cls, black_list)
+def parse_method_types_optdoc_from_class(cls, black_list=None, white_list=None):
+    method_list = _get_method_list(cls, black_list, white_list)
     params_types = {}
     params_doc = {}
 
