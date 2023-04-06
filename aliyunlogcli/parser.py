@@ -387,41 +387,22 @@ def _attach_more_cmd_docopt():
     return MORE_DOCOPT_CMD
 
 
-def _get_grouped_usage(method_list):
-    dct = OrderedDict()
-    for k in API_GROUP:
-        des = k[1] if isinstance(k, (list, tuple)) else k.title()
-        dct[des] = []
-
-    for x in method_list:
-        for k in API_GROUP:
-            key = k[0] if isinstance(k, (list, tuple)) else k
-            des = k[1] if isinstance(k, (list, tuple)) else k.title()
-            if re.search(key, x):
-                dct[des].append(x)
-                break
-        else:
-            if "Others" not in dct:
-                dct["Others"] = []
-            dct["Others"].append(x)
-
+def _get_grouped_usage():
     usage = StringIO()
-    for k, v in dct.items():
+    for k, v in SUPPORT_LIST.items():
         usage.write("\n\t")
         usage.write(k)
         usage.write("\n\t" + "-" * 35)
         for d in sorted(v):
             usage.write("\n\t")
             usage.write(d)
-
         usage.write("\n")
-
     return usage.getvalue()
 
 
-def _get_method_list(cls, black_list=None, white_list=None):
+def _get_method_list(cls):
     method_list = []
-    all_support_list = [i for j in white_list.values() for i in j]
+    all_support_list = [i for j in SUPPORT_LIST.values() for i in j]
     for k in dir(cls):
         m = getattr(cls, k, None)
         if k in all_support_list and (inspect.isfunction(m) or inspect.ismethod(m)):
@@ -430,12 +411,12 @@ def _get_method_list(cls, black_list=None, white_list=None):
     return method_list
 
 
-def parse_method_types_optdoc_from_class(cls, black_list=None, white_list=None):
-    method_list = _get_method_list(cls, black_list, white_list)
+def parse_method_types_optdoc_from_class(cls):
+    method_list = _get_method_list(cls)
     params_types = {}
     params_doc = {}
 
-    cli_usage_doc = USAGE_STR_TEMPLATE.format(grouped_api=_get_grouped_usage(method_list))
+    cli_usage_doc = USAGE_STR_TEMPLATE.format(grouped_api=_get_grouped_usage())
 
     opt_doc = 'Usage:\n'
     opt_doc += MORE_DOCOPT_CMD

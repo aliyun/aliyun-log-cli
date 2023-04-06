@@ -6,7 +6,7 @@ from docopt import docopt, DocoptExit
 from six import StringIO
 from .version import __version__, USER_AGENT
 from .config import load_config, LOG_CONFIG_SECTION, GLOBAL_OPTION_SECTION, \
-    GLOBAL_OPTION_KEY_FORMAT_OUTPUT, GLOBAL_OPTION_KEY_DEFAULT_CLIENT, SUPPORT_LIST
+    GLOBAL_OPTION_KEY_FORMAT_OUTPUT, GLOBAL_OPTION_KEY_DEFAULT_CLIENT
 from .parser import *
 from .parser import _to_string_list
 import sys
@@ -215,9 +215,7 @@ def _process_response(ret, jmes_filter, format_output, decode_output):
 
 
 def main():
-    method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient,
-                                                                                           LOG_CLIENT_METHOD_BLACK_LIST,
-                                                                                           SUPPORT_LIST)
+    method_types, method_param_usage, optdoc, usage = parse_method_types_optdoc_from_class(LogClient)
 
     arguments = docopt_ex(optdoc, usage, method_param_usage, hlp=False, ver=USER_AGENT)
     if arguments is None:
