@@ -404,8 +404,7 @@ def _get_method_list(cls):
     method_list = []
     all_support_list = [i for j in SUPPORT_LIST.values() for i in j]
     for k in dir(cls):
-        m = getattr(cls, k, None)
-        if k in all_support_list and (inspect.isfunction(m) or inspect.ismethod(m)):
+        if k in all_support_list:
             method_list.append(k)
 
     return method_list
