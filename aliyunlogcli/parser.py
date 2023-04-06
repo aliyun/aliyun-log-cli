@@ -426,7 +426,8 @@ def _get_method_list(cls, black_list=None, white_list=None):
     method_list = []
     for k in dir(cls):
         m = getattr(cls, k, None)
-        if k in white_list and not _match_black_list(k, black_list) \
+        all_support_list = [i for j in white_list.values() for i in j]
+        if k in all_support_list and not _match_black_list(k, black_list) \
                 and (inspect.isfunction(m) or inspect.ismethod(m)):
             method_list.append(k)
 

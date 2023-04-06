@@ -82,24 +82,43 @@ aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_n
 
 DEBUG_SECTION_NAME = "__logging__"
 
-SUPPORT_LIST = ["copy_project", "create_project", "delete_project", "get_project", "list_project", "tag_project",
-                "untag_project", "copy_logstore", "create_logstore", "delete_logstore", "execute_logstore_sql",
-                "get_logstore", "list_logstore", "update_logstore", "create_index", "delete_index", "get_index_config",
-                "list_topics", "update_index", "create_logtail_config", "delete_logtail_config", "get_logtail_config",
-                "list_logtail_config", "update_logtail_config", "apply_config_to_machine_group", "create_machine_group",
-                "delete_machine_group", "get_config_applied_machine_groups", "get_machine_group",
-                "get_machine_group_applied_configs", "list_machine_group", "list_machines", "remove_config_to_machine_group",
-                "update_machine_group", "arrange_shard", "list_shards", "merge_shard", "split_shard", "get_begin_cursor",
-                "get_cursor", "get_cursor_time", "get_end_cursor", "get_previous_cursor_time", "get_context_logs",
-                "get_histograms", "get_log", "get_log_all", "get_logs", "get_project_logs", "pull_log", "pull_log_dump",
-                "pull_logs", "create_consumer_group", "delete_consumer_group", "get_check_point", "get_check_point_fixed",
-                "list_consumer_group", "update_check_point", "update_consumer_group", "create_dashboard", "delete_dashboard",
-                "get_dashboard", "list_dashboard", "update_dashboard", "create_savedsearch","delete_savedsearch",
-                "get_savedsearch", "list_savedsearch", "update_savedsearch", "create_alert", "delete_alert", "disable_alert",
-                "enable_alert", "get_alert", "list_alert", "update_alert", "create_external_store", "delete_external_store",
-                "get_external_store", "list_external_store", "update_external_store", "create_metric_store", "create_substore",
-                "delete_metric_store", "delete_substore", "es_migration", "execute_project_sql", "get_metric_store",
-                "get_project_tags", "get_substore", "get_substore_ttl", "list_substore", "update_substore", "update_substore_ttl"]
+SUPPORT_LIST = {"Project":
+                    ["copy_project", "create_project", "delete_project", "get_project", "list_project", "tag_project",
+                     "untag_project"],
+                "Logstore":
+                    ["copy_logstore", "create_logstore", "delete_logstore", "execute_logstore_sql", "get_logstore",
+                     "list_logstore", "update_logstore"],
+                "Index":
+                    ["create_index", "delete_index", "get_index_config", "list_topics", "update_index"],
+                "Logtail Config":
+                    ["create_logtail_config", "delete_logtail_config", "get_logtail_config", "list_logtail_config", "update_logtail_config"],
+                "Machine Group":
+                    ["apply_config_to_machine_group", "create_machine_group", "delete_machine_group", "get_config_applied_machine_groups",
+                     "get_machine_group", "get_machine_group_applied_configs", "list_machine_group", "list_machines",
+                     "remove_config_to_machine_group", "update_machine_group"],
+                "Shard":
+                    ["arrange_shard", "list_shards", "merge_shard", "split_shard"],
+                "Cursor":
+                    ["get_begin_cursor", "get_cursor", "get_cursor_time", "get_end_cursor", "get_previous_cursor_time"],
+                "Logs":
+                    ["get_context_logs", "get_histograms", "get_log", "get_log_all", "get_logs", "get_project_logs", "pull_log",
+                     "pull_log_dump", "pull_logs"],
+                "Consumer Group":
+                    ["create_consumer_group", "delete_consumer_group", "get_check_point", "get_check_point_fixed",
+                     "list_consumer_group", "update_check_point", "update_consumer_group"],
+                "Dashboard":
+                    ["create_dashboard", "delete_dashboard", "get_dashboard", "list_dashboard", "update_dashboard"],
+                "Savedsearch":
+                    ["create_savedsearch","delete_savedsearch", "get_savedsearch", "list_savedsearch", "update_savedsearch"],
+                "Alert":
+                    ["create_alert", "delete_alert", "disable_alert", "enable_alert", "get_alert", "list_alert", "update_alert"],
+                "External Store":
+                    ["create_external_store", "delete_external_store", "get_external_store", "list_external_store", "update_external_store"],
+                "Others":
+                    ["create_metric_store", "create_substore", "delete_metric_store", "delete_substore", "es_migration",
+                     "execute_project_sql", "get_metric_store", "get_project_tags", "get_substore", "get_substore_ttl",
+                     "list_substore", "update_substore", "update_substore_ttl"]
+                }
 
 def _get_section_option(config, section_name, option_name, default=None):
     if six.PY3:
