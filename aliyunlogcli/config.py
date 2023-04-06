@@ -27,23 +27,11 @@ GLOBAL_OPTION_KEY_DECODE_OUTPUT = "decode-output"
 
 STS_TOKEN_SEP = "::"
 
-SYSTEM_OPTIONS = [
-    "access-id",
-    "access-key",
-    "sts-token",
-    "region-endpoint",
-    "client-name",
-    "jmes-filter",
-    "format-output",
-    "decode-output",
-    "profile",
-]
+SYSTEM_OPTIONS = ['access-id', 'access-key', 'sts-token', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output',
+                  'decode-output', 'profile']
 SYSTEM_OPTIONS_STR = " ".join("[--" + x + "=<value>]" for x in SYSTEM_OPTIONS)
 
-SystemConfig = namedtuple(
-    "SystemConfig",
-    "access_id access_key endpoint sts_token, jmes_filter format_output decode_output",
-)
+SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint sts_token, jmes_filter format_output decode_output")
 
 GLOBAL_OPTIONS_STR = """
 Global Options:
@@ -60,8 +48,7 @@ Global Options:
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
 """
 
-USAGE_STR_TEMPLATE = (
-    """
+USAGE_STR_TEMPLATE = """
 Usage:
 
 1. aliyunlog log <subcommand> [parameters | global options]
@@ -79,9 +66,8 @@ Examples:
 
 Subcommand:
 {grouped_api}
-"""
-    + GLOBAL_OPTIONS_STR
-)
+""" + GLOBAL_OPTIONS_STR
+
 
 MORE_DOCOPT_CMD = """aliyunlog configure <secure_id> <secure_key> <endpoint> [<client_name>] [<sts_token>]
 aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_name>] [--decode-output=utf8,latin1]
@@ -206,7 +192,7 @@ SUPPORT_LIST = {
         "list_substore",
         "update_substore",
         "update_substore_ttl",
-    ],
+    ]
 }
 
 
@@ -214,11 +200,7 @@ def _get_section_option(config, section_name, option_name, default=None):
     if six.PY3:
         return config.get(section_name, option_name, fallback=default)
     else:
-        return (
-            config.get(section_name, option_name)
-            if config.has_option(section_name, option_name)
-            else default
-        )
+        return config.get(section_name, option_name) if config.has_option(section_name, option_name) else default
 
 
 def load_kv_from_file(section, key, default=None):
@@ -283,9 +265,7 @@ def load_confidential_from_file(client_name):
 
 
 def load_default_config_from_file_env():
-    access_id, access_key, endpoint, sts_token = load_confidential_from_file(
-        LOG_CONFIG_SECTION
-    )
+    access_id, access_key, endpoint, sts_token = load_confidential_from_file(LOG_CONFIG_SECTION)
 
     # load config from envs
     access_id = os.environ.get("ALIYUN_LOG_CLI_ACCESSID", access_id)
@@ -339,9 +319,7 @@ def parse_ecs_ram_role_authenticity_from_response(ram_role_name):
     return ak_id, ak_key, sts_token
 
 
-def load_confidential_from_aliyun_client_file(
-    config_file, profile_mode="", ak_id="", ak_key="", endpoint="", sts_token=""
-):
+def load_confidential_from_aliyun_client_file(config_file, profile_mode="", ak_id="", ak_key="", endpoint="", sts_token=""):
     user_define_profile = True if profile_mode else False
     try:
         with open(config_file) as cf:
@@ -351,34 +329,25 @@ def load_confidential_from_aliyun_client_file(
         profile = None
         for _profile in profiles:
             profile_name = _profile.get("name")
-            if (user_define_profile and profile_name == profile_mode) or (
-                profile_name == current_profile and not user_define_profile
-            ):
+            if user_define_profile and profile_name == profile_mode or \
+                    (profile_name == current_profile and not user_define_profile):
                 profile = _profile
                 break
         current_mode = profile.get("mode")
         access_id = profile.get("access_key_id", ak_id)
         access_key = profile.get("access_key_secret", ak_key)
         endpoint = profile.get("region_id", endpoint)
-        endpoint = (
-            endpoint + ".log.aliyuncs.com"
-            if endpoint != ""
-            else "cn-hangzhou.log.aliyuncs.com"
-        )
+        endpoint = endpoint + '.log.aliyuncs.com' if endpoint != "" else "cn-hangzhou.log.aliyuncs.com"
         sts_token = profile.get("sts_token", sts_token)
         # RamRoleArn config
         if current_mode == "RamRoleArn":
             ram_role_arn = profile.get("ram_role_arn")
-            ak_id, ak_secret, sts_token = parse_xml_info_from_assumerole(
-                access_id, access_key, endpoint, ram_role_arn
-            )
+            ak_id, ak_secret, sts_token = parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn)
             return ak_id, ak_secret, endpoint, sts_token
         # EcsRamRole config
         if current_mode == "EcsRamRole":
             ram_role_name = profile.get("ram_role_name")
-            ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(
-                ram_role_name
-            )
+            ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(ram_role_name)
             return ak_id, ak_secret, endpoint, sts_token
     except Exception as e:
         return "", "", "", ""
@@ -400,20 +369,11 @@ def load_config(system_options):
     )
     client_name = os.environ.get("ALIYUN_LOG_CLI_CLIENT_NAME", client_name)
     client_name = system_options.get("client-name", client_name)
-    format_output = load_kv_from_file(
-        GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, ""
-    )
-    decode_output = load_kv_from_file(
-        GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1")
-    )
+    format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, "")
+    decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
     # load config from aliyun cfg file
-    (
-        _access_id,
-        _access_key,
-        _endpoint,
-        _sts_token,
-    ) = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME)
+    _access_id, _access_key, _endpoint, _sts_token = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME)
     endpoint = _endpoint or endpoint
     if all((_access_id, _access_key)):
         access_id, access_key, sts_token = _access_id, _access_key, _sts_token
@@ -490,12 +450,7 @@ def load_config(system_options):
         endpoint = endpoint + ".log.aliyuncs.com"
 
     # load config from sls cfg file
-    (
-        sls_access_id,
-        sls_access_key,
-        sls_endpoint,
-        sls_sts_token,
-    ) = load_confidential_from_file(client_name)
+    sls_access_id, sls_access_key, sls_endpoint, sls_sts_token = load_confidential_from_file(client_name)
     endpoint = sls_endpoint or endpoint
     if all((sls_access_id, sls_access_key)):
         access_id, access_key, sts_token = sls_access_id, sls_access_key, sls_sts_token
@@ -530,11 +485,7 @@ def load_config(system_options):
         )
         endpoint = pro_endpoint or endpoint
         if all((pro_access_id, pro_access_key)):
-            access_id, access_key, sts_token = (
-                pro_access_id,
-                pro_access_key,
-                pro_sts_token,
-            )
+            access_id, access_key, sts_token = pro_access_id, pro_access_key, pro_sts_token
 
     # load config from command lines
     _access_id, _access_key, _endpoint, _sts_token = (
@@ -561,15 +512,7 @@ def load_config(system_options):
             print(ex)
             raise ValueError("Invalid JMES filter path")
 
-    return SystemConfig(
-        access_id,
-        access_key,
-        endpoint,
-        sts_token,
-        jmes_filter,
-        format_output,
-        decode_output,
-    )
+    return SystemConfig(access_id, access_key, endpoint, sts_token, jmes_filter, format_output, decode_output)
 
 
 __LOGGING_LEVEL_MAP = {
@@ -582,7 +525,7 @@ __LOGGING_LEVEL_MAP = {
     "err": logging.ERROR,
     "critical": logging.CRITICAL,
     "fat": logging.FATAL,
-    "fatal": logging.FATAL,
+    "fatal": logging.FATAL
 }
 
 
@@ -604,12 +547,8 @@ def config_logging_from_config_file():
         level = _get_section_option(config, client_name, "level", level)
         fmt = _get_section_option(config, client_name, "format", fmt)
         datefmt = _get_section_option(config, client_name, "datefmt", datefmt)
-        filebytes = int(
-            _get_section_option(config, client_name, "filebytes", filebytes)
-        )
-        backupcount = int(
-            _get_section_option(config, client_name, "backupcount", backupcount)
-        )
+        filebytes = int(_get_section_option(config, client_name, "filebytes", filebytes))
+        backupcount = int(_get_section_option(config, client_name, "backupcount", backupcount))
 
     root = logging.getLogger()
     handler = RotatingFileHandler(filename, maxBytes=filebytes, backupCount=backupcount)
