@@ -186,7 +186,6 @@ SUPPORT_LIST = {
         "create_substore",
         "delete_substore",
         "es_migration",
-        "get_project_tags",
         "get_substore",
         "get_substore_ttl",
         "list_substore",
