@@ -117,7 +117,12 @@ SUPPORT_LIST = {
         "remove_config_to_machine_group",
         "update_machine_group",
     ],
-    "Shard": ["arrange_shard", "list_shards", "merge_shard", "split_shard"],
+    "Shard": [
+        "arrange_shard",
+        "list_shards",
+        "merge_shard",
+        "split_shard",
+    ],
     "Cursor": [
         "get_begin_cursor",
         "get_cursor",
@@ -170,6 +175,18 @@ SUPPORT_LIST = {
         "list_alert",
         "update_alert",
     ],
+    "Metric Store": [
+            "create_metric_store",
+            "get_metric_store",
+            "delete_metric_store",
+            "create_substore",
+            "get_substore",
+            "list_substore",
+            "update_substore",
+            "get_substore_ttl",
+            "update_substore_ttl",
+            "delete_substore",
+        ],
     "External Store": [
         "create_external_store",
         "delete_external_store",
@@ -177,20 +194,8 @@ SUPPORT_LIST = {
         "list_external_store",
         "update_external_store",
     ],
-    "Metric Store": [
-        "create_metric_store",
-        "get_metric_store",
-        "delete_metric_store",
-    ],
     "Others": [
-        "create_substore",
-        "delete_substore",
         "es_migration",
-        "get_substore",
-        "get_substore_ttl",
-        "list_substore",
-        "update_substore",
-        "update_substore_ttl",
     ]
 }
 
