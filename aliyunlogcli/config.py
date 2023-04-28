@@ -131,6 +131,7 @@ SUPPORT_LIST = {
         "get_previous_cursor_time",
     ],
     "Logs": [
+        "copy_data",
         "get_context_logs",
         "get_histograms",
         "get_log",
