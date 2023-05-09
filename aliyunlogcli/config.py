@@ -82,14 +82,11 @@ SUPPORT_LIST = {
         "delete_project",
         "get_project",
         "list_project",
-        "tag_project",
-        "untag_project",
     ],
     "Logstore": [
         "copy_logstore",
         "create_logstore",
         "delete_logstore",
-        "execute_logstore_sql",
         "get_logstore",
         "list_logstore",
         "update_logstore",
@@ -98,8 +95,8 @@ SUPPORT_LIST = {
         "create_index",
         "delete_index",
         "get_index_config",
-        "list_topics",
         "update_index",
+        "list_topics"
     ],
     "Logtail Config": [
         "create_logtail_config",
@@ -120,7 +117,12 @@ SUPPORT_LIST = {
         "remove_config_to_machine_group",
         "update_machine_group",
     ],
-    "Shard": ["arrange_shard", "list_shards", "merge_shard", "split_shard"],
+    "Shard": [
+        "arrange_shard",
+        "list_shards",
+        "merge_shard",
+        "split_shard",
+    ],
     "Cursor": [
         "get_begin_cursor",
         "get_cursor",
@@ -129,15 +131,18 @@ SUPPORT_LIST = {
         "get_previous_cursor_time",
     ],
     "Logs": [
+        "copy_data",
         "get_context_logs",
         "get_histograms",
         "get_log",
-        "get_log_all",
         "get_logs",
+        "get_log_all",
         "get_project_logs",
         "pull_log",
-        "pull_log_dump",
         "pull_logs",
+        "pull_log_dump",
+        "execute_logstore_sql",
+        "execute_project_sql",
     ],
     "Consumer Group": [
         "create_consumer_group",
@@ -171,6 +176,18 @@ SUPPORT_LIST = {
         "list_alert",
         "update_alert",
     ],
+    "Metric Store": [
+            "create_metric_store",
+            "get_metric_store",
+            "delete_metric_store",
+            "create_substore",
+            "get_substore",
+            "list_substore",
+            "update_substore",
+            "get_substore_ttl",
+            "update_substore_ttl",
+            "delete_substore",
+        ],
     "External Store": [
         "create_external_store",
         "delete_external_store",
@@ -179,19 +196,7 @@ SUPPORT_LIST = {
         "update_external_store",
     ],
     "Others": [
-        "create_metric_store",
-        "create_substore",
-        "delete_metric_store",
-        "delete_substore",
         "es_migration",
-        "execute_project_sql",
-        "get_metric_store",
-        "get_project_tags",
-        "get_substore",
-        "get_substore_ttl",
-        "list_substore",
-        "update_substore",
-        "update_substore_ttl",
     ]
 }
 
