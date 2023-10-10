@@ -517,8 +517,8 @@ def load_config(system_options):
         access_id, access_key, sts_token = _access_id, _access_key, _sts_token
     format_output = system_options.get("format-output", format_output)
     decode_output = system_options.get("decode-output", decode_output)
-    sign_version = system_options.get('sign-version', sign_version)
-    region_id = system_options.get('region-id', region_id)
+    sign_version = system_options.get("sign-version", sign_version)
+    region_id = system_options.get("region-id", region_id)
 
     if not (access_id and access_key and endpoint):
         raise IncompleteAccountInfoError("Access id/key or endpoint is empty!")
