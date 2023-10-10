@@ -307,8 +307,12 @@ def _make_log_client(to_client):
         assert endpoint and access_id and access_key, \
             ValueError("endpoint, access_id or key is not configured for section {0}".format(to_client))
 
-        return LogClient(endpoint, access_id, access_key, securityToken=verify_sts_token(access_id, sts_token, use=True),
-                         auth_version=sign_version, region=region_id)
+        return LogClient(endpoint,
+                         access_id,
+                         access_key,
+                         securityToken=verify_sts_token(access_id, sts_token, use=True),
+                         auth_version=sign_version,
+                         region=region_id)
 
     raise ValueError("fail to convert section {0} to log client instance.".format(to_client))
 

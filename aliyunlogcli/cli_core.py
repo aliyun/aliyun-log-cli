@@ -255,7 +255,9 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
             """)
             exit(2)
 
-        client = LogClient(endpoint, access_id, access_key,
+        client = LogClient(endpoint,
+                           access_id,
+                           access_key,
                            securityToken=verify_sts_token(access_id, sts_token, use=True),
                            auth_version=sign_version,
                            region=region_id)

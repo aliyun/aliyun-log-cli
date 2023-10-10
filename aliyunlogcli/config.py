@@ -259,9 +259,6 @@ def load_confidential_from_file(client_name):
     config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
-    # access_id, access_key, endpoint = load_config_from_cloudshell()
-    # sts_token = ""
-
     access_id = _get_section_option(config, client_name, "access-id", "")
     access_key = _get_section_option(config, client_name, "access-key", "")
     endpoint = _get_section_option(config, client_name, "region-endpoint", "")
@@ -277,12 +274,12 @@ def load_default_config_from_file_env():
     access_id, access_key, endpoint, sts_token, sign_version, region_id = load_confidential_from_file(LOG_CONFIG_SECTION)
 
     # load config from envs
-    access_id = os.environ.get('ALIYUN_LOG_CLI_ACCESSID', access_id)
-    access_key = os.environ.get('ALIYUN_LOG_CLI_ACCESSKEY', access_key)
-    endpoint = os.environ.get('ALIYUN_LOG_CLI_ENDPOINT', endpoint)
-    sts_token = os.environ.get('ALIYUN_LOG_CLI_STS_TOKEN', sts_token)
-    sign_version = os.environ.get('ALIYUN_LOG_CLI_SIGN_VERSION', sign_version)
-    region_id = os.environ.get('ALIYUN_LOG_CLI_REGION_ID', region_id)
+    access_id = os.environ.get("ALIYUN_LOG_CLI_ACCESSID", access_id)
+    access_key = os.environ.get("ALIYUN_LOG_CLI_ACCESSKEY", access_key)
+    endpoint = os.environ.get("ALIYUN_LOG_CLI_ENDPOINT", endpoint)
+    sts_token = os.environ.get("ALIYUN_LOG_CLI_STS_TOKEN", sts_token)
+    sign_version = os.environ.get("ALIYUN_LOG_CLI_SIGN_VERSION", sign_version)
+    region_id = os.environ.get("ALIYUN_LOG_CLI_REGION_ID", region_id)
 
     return access_id, access_key, endpoint, sts_token, sign_version, region_id
 
@@ -352,12 +349,12 @@ def load_confidential_from_aliyun_client_file(config_file, profile_mode="", ak_i
         endpoint = region_id + '.log.aliyuncs.com' if region_id != "" else "cn-hangzhou.log.aliyuncs.com"
         sts_token = profile.get("sts_token", sts_token)
         sign_version = profile.get("sign_version", sign_version)
-        #RamRoleArn config
+        # RamRoleArn config
         if current_mode == "RamRoleArn":
             ram_role_arn = profile.get("ram_role_arn")
             ak_id, ak_secret, sts_token = parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn)
             return ak_id, ak_secret, endpoint, sts_token, sign_version, region_id
-        #EcsRamRole config
+        # EcsRamRole config
         if current_mode == "EcsRamRole":
             ram_role_name = profile.get("ram_role_name")
             ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(ram_role_name)
@@ -368,7 +365,7 @@ def load_confidential_from_aliyun_client_file(config_file, profile_mode="", ak_i
 
 
 def load_config(system_options):
-    access_id, access_key, endpoint, sts_token, sign_version, region_id = '', '', '', '', '', ''
+    access_id, access_key, endpoint, sts_token, sign_version, region_id = "", "", "", "", "", ""
     # load config from file
     config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
@@ -385,7 +382,7 @@ def load_config(system_options):
     format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, "")
     decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
-    #load config from aliyun cfg file
+    # load config from aliyun cfg file
     _access_id, _access_key, _endpoint, _sts_token, sign_version, region_id = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME)
     endpoint = _endpoint or endpoint
     if all((_access_id, _access_key)):
@@ -462,7 +459,7 @@ def load_config(system_options):
     if endpoint and not endpoint.endswith(".com"):
         endpoint = endpoint + ".log.aliyuncs.com"
 
-    #load config from sls cfg file
+    # load config from sls cfg file
     sls_access_id, sls_access_key, sls_endpoint, sls_sts_token, _sign_version, _region_id = load_confidential_from_file(client_name)
     endpoint = sls_endpoint or endpoint
     if all((sls_access_id, sls_access_key)):
