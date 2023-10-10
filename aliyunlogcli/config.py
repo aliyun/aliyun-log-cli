@@ -12,13 +12,10 @@ import requests
 from aliyunsdkcore import client
 from aliyunsdksts.request.v20150401 import AssumeRoleRequest
 
-LOG_CLIENT_METHOD_BLACK_LIST = (r'_.+', r'\w+acl', 'set_source', 'delete_shard', 'heart_beat',
-                                'set_user_agent', 'get_unicode', 'list_logstores', 'put_log_raw'
-                                )
 
-LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser('~')
-ALIYUN_CLI_CONF_FILENAME = "%s/.aliyun/config.json" % os.path.expanduser('~')
-DEFAULT_DEBUG_LOG_FILE_PATH = "%s/aliyunlogcli.log" % os.path.expanduser('~')
+LOG_CREDS_FILENAME = "%s/.aliyunlogcli" % os.path.expanduser("~")
+ALIYUN_CLI_CONF_FILENAME = "%s/.aliyun/config.json" % os.path.expanduser("~")
+DEFAULT_DEBUG_LOG_FILE_PATH = "%s/aliyunlogcli.log" % os.path.expanduser("~")
 DEFAULT_DEBUG_LOG_FORMAT = "%(asctime)s %(levelname)s %(process)s:%(threadName)s:%(filename)s:%(lineno)d %(funcName)s %(message)s"
 ECS_RAM_ROLE_URL = "http://100.100.100.200/latest/meta-data/Ram/security-credentials/"
 
@@ -32,14 +29,9 @@ STS_TOKEN_SEP = "::"
 
 SYSTEM_OPTIONS = ['access-id', 'access-key', 'sts-token', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output',
                   'decode-output', 'profile', 'sign-version', 'region-id']
-SYSTEM_OPTIONS_STR = ' '.join('[--' + x + '=<value>]' for x in SYSTEM_OPTIONS)
+SYSTEM_OPTIONS_STR = " ".join("[--" + x + "=<value>]" for x in SYSTEM_OPTIONS)
 
 SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint sts_token, jmes_filter format_output decode_output sign_version region_id")
-
-API_GROUP = [('project$', 'Project'), 'logstore', ('index|topics', "Index"),
-             ('logtail_config', "Logtail Config"), ('machine', "Machine Group"), 'shard',
-             'cursor', ('log|histogram', "Logs"), ('consumer|check_point', "Consumer Group"), 'shipper',
-             'dashboard', 'savedsearch', 'alert', ('external_store', "External Store")]
 
 GLOBAL_OPTIONS_STR = """
 Global Options:
@@ -78,11 +70,137 @@ Subcommand:
 {grouped_api}
 """ + GLOBAL_OPTIONS_STR
 
+
 MORE_DOCOPT_CMD = """aliyunlog configure <secure_id> <secure_key> <endpoint> [<client_name>] [<sts_token>]
 aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 """
 
 DEBUG_SECTION_NAME = "__logging__"
+
+SUPPORT_LIST = {
+    "Project": [
+        "copy_project",
+        "create_project",
+        "delete_project",
+        "get_project",
+        "list_project",
+    ],
+    "Logstore": [
+        "copy_logstore",
+        "create_logstore",
+        "delete_logstore",
+        "get_logstore",
+        "list_logstore",
+        "update_logstore",
+    ],
+    "Index": [
+        "create_index",
+        "delete_index",
+        "get_index_config",
+        "update_index",
+        "list_topics"
+    ],
+    "Logtail Config": [
+        "create_logtail_config",
+        "delete_logtail_config",
+        "get_logtail_config",
+        "list_logtail_config",
+        "update_logtail_config",
+    ],
+    "Machine Group": [
+        "apply_config_to_machine_group",
+        "create_machine_group",
+        "delete_machine_group",
+        "get_config_applied_machine_groups",
+        "get_machine_group",
+        "get_machine_group_applied_configs",
+        "list_machine_group",
+        "list_machines",
+        "remove_config_to_machine_group",
+        "update_machine_group",
+    ],
+    "Shard": [
+        "arrange_shard",
+        "list_shards",
+        "merge_shard",
+        "split_shard",
+    ],
+    "Cursor": [
+        "get_begin_cursor",
+        "get_cursor",
+        "get_cursor_time",
+        "get_end_cursor",
+        "get_previous_cursor_time",
+    ],
+    "Logs": [
+        "copy_data",
+        "get_context_logs",
+        "get_histograms",
+        "get_log",
+        "get_logs",
+        "get_log_all",
+        "get_project_logs",
+        "pull_log",
+        "pull_logs",
+        "pull_log_dump",
+        "execute_logstore_sql",
+        "execute_project_sql",
+    ],
+    "Consumer Group": [
+        "create_consumer_group",
+        "delete_consumer_group",
+        "get_check_point",
+        "get_check_point_fixed",
+        "list_consumer_group",
+        "update_check_point",
+        "update_consumer_group",
+    ],
+    "Dashboard": [
+        "create_dashboard",
+        "delete_dashboard",
+        "get_dashboard",
+        "list_dashboard",
+        "update_dashboard",
+    ],
+    "Savedsearch": [
+        "create_savedsearch",
+        "delete_savedsearch",
+        "get_savedsearch",
+        "list_savedsearch",
+        "update_savedsearch",
+    ],
+    "Alert": [
+        "create_alert",
+        "delete_alert",
+        "disable_alert",
+        "enable_alert",
+        "get_alert",
+        "list_alert",
+        "update_alert",
+    ],
+    "Metric Store": [
+            "create_metric_store",
+            "get_metric_store",
+            "delete_metric_store",
+            "create_substore",
+            "get_substore",
+            "list_substore",
+            "update_substore",
+            "get_substore_ttl",
+            "update_substore_ttl",
+            "delete_substore",
+        ],
+    "External Store": [
+        "create_external_store",
+        "delete_external_store",
+        "get_external_store",
+        "list_external_store",
+        "update_external_store",
+    ],
+    "Others": [
+        "es_migration",
+    ]
+}
 
 
 def _get_section_option(config, section_name, option_name, default=None):
@@ -100,13 +218,13 @@ def load_kv_from_file(section, key, default=None):
     return _get_section_option(config, section, key, default)
 
 
-def load_config_from_cloudshell(default_ak_id='', default_ak_key='', default_endpoint=''):
+def load_config_from_cloudshell(default_ak_id="", default_ak_key="", default_endpoint=""):
     # Cloudshell envs
-    access_id = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_ID', default_ak_id)
-    access_key = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_SECRET', default_ak_key)
-    endpoint = os.environ.get('ALIBABA_CLOUD_DEFAULT_REGION', default_endpoint)
-    if endpoint and not endpoint.endswith('.com'):
-        endpoint = endpoint + '.log.aliyuncs.com'
+    access_id = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_ID", default_ak_id)
+    access_key = os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_SECRET", default_ak_key)
+    endpoint = os.environ.get("ALIBABA_CLOUD_DEFAULT_REGION", default_endpoint)
+    if endpoint and not endpoint.endswith(".com"):
+        endpoint = endpoint + ".log.aliyuncs.com"
 
     return access_id, access_key, endpoint
 
@@ -144,10 +262,10 @@ def load_confidential_from_file(client_name):
     # access_id, access_key, endpoint = load_config_from_cloudshell()
     # sts_token = ""
 
-    access_id = _get_section_option(config, client_name, 'access-id', "")
-    access_key = _get_section_option(config, client_name, 'access-key', "")
-    endpoint = _get_section_option(config, client_name, 'region-endpoint', "")
-    sts_token = _get_section_option(config, client_name, 'sts-token', "")
+    access_id = _get_section_option(config, client_name, "access-id", "")
+    access_key = _get_section_option(config, client_name, "access-key", "")
+    endpoint = _get_section_option(config, client_name, "region-endpoint", "")
+    sts_token = _get_section_option(config, client_name, "sts-token", "")
     sts_token = verify_sts_token(access_id, sts_token)
     sign_version = _get_section_option(config, client_name, 'sign-version', "")
     region_id = _get_section_option(config, client_name, 'region-id', "")
@@ -168,6 +286,7 @@ def load_default_config_from_file_env():
 
     return access_id, access_key, endpoint, sts_token, sign_version, region_id
 
+
 def parse_authenticity_from_response(response):
     if isinstance(response, bytes):
         response = response.decode()
@@ -178,19 +297,25 @@ def parse_authenticity_from_response(response):
     ak_key = credentials.get("AccessKeySecret", "")
     return ak_id, ak_key, sts_token
 
+
 def parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn):
-    endpoint = endpoint.replace(".log.aliyuncs.com", "") if endpoint.endswith(".log.aliyuncs.com") else endpoint
+    endpoint = (
+        endpoint.replace(".log.aliyuncs.com", "")
+        if endpoint.endswith(".log.aliyuncs.com")
+        else endpoint
+    )
     clt = client.AcsClient(access_id, access_key, endpoint)
     # 构造"AssumeRole"请求
     request = AssumeRoleRequest.AssumeRoleRequest()
     # 指定角色
     request.set_RoleArn(ram_role_arn)
     # 设置会话名称，审计服务使用此名称区分调用者
-    request.set_RoleSessionName('etl-test')
+    request.set_RoleSessionName("etl-test")
     # 发起请求，并得到response
     response = clt.do_action_with_exception(request)
     ak_id, ak_key, sts_token = parse_authenticity_from_response(response)
     return ak_id, ak_key, sts_token
+
 
 def parse_ecs_ram_role_authenticity_from_response(ram_role_name):
     url = ECS_RAM_ROLE_URL + ram_role_name
@@ -204,7 +329,8 @@ def parse_ecs_ram_role_authenticity_from_response(ram_role_name):
     sts_token = authenticity.get("SecurityToken", "")
     return ak_id, ak_key, sts_token
 
-def load_confidential_from_aliyun_client_file(config_file, profile_mode='', ak_id="", ak_key="", endpoint="", sts_token=""):
+
+def load_confidential_from_aliyun_client_file(config_file, profile_mode="", ak_id="", ak_key="", endpoint="", sts_token=""):
     user_define_profile = True if profile_mode else False
     sign_version, region_id = "", ""
     try:
@@ -215,7 +341,8 @@ def load_confidential_from_aliyun_client_file(config_file, profile_mode='', ak_i
         profile = None
         for _profile in profiles:
             profile_name = _profile.get("name")
-            if (user_define_profile and profile_name == profile_mode) or (profile_name == current_profile and not user_define_profile):
+            if user_define_profile and profile_name == profile_mode or \
+                    (profile_name == current_profile and not user_define_profile):
                 profile = _profile
                 break
         current_mode = profile.get("mode")
@@ -247,10 +374,15 @@ def load_config(system_options):
     config.read(LOG_CREDS_FILENAME)
 
     # get section name
-    client_name = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DEFAULT_CLIENT, LOG_CONFIG_SECTION) or LOG_CONFIG_SECTION
-    client_name = os.environ.get('ALIYUN_LOG_CLI_CLIENT_NAME', client_name)
-    client_name = system_options.get('client-name', client_name)
-    format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, '')
+    client_name = (
+        load_kv_from_file(
+            GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DEFAULT_CLIENT, LOG_CONFIG_SECTION
+        )
+        or LOG_CONFIG_SECTION
+    )
+    client_name = os.environ.get("ALIYUN_LOG_CLI_CLIENT_NAME", client_name)
+    client_name = system_options.get("client-name", client_name)
+    format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, "")
     decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
     #load config from aliyun cfg file
@@ -259,34 +391,76 @@ def load_config(system_options):
     if all((_access_id, _access_key)):
         access_id, access_key, sts_token = _access_id, _access_key, _sts_token
 
-    #load config from aliyun-cli envs
-    alicloud_access_id, alicloud_access_key, alicloud_endpoint, alicloud_sts_token = os.environ.get('ALICLOUD_ACCESS_KEY_ID'), os.environ.get('ALICLOUD_ACCESS_KEY_SECRET'), \
-        os.environ.get('ALICLOUD_REGION_ID'), os.environ.get('SECURITY_TOKEN')
+    # load config from aliyun-cli envs
+    alicloud_access_id, alicloud_access_key, alicloud_endpoint, alicloud_sts_token = (
+        os.environ.get("ALICLOUD_ACCESS_KEY_ID"),
+        os.environ.get("ALICLOUD_ACCESS_KEY_SECRET"),
+        os.environ.get("ALICLOUD_REGION_ID"),
+        os.environ.get("SECURITY_TOKEN"),
+    )
     endpoint = alicloud_endpoint or endpoint
     if all((alicloud_access_id, alicloud_access_key)):
-        access_id, access_key, sts_token = alicloud_access_id, alicloud_access_key, alicloud_sts_token
+        access_id, access_key, sts_token = (
+            alicloud_access_id,
+            alicloud_access_key,
+            alicloud_sts_token,
+        )
 
-    alibabacloud_access_id, alibabacloud_access_key, alibabacloud_endpoint, alibabacloud_sts_token = os.environ.get('ALIBABACLOUD_ACCESS_KEY_ID'), os.environ.get('ALIBABACLOUD_ACCESS_KEY_SECRET'), \
-        os.environ.get('ALIBABACLOUD_REGION_ID'), os.environ.get('SECURITY_TOKEN')
+    (
+        alibabacloud_access_id,
+        alibabacloud_access_key,
+        alibabacloud_endpoint,
+        alibabacloud_sts_token,
+    ) = (
+        os.environ.get("ALIBABACLOUD_ACCESS_KEY_ID"),
+        os.environ.get("ALIBABACLOUD_ACCESS_KEY_SECRET"),
+        os.environ.get("ALIBABACLOUD_REGION_ID"),
+        os.environ.get("SECURITY_TOKEN"),
+    )
     endpoint = alibabacloud_endpoint or endpoint
     if all((alibabacloud_access_id, alibabacloud_access_key)):
-        access_id, access_key, sts_token = alibabacloud_access_id, alibabacloud_access_key, alibabacloud_sts_token
+        access_id, access_key, sts_token = (
+            alibabacloud_access_id,
+            alibabacloud_access_key,
+            alibabacloud_sts_token,
+        )
 
-    #load config from cloudshell envs
-    alicloud_access_id, alicloud_access_key, alicloud_endpoint, alicloud_sts_token = os.environ.get('ALICLOUD_ACCESS_KEY'), os.environ.get('ALICLOUD_SECRET_KEY'), \
-        os.environ.get('ALICLOUD_REGION'), os.environ.get('SECURITY_TOKEN')
+    # load config from cloudshell envs
+    alicloud_access_id, alicloud_access_key, alicloud_endpoint, alicloud_sts_token = (
+        os.environ.get("ALICLOUD_ACCESS_KEY"),
+        os.environ.get("ALICLOUD_SECRET_KEY"),
+        os.environ.get("ALICLOUD_REGION"),
+        os.environ.get("SECURITY_TOKEN"),
+    )
     endpoint = alicloud_endpoint or endpoint
     if all((alicloud_access_id, alicloud_access_key)):
-        access_id, access_key, sts_token = alicloud_access_id, alicloud_access_key, alicloud_sts_token
+        access_id, access_key, sts_token = (
+            alicloud_access_id,
+            alicloud_access_key,
+            alicloud_sts_token,
+        )
 
-    alibabacloud_access_id, alibabacloud_access_key, alibabacloud_endpoint, alibabacloud_sts_token = os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_ID'), os.environ.get('ALIBABA_CLOUD_ACCESS_KEY_SECRET'), \
-        os.environ.get('ALIBABA_CLOUD_DEFAULT_REGION'), os.environ.get('ALIBABA_CLOUD_SECURITY_TOKEN')
+    (
+        alibabacloud_access_id,
+        alibabacloud_access_key,
+        alibabacloud_endpoint,
+        alibabacloud_sts_token,
+    ) = (
+        os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_ID"),
+        os.environ.get("ALIBABA_CLOUD_ACCESS_KEY_SECRET"),
+        os.environ.get("ALIBABA_CLOUD_DEFAULT_REGION"),
+        os.environ.get("ALIBABA_CLOUD_SECURITY_TOKEN"),
+    )
     endpoint = alibabacloud_endpoint or endpoint
     if all((alibabacloud_access_id, alibabacloud_access_key)):
-        access_id, access_key, sts_token = alibabacloud_access_id, alibabacloud_access_key, alibabacloud_sts_token
+        access_id, access_key, sts_token = (
+            alibabacloud_access_id,
+            alibabacloud_access_key,
+            alibabacloud_sts_token,
+        )
 
-    if endpoint and not endpoint.endswith('.com'):
-        endpoint = endpoint + '.log.aliyuncs.com'
+    if endpoint and not endpoint.endswith(".com"):
+        endpoint = endpoint + ".log.aliyuncs.com"
 
     #load config from sls cfg file
     sls_access_id, sls_access_key, sls_endpoint, sls_sts_token, _sign_version, _region_id = load_confidential_from_file(client_name)
@@ -297,20 +471,37 @@ def load_config(system_options):
     region_id = _region_id or region_id
 
     # load config from sls envs
-    aliyun_access_id, aliyun_access_key, aliyun_endpoint, aliyun_sts_token = os.environ.get('ALIYUN_LOG_CLI_ACCESSID'), os.environ.get('ALIYUN_LOG_CLI_ACCESSKEY'), \
-        os.environ.get('ALIYUN_LOG_CLI_ENDPOINT'), os.environ.get('ALIYUN_LOG_CLI_STS_TOKEN')
+    aliyun_access_id, aliyun_access_key, aliyun_endpoint, aliyun_sts_token = (
+        os.environ.get("ALIYUN_LOG_CLI_ACCESSID"),
+        os.environ.get("ALIYUN_LOG_CLI_ACCESSKEY"),
+        os.environ.get("ALIYUN_LOG_CLI_ENDPOINT"),
+        os.environ.get("ALIYUN_LOG_CLI_STS_TOKEN"),
+    )
     endpoint = aliyun_endpoint or endpoint
     if all((aliyun_access_id, aliyun_access_key)):
-        access_id, access_key, sts_token = aliyun_access_id, aliyun_access_key, aliyun_sts_token
-    format_output = os.environ.get('ALIYUN_LOG_CLI_FORMAT_OUTPUT', format_output)
-    decode_output = os.environ.get('ALIYUN_LOG_CLI_DECODE_OUTPUT', decode_output)
+        access_id, access_key, sts_token = (
+            aliyun_access_id,
+            aliyun_access_key,
+            aliyun_sts_token,
+        )
+    format_output = os.environ.get("ALIYUN_LOG_CLI_FORMAT_OUTPUT", format_output)
+    decode_output = os.environ.get("ALIYUN_LOG_CLI_DECODE_OUTPUT", decode_output)
     sign_version = os.environ.get('ALIYUN_LOG_CLI_SIGN_VERSION', sign_version)
     region_id = os.environ.get('ALIYUN_LOG_CLI_REGION_ID', region_id)
 
     # load config from profile mode
-    profile = system_options.get('profile', '')
+    profile = system_options.get("profile", "")
     if profile:
-        pro_access_id, pro_access_key, pro_endpoint, pro_sts_token, _sign_version, _region_id = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME, profile_mode=profile)
+        (
+            pro_access_id,
+            pro_access_key,
+            pro_endpoint,
+            pro_sts_token,
+            _sign_version,
+            _region_id,
+        ) = load_confidential_from_aliyun_client_file(
+            ALIYUN_CLI_CONF_FILENAME, profile_mode=profile
+        )
         endpoint = pro_endpoint or endpoint
         if all((pro_access_id, pro_access_key)):
             access_id, access_key, sts_token = pro_access_id, pro_access_key, pro_sts_token
@@ -318,13 +509,17 @@ def load_config(system_options):
         region_id = _region_id or region_id
 
     # load config from command lines
-    _access_id, _access_key, _endpoint, _sts_token = system_options.get('access-id'), system_options.get('access-key'), \
-                                                     system_options.get('region-endpoint'), system_options.get('sts-token')
+    _access_id, _access_key, _endpoint, _sts_token = (
+        system_options.get("access-id"),
+        system_options.get("access-key"),
+        system_options.get("region-endpoint"),
+        system_options.get("sts-token"),
+    )
     endpoint = _endpoint or endpoint
     if all((_access_id, _access_key)):
         access_id, access_key, sts_token = _access_id, _access_key, _sts_token
-    format_output = system_options.get('format-output', format_output)
-    decode_output = system_options.get('decode-output', decode_output)
+    format_output = system_options.get("format-output", format_output)
+    decode_output = system_options.get("decode-output", decode_output)
     sign_version = system_options.get('sign-version', sign_version)
     region_id = system_options.get('region-id', region_id)
 
@@ -332,7 +527,7 @@ def load_config(system_options):
         raise IncompleteAccountInfoError("Access id/key or endpoint is empty!")
 
     # load jmes filter from cmd
-    jmes_filter = system_options.get('jmes-filter', '')
+    jmes_filter = system_options.get("jmes-filter", "")
     if jmes_filter:
         try:
             jmespath.compile(jmes_filter)
@@ -364,7 +559,7 @@ def config_logging_from_config_file():
     config.read(LOG_CREDS_FILENAME)
 
     filename = DEFAULT_DEBUG_LOG_FILE_PATH
-    level = "warn"          # use string first
+    level = "warn"  # use string first
     fmt = DEFAULT_DEBUG_LOG_FORMAT
     datefmt = None
     filebytes = 100 * 1024 * 1024
@@ -372,12 +567,12 @@ def config_logging_from_config_file():
 
     client_name = DEBUG_SECTION_NAME
     if config.has_section(client_name):
-        filename = _get_section_option(config, client_name, 'filename', filename)
-        level = _get_section_option(config, client_name, 'level', level)
-        fmt = _get_section_option(config, client_name, 'format', fmt)
-        datefmt = _get_section_option(config, client_name, 'datefmt', datefmt)
-        filebytes = int(_get_section_option(config, client_name, 'filebytes', filebytes))
-        backupcount = int(_get_section_option(config, client_name, 'backupcount', backupcount))
+        filename = _get_section_option(config, client_name, "filename", filename)
+        level = _get_section_option(config, client_name, "level", level)
+        fmt = _get_section_option(config, client_name, "format", fmt)
+        datefmt = _get_section_option(config, client_name, "datefmt", datefmt)
+        filebytes = int(_get_section_option(config, client_name, "filebytes", filebytes))
+        backupcount = int(_get_section_option(config, client_name, "backupcount", backupcount))
 
     root = logging.getLogger()
     handler = RotatingFileHandler(filename, maxBytes=filebytes, backupCount=backupcount)
@@ -403,4 +598,3 @@ class monkey_patch(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.activated:
             setattr(self.src_obj, self.src_prop, self.origin)
-
