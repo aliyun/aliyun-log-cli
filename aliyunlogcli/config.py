@@ -264,8 +264,8 @@ def load_confidential_from_file(client_name):
     endpoint = _get_section_option(config, client_name, "region-endpoint", "")
     sts_token = _get_section_option(config, client_name, "sts-token", "")
     sts_token = verify_sts_token(access_id, sts_token)
-    sign_version = _get_section_option(config, client_name, 'sign-version', "")
-    region_id = _get_section_option(config, client_name, 'region-id', "")
+    sign_version = _get_section_option(config, client_name, "sign-version", "")
+    region_id = _get_section_option(config, client_name, "region-id", "")
 
     return access_id, access_key, endpoint, sts_token, sign_version, region_id
 
@@ -483,8 +483,8 @@ def load_config(system_options):
         )
     format_output = os.environ.get("ALIYUN_LOG_CLI_FORMAT_OUTPUT", format_output)
     decode_output = os.environ.get("ALIYUN_LOG_CLI_DECODE_OUTPUT", decode_output)
-    sign_version = os.environ.get('ALIYUN_LOG_CLI_SIGN_VERSION', sign_version)
-    region_id = os.environ.get('ALIYUN_LOG_CLI_REGION_ID', region_id)
+    sign_version = os.environ.get("ALIYUN_LOG_CLI_SIGN_VERSION", sign_version)
+    region_id = os.environ.get("ALIYUN_LOG_CLI_REGION_ID", region_id)
 
     # load config from profile mode
     profile = system_options.get("profile", "")
