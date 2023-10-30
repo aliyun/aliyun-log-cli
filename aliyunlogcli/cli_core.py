@@ -226,7 +226,8 @@ def main():
     # process normal log command
     if arguments.get('log', False):
         try:
-            access_id, access_key, endpoint, sts_token, jmes_filter, format_output, decode_output = load_config(system_options)
+            access_id, access_key, endpoint, sts_token, jmes_filter, format_output, decode_output,\
+                sign_version, region_id = load_config(system_options)
 
             decode_output = _to_string_list(decode_output)  # convert decode to list if any
 
@@ -254,7 +255,12 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
             """)
             exit(2)
 
-        client = LogClient(endpoint, access_id, access_key, securityToken=verify_sts_token(access_id, sts_token, use=True))
+        client = LogClient(endpoint,
+                           access_id,
+                           access_key,
+                           securityToken=verify_sts_token(access_id, sts_token, use=True),
+                           auth_version=sign_version,
+                           region=region_id)
         client.set_user_agent(USER_AGENT)
 
         assert hasattr(client, method_name), "Unknown parsed command:" + method_name

@@ -28,10 +28,10 @@ GLOBAL_OPTION_KEY_DECODE_OUTPUT = "decode-output"
 STS_TOKEN_SEP = "::"
 
 SYSTEM_OPTIONS = ['access-id', 'access-key', 'sts-token', 'region-endpoint', 'client-name', 'jmes-filter', 'format-output',
-                  'decode-output', 'profile']
+                  'decode-output', 'profile', 'sign-version', 'region-id']
 SYSTEM_OPTIONS_STR = " ".join("[--" + x + "=<value>]" for x in SYSTEM_OPTIONS)
 
-SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint sts_token, jmes_filter format_output decode_output")
+SystemConfig = namedtuple('SystemConfig', "access_id access_key endpoint sts_token, jmes_filter format_output decode_output sign_version region_id")
 
 GLOBAL_OPTIONS_STR = """
 Global Options:
@@ -44,6 +44,8 @@ Global Options:
 [--format-output=json,no_escape]    : print formatted json results or else print in one line; if escape non-ANSI or not with `no_escape`. like: "json", "json,no_escape", "no_escape"
 [--decode-output=<value>]	        : encoding list to decode response, comma separated like "utf8,lartin1,gbk", default is "utf8". 
 [--profile=<value>]	                : use the authentication mode in this command, specify authentication profile configured from Alibaba Cloud CLI.
+[--sign-version=<value>]            : specify signature version.
+[--region-id=<value>]               : the region id for v4 signature.
 
 Refer to http://aliyun-log-cli.readthedocs.io/ for more info.
 """
@@ -257,28 +259,29 @@ def load_confidential_from_file(client_name):
     config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
-    # access_id, access_key, endpoint = load_config_from_cloudshell()
-    # sts_token = ""
-
     access_id = _get_section_option(config, client_name, "access-id", "")
     access_key = _get_section_option(config, client_name, "access-key", "")
     endpoint = _get_section_option(config, client_name, "region-endpoint", "")
     sts_token = _get_section_option(config, client_name, "sts-token", "")
     sts_token = verify_sts_token(access_id, sts_token)
+    sign_version = _get_section_option(config, client_name, "sign-version", "")
+    region_id = _get_section_option(config, client_name, "region-id", "")
 
-    return access_id, access_key, endpoint, sts_token
+    return access_id, access_key, endpoint, sts_token, sign_version, region_id
 
 
 def load_default_config_from_file_env():
-    access_id, access_key, endpoint, sts_token = load_confidential_from_file(LOG_CONFIG_SECTION)
+    access_id, access_key, endpoint, sts_token, sign_version, region_id = load_confidential_from_file(LOG_CONFIG_SECTION)
 
     # load config from envs
     access_id = os.environ.get("ALIYUN_LOG_CLI_ACCESSID", access_id)
     access_key = os.environ.get("ALIYUN_LOG_CLI_ACCESSKEY", access_key)
     endpoint = os.environ.get("ALIYUN_LOG_CLI_ENDPOINT", endpoint)
     sts_token = os.environ.get("ALIYUN_LOG_CLI_STS_TOKEN", sts_token)
+    sign_version = os.environ.get("ALIYUN_LOG_CLI_SIGN_VERSION", sign_version)
+    region_id = os.environ.get("ALIYUN_LOG_CLI_REGION_ID", region_id)
 
-    return access_id, access_key, endpoint, sts_token
+    return access_id, access_key, endpoint, sts_token, sign_version, region_id
 
 
 def parse_authenticity_from_response(response):
@@ -326,6 +329,7 @@ def parse_ecs_ram_role_authenticity_from_response(ram_role_name):
 
 def load_confidential_from_aliyun_client_file(config_file, profile_mode="", ak_id="", ak_key="", endpoint="", sts_token=""):
     user_define_profile = True if profile_mode else False
+    sign_version, region_id = "", ""
     try:
         with open(config_file) as cf:
             cf_content = json.load(cf)
@@ -341,26 +345,27 @@ def load_confidential_from_aliyun_client_file(config_file, profile_mode="", ak_i
         current_mode = profile.get("mode")
         access_id = profile.get("access_key_id", ak_id)
         access_key = profile.get("access_key_secret", ak_key)
-        endpoint = profile.get("region_id", endpoint)
-        endpoint = endpoint + '.log.aliyuncs.com' if endpoint != "" else "cn-hangzhou.log.aliyuncs.com"
+        region_id = profile.get("region_id", region_id)
+        endpoint = region_id + '.log.aliyuncs.com' if region_id != "" else "cn-hangzhou.log.aliyuncs.com"
         sts_token = profile.get("sts_token", sts_token)
+        sign_version = profile.get("sign_version", sign_version)
         # RamRoleArn config
         if current_mode == "RamRoleArn":
             ram_role_arn = profile.get("ram_role_arn")
             ak_id, ak_secret, sts_token = parse_xml_info_from_assumerole(access_id, access_key, endpoint, ram_role_arn)
-            return ak_id, ak_secret, endpoint, sts_token
+            return ak_id, ak_secret, endpoint, sts_token, sign_version, region_id
         # EcsRamRole config
         if current_mode == "EcsRamRole":
             ram_role_name = profile.get("ram_role_name")
             ak_id, ak_secret, sts_token = parse_ecs_ram_role_authenticity_from_response(ram_role_name)
-            return ak_id, ak_secret, endpoint, sts_token
+            return ak_id, ak_secret, endpoint, sts_token, sign_version, region_id
     except Exception as e:
-        return "", "", "", ""
-    return access_id, access_key, endpoint, sts_token
+        return "", "", "", "", "", ""
+    return access_id, access_key, endpoint, sts_token, sign_version, region_id
 
 
 def load_config(system_options):
-    access_id, access_key, endpoint, sts_token = "", "", "", ""
+    access_id, access_key, endpoint, sts_token, sign_version, region_id = "", "", "", "", "", ""
     # load config from file
     config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
@@ -378,7 +383,7 @@ def load_config(system_options):
     decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
     # load config from aliyun cfg file
-    _access_id, _access_key, _endpoint, _sts_token = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME)
+    _access_id, _access_key, _endpoint, _sts_token, sign_version, region_id = load_confidential_from_aliyun_client_file(ALIYUN_CLI_CONF_FILENAME)
     endpoint = _endpoint or endpoint
     if all((_access_id, _access_key)):
         access_id, access_key, sts_token = _access_id, _access_key, _sts_token
@@ -455,10 +460,12 @@ def load_config(system_options):
         endpoint = endpoint + ".log.aliyuncs.com"
 
     # load config from sls cfg file
-    sls_access_id, sls_access_key, sls_endpoint, sls_sts_token = load_confidential_from_file(client_name)
+    sls_access_id, sls_access_key, sls_endpoint, sls_sts_token, _sign_version, _region_id = load_confidential_from_file(client_name)
     endpoint = sls_endpoint or endpoint
     if all((sls_access_id, sls_access_key)):
         access_id, access_key, sts_token = sls_access_id, sls_access_key, sls_sts_token
+    sign_version = _sign_version or sign_version
+    region_id = _region_id or region_id
 
     # load config from sls envs
     aliyun_access_id, aliyun_access_key, aliyun_endpoint, aliyun_sts_token = (
@@ -476,6 +483,8 @@ def load_config(system_options):
         )
     format_output = os.environ.get("ALIYUN_LOG_CLI_FORMAT_OUTPUT", format_output)
     decode_output = os.environ.get("ALIYUN_LOG_CLI_DECODE_OUTPUT", decode_output)
+    sign_version = os.environ.get("ALIYUN_LOG_CLI_SIGN_VERSION", sign_version)
+    region_id = os.environ.get("ALIYUN_LOG_CLI_REGION_ID", region_id)
 
     # load config from profile mode
     profile = system_options.get("profile", "")
@@ -485,12 +494,16 @@ def load_config(system_options):
             pro_access_key,
             pro_endpoint,
             pro_sts_token,
+            _sign_version,
+            _region_id,
         ) = load_confidential_from_aliyun_client_file(
             ALIYUN_CLI_CONF_FILENAME, profile_mode=profile
         )
         endpoint = pro_endpoint or endpoint
         if all((pro_access_id, pro_access_key)):
             access_id, access_key, sts_token = pro_access_id, pro_access_key, pro_sts_token
+        sign_version = _sign_version or sign_version
+        region_id = _region_id or region_id
 
     # load config from command lines
     _access_id, _access_key, _endpoint, _sts_token = (
@@ -504,6 +517,8 @@ def load_config(system_options):
         access_id, access_key, sts_token = _access_id, _access_key, _sts_token
     format_output = system_options.get("format-output", format_output)
     decode_output = system_options.get("decode-output", decode_output)
+    sign_version = system_options.get("sign-version", sign_version)
+    region_id = system_options.get("region-id", region_id)
 
     if not (access_id and access_key and endpoint):
         raise IncompleteAccountInfoError("Access id/key or endpoint is empty!")
@@ -517,7 +532,8 @@ def load_config(system_options):
             print(ex)
             raise ValueError("Invalid JMES filter path")
 
-    return SystemConfig(access_id, access_key, endpoint, sts_token, jmes_filter, format_output, decode_output)
+    return SystemConfig(access_id, access_key, endpoint, sts_token, jmes_filter,
+                        format_output, decode_output, sign_version, region_id)
 
 
 __LOGGING_LEVEL_MAP = {

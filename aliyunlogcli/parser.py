@@ -300,14 +300,19 @@ def _chained_method_maker(*method_list):
 def _make_log_client(to_client):
     if to_client:
         if to_client == LOG_CONFIG_SECTION:
-            access_id, access_key, endpoint, sts_token = load_default_config_from_file_env()
+            access_id, access_key, endpoint, sts_token, sign_version, region_id = load_default_config_from_file_env()
         else:
-            access_id, access_key, endpoint, sts_token = load_confidential_from_file(to_client)
+            access_id, access_key, endpoint, sts_token, sign_version, region_id = load_confidential_from_file(to_client)
 
         assert endpoint and access_id and access_key, \
             ValueError("endpoint, access_id or key is not configured for section {0}".format(to_client))
 
-        return LogClient(endpoint, access_id, access_key, securityToken=verify_sts_token(access_id, sts_token, use=True))
+        return LogClient(endpoint,
+                         access_id,
+                         access_key,
+                         securityToken=verify_sts_token(access_id, sts_token, use=True),
+                         auth_version=sign_version,
+                         region=region_id)
 
     raise ValueError("fail to convert section {0} to log client instance.".format(to_client))
 
