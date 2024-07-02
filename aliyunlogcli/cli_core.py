@@ -181,6 +181,9 @@ def show_result(result, format_output, decode_output=None):
                                      ensure_ascii=escape))
 
 
+def _log_response_converter(data):
+    return data if isinstance(data, list) else data['data']
+        
 def _process_response_data(data, jmes_filter, format_output, decode_output):
     if data is not None:
         if jmes_filter:
@@ -201,15 +204,17 @@ def _process_response_data(data, jmes_filter, format_output, decode_output):
             show_result(data, format_output, decode_output)
 
 
-def _process_response(ret, jmes_filter, format_output, decode_output):
+def _process_response(ret, jmes_filter, format_output, decode_output, data_converter):
     if hasattr(ret, 'get_body'):
         data = ret.get_body()
+        if data_converter is not None:
+            data = data_converter(data)
         _process_response_data(data, jmes_filter, format_output, decode_output)
 
         return data
     elif inspect.isgenerator(ret):
         for x in ret:
-            _process_response(x, jmes_filter, format_output, decode_output)
+            _process_response(x, jmes_filter, format_output, decode_output, data_converter)
     else:
         logger.warning("unknown response data: %s", ret)
 
@@ -269,7 +274,10 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
         try:
             ret = getattr(client, method_name)(**args)
             jmes_filter = jmes_filter.replace("\\n", '\n')  # parse faked \n
-            data = _process_response(ret, jmes_filter, format_output, decode_output)
+            converter = None
+            if method_name in ['get_log', 'get_logs', 'get_log_all', 'get_log_all_v2']:
+                converter = _log_response_converter
+            data = _process_response(ret, jmes_filter, format_output, decode_output, converter)
 
         except LogException as ex:
             if data is not None:
