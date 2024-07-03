@@ -8,8 +8,7 @@ except ImportError:
 import re
 import sys
 
-install_requires = [
-    'aliyun-log-python-sdk>=0.6.37',
+common_requires = [
     'jmespath',
     'docopt',
     'requests',
@@ -18,7 +17,20 @@ install_requires = [
 ]
 
 if sys.version_info[:2] == (2, 6):
-    install_requires += ['ordereddict']
+    common_requires += ['ordereddict']
+
+requirements_py3 = common_requires + [
+    'aliyun-log-python-sdk>=0.6.37,<0.10.0',
+]
+
+requirements_py2 = common_requires + [
+    'aliyun-log-python-sdk>=0.6.37,<=0.9.0',
+]
+
+if sys.version_info[0] == 2:
+    requirements = requirements_py2
+elif sys.version_info[0] == 3:
+    requirements = requirements_py3
 
 packages = [
     'aliyunlogcli'
@@ -54,7 +66,7 @@ setup(
     description='Aliyun log service CLI',
     author='Aliyun',
     url='https://github.com/aliyun/aliyun-log-cli',
-    install_requires=install_requires,
+    install_requires=requirements,
     packages=packages,
     classifiers=classifiers,
     long_description=long_description,
