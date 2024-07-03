@@ -212,7 +212,7 @@ def _get_section_option(config, section_name, option_name, default=None):
 
 def load_kv_from_file(section, key, default=None):
     # load key value from file
-    config = configparser.SafeConfigParser()
+    config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
     return _get_section_option(config, section, key, default)
