@@ -275,7 +275,7 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
             ret = getattr(client, method_name)(**args)
             jmes_filter = jmes_filter.replace("\\n", '\n')  # parse faked \n
             converter = None
-            if method_name in ['get_log', 'get_logs', 'get_log_all', 'get_log_all_v2']:
+            if method_name in ['get_log', 'get_logs', 'get_log_all', 'get_log_all_v2', 'execute_project_sql', 'get_project_logs']:
                 converter = _log_response_converter
             data = _process_response(ret, jmes_filter, format_output, decode_output, converter)
 
