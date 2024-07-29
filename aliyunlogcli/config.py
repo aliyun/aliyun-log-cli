@@ -22,6 +22,7 @@ ECS_RAM_ROLE_URL = "http://100.100.100.200/latest/meta-data/Ram/security-credent
 LOG_CONFIG_SECTION = "main"
 GLOBAL_OPTION_SECTION = "__option__"
 GLOBAL_OPTION_KEY_FORMAT_OUTPUT = "format-output"
+GLOBAL_OPTION_KEY_JMES_FILTER = "jmes-filter"
 GLOBAL_OPTION_KEY_DEFAULT_CLIENT = "default-client"
 GLOBAL_OPTION_KEY_DECODE_OUTPUT = "decode-output"
 
@@ -380,6 +381,7 @@ def load_config(system_options):
     client_name = os.environ.get("ALIYUN_LOG_CLI_CLIENT_NAME", client_name)
     client_name = system_options.get("client-name", client_name)
     format_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_FORMAT_OUTPUT, "")
+    jmes_filter = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_JMES_FILTER, "")
     decode_output = load_kv_from_file(GLOBAL_OPTION_SECTION, GLOBAL_OPTION_KEY_DECODE_OUTPUT, ("utf8", "latin1"))
 
     # load config from aliyun cfg file
@@ -482,6 +484,7 @@ def load_config(system_options):
             aliyun_sts_token,
         )
     format_output = os.environ.get("ALIYUN_LOG_CLI_FORMAT_OUTPUT", format_output)
+    jmes_filter = os.environ.get("ALIYUN_LOG_CLI_JMES_FILTER", jmes_filter)
     decode_output = os.environ.get("ALIYUN_LOG_CLI_DECODE_OUTPUT", decode_output)
     sign_version = os.environ.get("ALIYUN_LOG_CLI_SIGN_VERSION", sign_version)
     region_id = os.environ.get("ALIYUN_LOG_CLI_REGION_ID", region_id)
@@ -524,7 +527,7 @@ def load_config(system_options):
         raise IncompleteAccountInfoError("Access id/key or endpoint is empty!")
 
     # load jmes filter from cmd
-    jmes_filter = system_options.get("jmes-filter", "")
+    jmes_filter = system_options.get("jmes-filter", jmes_filter)
     if jmes_filter:
         try:
             jmespath.compile(jmes_filter)
@@ -552,7 +555,7 @@ __LOGGING_LEVEL_MAP = {
 
 def config_logging_from_config_file():
     # load debug config from file
-    config = configparser.RawConfigParser()
+    config = configparser.ConfigParser()
     config.read(LOG_CREDS_FILENAME)
 
     filename = DEFAULT_DEBUG_LOG_FILE_PATH
