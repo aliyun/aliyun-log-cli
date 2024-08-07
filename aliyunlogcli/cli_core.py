@@ -4,6 +4,7 @@ from aliyun.log import LogException, LogClient
 import six.moves.configparser as configparser
 from docopt import docopt, DocoptExit
 from six import StringIO
+from .parser import _get_grouped_usage
 from .version import __version__, USER_AGENT
 from .config import load_config, LOG_CONFIG_SECTION, GLOBAL_OPTION_SECTION, \
     GLOBAL_OPTION_KEY_FORMAT_OUTPUT, GLOBAL_OPTION_KEY_DEFAULT_CLIENT
@@ -76,6 +77,60 @@ def configure_default_options(options):
     with open(LOG_CREDS_FILENAME, 'w') as configfile:
         config.write(configfile)
 
+def _parse_cmd_pattern_param(cmd):
+    pattern = re.compile(r'--([a-zA-Z0-9_-]+)=<[a-zA-Z0-9_-]+>|\[--([a-zA-Z0-9_-]+)=<[a-zA-Z0-9_-]+>\]')
+
+    required_arguments = set()
+    optional_arguments = set()
+
+    matches = pattern.finditer(cmd)
+    for match in matches:
+        required_argument, optional_argument = match.groups()
+        if required_argument:
+            required_arguments.add(required_argument)
+        if optional_argument:
+            optional_arguments.add(optional_argument)
+    return required_arguments, optional_arguments
+
+def _print_log_invalid_param_msg(method, args, cmd_patterns, method_param_usage):
+    def _print_usage():
+        print("Usage:")
+        for cmd in cmd_patterns:
+            print(cmd)
+        print("\nOptions:")
+        print(method_param_usage[method])
+        print(GLOBAL_OPTIONS_STR)
+    try:
+        if len(cmd_patterns) == 1:
+            cmd_pattern = cmd_patterns[0]
+            required_arguments, optional_arguments = _parse_cmd_pattern_param(cmd_pattern)
+            cmd_prefix = 'aliyunlog log ' + method + ' '
+            full_cmd = cmd_prefix + ' '.join(args)
+            # find missing required params
+            for param_name in required_arguments:
+                if '--' + param_name + '=' not in full_cmd:
+                    print("Missing required parameter '{}'.\n".format(param_name))
+                    _print_usage()
+                    return
+            # find unknown params
+            pattern = re.compile(r'^--([a-zA-Z0-9_-]+)=')
+            err_indicator_offset = len(cmd_prefix)
+            for arg in args:
+                match = re.search(pattern, arg)
+                if match:
+                    param_name = match.group(1)
+                    if param_name not in required_arguments and param_name not in optional_arguments:
+                        print("Unknown parameter '{}'.".format(param_name))
+                        print(full_cmd)
+                        print(' ' * err_indicator_offset + '^' * len(arg))
+                        _print_usage()
+                        return
+                err_indicator_offset += len(arg) + 1
+    except Exception as ex:
+        logger.error("fail to print_log_invalid_param_msg: %s", ex)
+
+    print("Invalid parameters.\n")
+    _print_usage()
 
 def docopt_ex(doc, usage, method_param_usage, hlp=True, ver=None):
     argv = sys.argv[1:]
@@ -92,31 +147,36 @@ def docopt_ex(doc, usage, method_param_usage, hlp=True, ver=None):
     except DocoptExit as ex:
         # show customized error
         if first_cmd == "configure":
-            print("Invalid parameters.\n")
+            print("Invalid configure parameters.\n")
             print("Usage:\n" + MORE_DOCOPT_CMD)
             return
-        elif first_cmd == "log" and len(argv) > 1:
+        elif first_cmd == "log":
+            if len(argv) == 1:
+                print("Missing aliyunlog log subcommand, example usage:")
+                print("aliyunlog log get_project --project_name=test")
+                print('              ^^^^^^^^^^^')
+                print('Supported aliyunlog log subcommands:')
+                print(_get_grouped_usage())
+                return
             second_cmd = argv[1]
-            header_printed = False
-            for cmd in doc.split("\n"):
-                if "aliyunlog log " + second_cmd + " " in cmd:
-                    if not header_printed:
-                        print("Invalid parameters.\n")
-                        print("Usage:")
-                        header_printed = True
+            cmd_patterns = []
+            for supported_cmd in doc.split("\n"):
+                if "aliyunlog log " + second_cmd + " " in supported_cmd:
+                    cmd_patterns.append(supported_cmd)
 
-                    print(cmd)
-
-            if header_printed and second_cmd in method_param_usage:
-                print("\nOptions:")
-                print(method_param_usage[second_cmd])
-                print(GLOBAL_OPTIONS_STR)
-            else:
-                print("Unknown subcommand.")
+            if len(cmd_patterns) == 0 or second_cmd not in method_param_usage:
+                print("Unknown aliyunlog log subcommand: " + second_cmd)
+                print('aliyunlog log ' + second_cmd + ' ' + ' '.join(argv[2:]))
+                print('              ' + '^' * len(second_cmd))
                 print(usage)
+                return
 
+            _print_log_invalid_param_msg(second_cmd, argv[1:], cmd_patterns, method_param_usage)
+            return
         else:
-            print("Unknown command.\n")
+            print("Unknown command: '{}'.".format(first_cmd))
+            print('aliyunlog log ' + first_cmd)
+            print('              ' + '^' * len(first_cmd))
             print(usage)
 
 
@@ -295,13 +355,13 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
         if options:
             configure_default_options(options)
         else:
-            args = arguments['<secure_id>'], arguments['<secure_key>'], arguments['<endpoint>'], \
+            for param in ['<access_id>', '<access_key>', '<endpoint>']:
+                if not arguments[param]:
+                    print("Missing required parameter '{}'.\n".format(param))
+                    print("Usage:\n" + MORE_DOCOPT_CMD)
+                    exit(1)
+            args = arguments['<access_id>'], arguments['<access_key>'], arguments['<endpoint>'], \
                    arguments['<client_name>'] or LOG_CONFIG_SECTION, arguments['<sts_token>']
-
-            if args[0] is None or args[1] is None or args[2] is None:
-                print("Invalid parameters.\n")
-                print("Usage:\n" + MORE_DOCOPT_CMD)
-                exit(1)
 
             configure_confidential(*args)
 
@@ -313,13 +373,13 @@ Refer to https://aliyun-log-cli.readthedocs.io/en/latest/tutorials/tutorial_conf
         if options:
             configure_default_options(options)
         else:
-            args = arguments['<secure_id>'], arguments['<secure_key>'], arguments['<endpoint>'], \
+            for param in ['<access_id>', '<access_key>', '<endpoint>']:
+                if not arguments[param]:
+                    print("Missing required parameter '{}'.\n".format(param))
+                    print("Usage:\n" + MORE_DOCOPT_CMD)
+                    exit(1)
+            args = arguments['<access_id>'], arguments['<access_key>'], arguments['<endpoint>'], \
                    arguments['<client_name>'] or LOG_CONFIG_SECTION, arguments['<sts_token>']
-
-            if args[0] is None or args[1] is None or args[1] is None:
-                print("Invalid parameters.\n")
-                print("Usage:\n" + MORE_DOCOPT_CMD)
-                exit(1)
 
             configure_confidential(*args)
 

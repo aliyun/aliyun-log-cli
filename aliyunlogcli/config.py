@@ -66,12 +66,11 @@ Examples:
 3. aliyunlog log create_project --project_name="test"
 4. aliyunlog configure AKID124 AKKey123 cn-hangzhou.log.aliyuncs.com main StsTokenValue1234
 
-Subcommand:
+Supported aliyunlog log subcommand:
 {grouped_api}
 """ + GLOBAL_OPTIONS_STR
 
-
-MORE_DOCOPT_CMD = """aliyunlog configure <secure_id> <secure_key> <endpoint> [<client_name>] [<sts_token>]
+MORE_DOCOPT_CMD = """aliyunlog configure <access_id> <access_key> <endpoint> [<client_name>] [<sts_token>]
 aliyunlog configure [--format-output=json,no_escape] [--default-client=<client_name>] [--decode-output=utf8,latin1]
 """
 

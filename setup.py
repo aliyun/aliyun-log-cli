@@ -20,11 +20,11 @@ if sys.version_info[:2] == (2, 6):
     common_requires += ['ordereddict']
 
 requirements_py3 = common_requires + [
-    'aliyun-log-python-sdk>=0.6.37,<0.10.0',
+    'aliyun-log-python-sdk>=0.8.11,<0.10.0',
 ]
 
 requirements_py2 = common_requires + [
-    'aliyun-log-python-sdk>=0.6.37,<=0.9.0',
+    'aliyun-log-python-sdk>=0.9.9,<0.10.0',
 ]
 
 if sys.version_info[0] == 2:
