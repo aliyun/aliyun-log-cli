@@ -1,0 +1,39 @@
+name: Py3-ut-test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+ 
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+
+    - name: Install dependencies
+      run: |
+        python -V
+        python -m pip install --upgrade pip setuptools
+        python -m pip install .
+        python -m pip install pytest
+
+    - name: Show dependencies
+      run: |
+        python -m pip freeze
+
+    - name: Run build tests
+      run: |
+        aliyunlog log --version
+
+    - name: Run tests
+      run: |
+        python -m pytest -s tests/test_error_message.py
