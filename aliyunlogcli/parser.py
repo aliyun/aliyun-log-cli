@@ -449,9 +449,10 @@ def _convert_args(args_values, method_types):
             if t not in (None, str):
                 try:
                     converted_args[arg] = t(value)
-                except Exception as e:
-                    logger.error("failed to convert parameter '{0}' value='{1}' to type {2}".format(arg, value, t))
-                    raise TypeError("parameter '{0}' should be of type {1}, but got type={2}, value='{3}'".format(arg, t, type(value), value)) from e
+                except Exception:
+                    message = "parameter '{0}' should be of type {1}, but got type={2}, value='{3}'".format(arg, t, type(value), value)
+                    logger.error(message)
+                    raise TypeError(message)
                 continue
 
         converted_args[arg] = value
