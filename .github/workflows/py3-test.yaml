@@ -37,3 +37,4 @@ jobs:
     - name: Run tests
       run: |
         python -m pytest -s tests/test_error_message.py
+        python -m pytest -s tests/test_cmd_format.py
