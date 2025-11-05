@@ -105,6 +105,11 @@ SUPPORT_LIST = {
         "get_logtail_config",
         "list_logtail_config",
         "update_logtail_config",
+        "create_logtail_pipeline_config",
+        "delete_logtail_pipeline_config",
+        "get_logtail_pipeline_config",
+        "list_logtail_pipeline_config",
+        "update_logtail_pipeline_config",
     ],
     "Machine Group": [
         "apply_config_to_machine_group",
