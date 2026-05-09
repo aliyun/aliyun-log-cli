@@ -1,0 +1,31 @@
+name: CI
+
+'on':
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python-version:
+          - "2.6"
+          - "2.7"
+          - "3.3"
+          - "3.4"
+          - "3.5"
+          - "3.6"
+          - "pypy"
+          - "pypy3"
+        include:
+          - python-version: "3.7"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install git+https://github.com/aliyun/aliyun-log-python-sdk.git@master
+      - run: pip install .
+      - run: cd tests
+      - run: python ./test_cli.py ./cmd_list.txt
